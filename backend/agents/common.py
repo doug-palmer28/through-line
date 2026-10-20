@@ -127,7 +127,8 @@ def _usage_of(messages) -> dict[str, int]:
     responses = [m for m in messages if isinstance(m, ModelResponse)]
     return {"requests": len(responses),
             "input_tokens": sum(m.usage.input_tokens or 0 for m in responses),
-            "output_tokens": sum(m.usage.output_tokens or 0 for m in responses)}
+            "output_tokens": sum(m.usage.output_tokens or 0 for m in responses),
+            "cached_input_tokens": sum(m.usage.cache_read_tokens or 0 for m in responses)}
 
 
 def _dump(output: Any) -> Any:
@@ -201,6 +202,8 @@ async def run_agent(
         "requests": run_usage.requests,
         "input_tokens": run_usage.input_tokens or 0,
         "output_tokens": run_usage.output_tokens or 0,
+        # Part of input_tokens that the provider served from its prompt cache (billed at the cached rate).
+        "cached_input_tokens": run_usage.cache_read_tokens or 0,
         # Built-in web searches are billed per call on top of tokens, so count them too.
         "web_searches": sum(isinstance(part, NativeToolCallPart) for m in result.new_messages()
                             for part in getattr(m, "parts", [])),

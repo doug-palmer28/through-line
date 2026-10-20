@@ -365,7 +365,8 @@ export type GrantList = {
 
 // ---------------------------------------------------------------- usage
 
-export type TokenTotals = { requests: number; input_tokens: number; output_tokens: number; total_tokens: number };
+export type TokenTotals = { requests: number; input_tokens: number; cached_input_tokens: number; output_tokens: number;
+  total_tokens: number };
 export type UsageReport = {
   me: TokenTotals & { by_feature: (TokenTotals & { key: string })[] };
   organization: TokenTotals & {

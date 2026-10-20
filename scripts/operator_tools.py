@@ -300,8 +300,8 @@ def report_data() -> str:
         out = []
         for org in db.exec(select(Organization)).all():
             rows = db.exec(select(TokenUsage).where(TokenUsage.org_id == org.id)).all()
-            tasks: dict = defaultdict(lambda: {"runs": 0, "requests": 0, "input": 0, "output": 0, "searches": 0,
-                                               "failed": 0})
+            tasks: dict = defaultdict(lambda: {"runs": 0, "requests": 0, "input": 0, "cached_input": 0, "output": 0,
+                                               "searches": 0, "failed": 0})
             for r in rows:
                 t = tasks[f"{r.feature}/{r.phase}"]
                 t["runs"] += 1
@@ -309,6 +309,7 @@ def report_data() -> str:
                 t["input"] += r.input_tokens
                 t["output"] += r.output_tokens
                 t["searches"] += r.web_searches or 0
+                t["cached_input"] += r.cached_input_tokens or 0
                 t["failed"] += 0 if r.ok else 1
             count = lambda m: len(db.exec(select(m).where(m.org_id == org.id)).all())  # noqa: E731
             out.append({
@@ -317,8 +318,9 @@ def report_data() -> str:
                 "survey_tools": count(Instrument), "participants": count(Participant), "responses": count(Response),
                 "program_numbers": count(Indicator), "program_values": count(IndicatorEntry),
                 "reports": count(ReportRun), "grants": count(GrantApplication),
-                "tokens": {"input": sum(r.input_tokens for r in rows), "output": sum(r.output_tokens for r in rows),
-                           "runs": len(rows)},
+                "tokens": {"input": sum(r.input_tokens for r in rows),
+                           "cached_input": sum(r.cached_input_tokens or 0 for r in rows),
+                           "output": sum(r.output_tokens for r in rows), "runs": len(rows)},
                 "by_task": dict(sorted(tasks.items())),
             })
     return json.dumps({"through_line_report_data": out}, separators=(",", ":"))

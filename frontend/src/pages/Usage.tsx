@@ -7,10 +7,10 @@ function Rows({ rows, label }: { rows: (TokenTotals & { key: string })[]; label:
   if (!rows.length) return <p className="empty">No AI use yet.</p>;
   return (
     <table className="table">
-      <thead><tr><th>{label}</th><th>Requests</th><th>Tokens in</th><th>Tokens out</th><th>Total tokens</th></tr></thead>
+      <thead><tr><th>{label}</th><th>Requests</th><th>Tokens in</th><th title="Part of the input the model provider had cached (billed at a tenth of the price)">of which cached</th><th>Tokens out</th><th>Total tokens</th></tr></thead>
       <tbody>
         {rows.map((r) => (
-          <tr key={r.key}><td>{r.key}</td><td>{n(r.requests)}</td><td>{n(r.input_tokens)}</td><td>{n(r.output_tokens)}</td><td><strong>{n(r.total_tokens)}</strong></td></tr>
+          <tr key={r.key}><td>{r.key}</td><td>{n(r.requests)}</td><td>{n(r.input_tokens)}</td><td className="muted">{n(r.cached_input_tokens ?? 0)}</td><td>{n(r.output_tokens)}</td><td><strong>{n(r.total_tokens)}</strong></td></tr>
         ))}
       </tbody>
     </table>

@@ -164,6 +164,7 @@ class TokenUsage(SQLModel, table=True):
     requests: int = 0
     input_tokens: int = 0
     output_tokens: int = 0
+    web_searches: int = 0  # built-in web search calls (billed per call)
     ok: bool = True  # False if the run failed or hit a limit (tokens were still used)
 
 
@@ -172,6 +173,7 @@ _ADDED_COLUMNS = {
     "organization": {"brand": "JSON", "allowance_used": "JSON"},
     "instrument": {"review_count": "INTEGER NOT NULL DEFAULT 0"},
     "reportrun": {"revisions": "INTEGER NOT NULL DEFAULT 0", "feedback": "JSON"},
+    "tokenusage": {"web_searches": "INTEGER NOT NULL DEFAULT 0"},
 }
 
 

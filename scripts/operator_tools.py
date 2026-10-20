@@ -300,13 +300,15 @@ def report_data() -> str:
         out = []
         for org in db.exec(select(Organization)).all():
             rows = db.exec(select(TokenUsage).where(TokenUsage.org_id == org.id)).all()
-            tasks: dict = defaultdict(lambda: {"runs": 0, "requests": 0, "input": 0, "output": 0, "failed": 0})
+            tasks: dict = defaultdict(lambda: {"runs": 0, "requests": 0, "input": 0, "output": 0, "searches": 0,
+                                               "failed": 0})
             for r in rows:
                 t = tasks[f"{r.feature}/{r.phase}"]
                 t["runs"] += 1
                 t["requests"] += r.requests
                 t["input"] += r.input_tokens
                 t["output"] += r.output_tokens
+                t["searches"] += r.web_searches or 0
                 t["failed"] += 0 if r.ok else 1
             count = lambda m: len(db.exec(select(m).where(m.org_id == org.id)).all())  # noqa: E731
             out.append({

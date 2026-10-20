@@ -9,7 +9,7 @@ from typing import Any
 
 from openai import AsyncOpenAI
 from pydantic_ai import Agent, RunContext, capture_run_messages
-from pydantic_ai.messages import ModelResponse, ToolCallPart, ToolReturnPart
+from pydantic_ai.messages import ModelResponse, NativeToolCallPart, ToolCallPart, ToolReturnPart
 from pydantic_ai.models import Model
 from pydantic_ai.models.openai import OpenAIResponsesModel
 from pydantic_ai.providers.openai import OpenAIProvider
@@ -201,6 +201,9 @@ async def run_agent(
         "requests": run_usage.requests,
         "input_tokens": run_usage.input_tokens or 0,
         "output_tokens": run_usage.output_tokens or 0,
+        # Built-in web searches are billed per call on top of tokens, so count them too.
+        "web_searches": sum(isinstance(part, NativeToolCallPart) for m in result.new_messages()
+                            for part in getattr(m, "parts", [])),
     }
     deps.session.add_usage(usage)
     ledger.record(**ledger_base, usage=usage)

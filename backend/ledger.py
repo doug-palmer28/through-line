@@ -28,7 +28,8 @@ def record(*, org_id: int | None, user_id: int | None, feature: str, phase: str,
     with Session(engine()) as db:
         db.add(TokenUsage(org_id=org_id, user_id=user_id, feature=feature, phase=phase, agent=agent, run_id=run_id,
                           requests=usage.get("requests", 0), input_tokens=usage.get("input_tokens", 0),
-                          output_tokens=usage.get("output_tokens", 0), ok=ok))
+                          output_tokens=usage.get("output_tokens", 0), web_searches=usage.get("web_searches", 0),
+                          ok=ok))
         db.commit()
 
 

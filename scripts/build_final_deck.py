@@ -223,9 +223,9 @@ for i, (name, cap) in enumerate(grid):
 s = page("Cents per organization, not thousands of dollars", "Cost to run", 6, GREEN,
          "Keystone's whole journey cost 6 cents in model fees: 33 agent runs, 339,000 input and 52,000 output tokens. Web search adds "
          "at most 18 cents. A typical year for one organization is about $1, and the most anyone can spend while staying "
-         "within the allowances is about $8. That's $10,000 a year in AI fees for 10,000 organizations. The main cost control "
+         "within the allowances is about $8. That's $10,000 a year in AI fees for 10,000 organizations. Two independent Studio runs (Keystone locally, The Place on the live site) cost 4.9 and 5.7 cents, so onboarding cost is predictable. The main cost control "
          "is limiting how often each organization can use the agents.")
-stat(s, 0.6, 2.05, 3.6, 2.05, "$0.24", "Keystone's whole journey, upper bound ($0.06 tokens + ≤ $0.18 web search)", GREEN, 36)
+stat(s, 0.6, 2.05, 3.6, 2.05, "$0.24", "Keystone, whole journey: 6¢ tokens + ≤ 18¢ search", GREEN, 36)
 cd = CategoryChartData()
 cd.categories = ["Logic Model Studio", "Grant draft", "Impact report", "Survey review"]
 cd.add_series("Model tokens (¢)", (4.93, 0.60, 0.35, 0.10))
@@ -248,7 +248,8 @@ card(s, 9.3, 2.05, 3.44, 2.05, CARD)
 text(s, 9.5, 2.15, 3.1, 1.9, [[("At scale (AI fees / year)", {"bold": True})],
                               [("100 orgs  ", {"bold": True, "font": HEAD, "size": 18}), "≈ $100"],
                               [("10,000 orgs  ", {"bold": True, "font": HEAD, "size": 18}), "≈ $10,000"],
-                              [("Worst case ", {"bold": True}), "≈ $8 per org"]], 13, False, INK, space=4)
+                              [("Worst case ", {"bold": True}), "≈ $8 per org"],
+                              [("Studio, 2 real runs: ", {"bold": True}), "4.9¢ and 5.7¢"]], 12, False, INK, space=3)
 card(s, 0.6, 4.45, 12.14, 2.2, TINT["green"])
 text(s, 0.9, 4.6, 11.6, 2.0, [[("Keeping costs down: limit how often the bots run", {"bold": True, "font": HEAD, "size": 16})],
                               "Studio: 2 sessions, 5 questions, ≤ 2 revision rounds   ·   Survey Review Bot: 2 per survey   ·   "

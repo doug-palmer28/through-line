@@ -376,12 +376,21 @@
   <table>
     <thead><tr><th>Organization</th><th>Who ran it</th><th class="n">Agent runs</th><th class="n">Tokens in / out</th><th class="n">Searches</th><th class="n">Est. cost</th></tr></thead>
     <tbody>
-      <tr><td>Keystone (above)</td><td>Doug, local, live model</td><td class="n">33</td><td class="n">339K / 52K</td><td class="n">≤ 18</td><td class="n">≤ $0.24</td></tr>
-      <tr><td>The Place</td><td>Doug, live site</td><td class="n" colspan="4"><span class="pending">PENDING · from operator report-data on Render</span></td></tr>
-      <tr><td>Kids at Their Best</td><td>Jodi Walker, executive director (outside tester)</td><td class="n" colspan="4"><span class="pending">PENDING</span></td></tr>
-      <tr><td>Sara's organization</td><td>Sara (outside tester)</td><td class="n" colspan="4"><span class="pending">PENDING</span></td></tr>
+      <tr><td>Keystone (above)</td><td>Doug, local, live model · full journey</td><td class="n">33</td><td class="n">339K / 52K</td><td class="n">≤ 18</td><td class="n">≤ $0.24</td></tr>
+      <tr><td>The Place</td><td>Doug, live site · Studio + 1 survey review</td><td class="n">28</td><td class="n">366K / 44K</td><td class="n">≤ 12*</td><td class="n">$0.06 (≤ $0.18)</td></tr>
+      <tr><td>Kids at Their Best</td><td>Jodi Walker, executive director (outside tester)</td><td class="n" colspan="4"><span class="pending">PENDING · not yet signed up</span></td></tr>
+      <tr><td>Sara's organization</td><td>Sara (outside tester)</td><td class="n" colspan="4"><span class="pending">PENDING · not yet signed up</span></td></tr>
     </tbody>
   </table>
+  <p class="small muted">* The Place's runs happened before web searches were counted, so the maximum is shown. Keystone was later copied onto the live site as a demo; the copy carries its results but not its usage history.</p>
+  <table>
+    <thead><tr><th>Logic Model Studio, two independent runs</th><th class="n">Runs</th><th class="n">Input tokens</th><th class="n">Output tokens</th><th class="n">Model cost</th></tr></thead>
+    <tbody>
+      <tr><td>Keystone (housing, local)</td><td class="n">27</td><td class="n">296,022</td><td class="n">39,336</td><td class="n">$0.049</td></tr>
+      <tr><td>The Place (live site)</td><td class="n">27</td><td class="n">363,131</td><td class="n">41,555</td><td class="n">$0.057</td></tr>
+    </tbody>
+  </table>
+  <p>The two Studio runs, for different organizations in different settings, came within a cent of each other. That makes the cost of onboarding a new organization predictable: about <b>5–6¢ in model fees</b>, plus at most 12¢ of web search. In both, the metrics phase (research, a working plan, a four-specialist review, and a final plan) used about half the tokens.</p>
   <h3>Keeping costs down</h3>
   <p>The main lever is <b>limiting how often each organization can call the agents</b>. Every run also has hard request, token, and tool-call caps, so no loop can run on.</p>
   <table>

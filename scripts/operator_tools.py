@@ -2,6 +2,7 @@
 
     .venv/Scripts/python scripts/operator_tools.py usage               # print totals + write an Excel report
     .venv/Scripts/python scripts/operator_tools.py orgs                # organizations and what they've used
+    .venv/Scripts/python scripts/operator_tools.py report-data         # compact JSON: tokens by task, what each org built
     .venv/Scripts/python scripts/operator_tools.py backfill            # once: copy pre-ledger usage from the audit log
     .venv/Scripts/python scripts/operator_tools.py export-org 1 scripts/demo/keystone.json   # package an organization
     python ../scripts/operator_tools.py import-org ../scripts/demo/keystone.json --username keystone.demo   # on Render
@@ -288,6 +289,39 @@ def import_org(path: Path, username: str, password: str, display_name: str) -> s
                 f"{len(b['entries'])} program values, {len(b['reports'])} report(s), {len(b['grants'])} grant draft(s).")
 
 
+def report_data() -> str:
+    """One compact JSON summary for the final report: per organization, tokens by task and what it built.
+    Organization names only (no staff names, usernames, or participant data)."""
+    import json
+
+    from db import Indicator, IndicatorEntry, Participant, Response, StaffUser, TokenUsage
+
+    with Session(engine()) as db:
+        out = []
+        for org in db.exec(select(Organization)).all():
+            rows = db.exec(select(TokenUsage).where(TokenUsage.org_id == org.id)).all()
+            tasks: dict = defaultdict(lambda: {"runs": 0, "requests": 0, "input": 0, "output": 0, "failed": 0})
+            for r in rows:
+                t = tasks[f"{r.feature}/{r.phase}"]
+                t["runs"] += 1
+                t["requests"] += r.requests
+                t["input"] += r.input_tokens
+                t["output"] += r.output_tokens
+                t["failed"] += 0 if r.ok else 1
+            count = lambda m: len(db.exec(select(m).where(m.org_id == org.id)).all())  # noqa: E731
+            out.append({
+                "org": org.name, "org_id": org.id, "created": org.created_at.strftime("%Y-%m-%d"),
+                "staff": count(StaffUser), "studio_done": bool(org.measurement_plan),
+                "survey_tools": count(Instrument), "participants": count(Participant), "responses": count(Response),
+                "program_numbers": count(Indicator), "program_values": count(IndicatorEntry),
+                "reports": count(ReportRun), "grants": count(GrantApplication),
+                "tokens": {"input": sum(r.input_tokens for r in rows), "output": sum(r.output_tokens for r in rows),
+                           "runs": len(rows)},
+                "by_task": dict(sorted(tasks.items())),
+            })
+    return json.dumps({"through_line_report_data": out}, separators=(",", ":"))
+
+
 def print_usage() -> None:
     with Session(engine()) as db:
         rows = ledger.platform_rows(db)
@@ -335,6 +369,7 @@ if __name__ == "__main__":
     sub = ap.add_subparsers(dest="cmd", required=True)
     sub.add_parser("usage", help="token totals by organization and person, plus an Excel report")
     sub.add_parser("orgs", help="organizations and their allowance use")
+    sub.add_parser("report-data", help="one-line JSON summary per organization (for the final report)")
     sub.add_parser("backfill", help="copy token use from the audit log for runs before the ledger existed")
     e = sub.add_parser("export-org", help="package an organization's work (no passwords or PINs) into a JSON file")
     e.add_argument("org_id", type=int)
@@ -354,6 +389,8 @@ if __name__ == "__main__":
         print(f"Excel report: {usage_report()}")
     elif args.cmd == "orgs":
         print_orgs()
+    elif args.cmd == "report-data":
+        print(report_data())
     elif args.cmd == "backfill":
         print(backfill())
     elif args.cmd == "export-org":

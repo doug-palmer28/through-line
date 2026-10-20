@@ -50,3 +50,6 @@ data/usage_reports/
 
 # --- Empty placeholder planning file (not part of the project)
 Idea building.docx
+
+# --- Built Canvas submissions (contain the live-site access code)
+deliverables/

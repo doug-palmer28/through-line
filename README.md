@@ -1,5 +1,7 @@
 # Through Line
 
+**Live app: [through-line.onrender.com](https://through-line.onrender.com)** · Graders: the sign-up access code and step-by-step instructions are in the submitted report (`report.html`, first page) and on the last slide (`slides.html`).
+
 **From mission to evidence to story.** Through Line helps small, low-resourced nonprofits prove the change they create, with a team of AI agents doing the heavy lifting and people approving everything that matters.
 
 Built for AI Foundations at Yale. **All data in this repo is synthetic:** fictional organizations, fictional participants.
@@ -20,7 +22,7 @@ Safety is built in:
 - Every agent run is written to an append-only, hash-chained audit log.
 - Every run's tokens are recorded per person, and each tool has a usage allowance.
 
-**Final report:** [`docs/report/index.html`](docs/report/index.html) (open it in a browser; prints to 14 pages). **Slides:** [`docs/Through_Line_final_deck.pptx`](docs/Through_Line_final_deck.pptx).
+**Final report:** [`docs/report/index.html`](docs/report/index.html). **Slides:** [`docs/slides/index.html`](docs/slides/index.html) (reveal.js). The submitted versions are single, self-contained files with every image embedded, built with `python scripts/build_deliverables.py --access-code <code>` into `deliverables/` (git-ignored, so the access code stays out of this public repo).
 
 **How the agents work** (prompts, tools, limits, guardrails, audit, test evidence): see [`output/harness.md`](output/harness.md). **How it was built**, prompt by prompt: [`AI_prompts.md`](AI_prompts.md).
 

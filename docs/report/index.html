@@ -33,22 +33,22 @@
 
   /* cover */
   .cover { position: relative; overflow: hidden; padding: 0.8in 0.65in 0.6in; min-height: 9.6in; display: flex; flex-direction: column; }
-  .cover h1 { font-size: 36pt; line-height: 1.04; margin: 0.3in 0 0.2in; max-width: 4.5in; }
-  .cover .lede { font-size: 12.5pt; color: var(--muted); max-width: 4.7in; }
+  .cover h1 { font-size: 32pt; line-height: 1.04; margin: 0.15in 0 0.12in; max-width: 4.5in; }
+  .cover .lede { font-size: 11.5pt; color: var(--muted); max-width: 4.7in; }
   .brand { display: flex; align-items: center; gap: 10px; font-family: var(--display); font-weight: 600; letter-spacing: 0.04em; font-size: 14pt; }
   .marks { display: flex; align-items: flex-end; gap: 4px; }
   .m-c { width: 16px; height: 16px; border-radius: 50%; background: var(--red); }
   .m-s { width: 16px; height: 16px; background: var(--blue); }
   .m-t { width: 0; height: 0; border-left: 9px solid transparent; border-right: 9px solid transparent; border-bottom: 16px solid var(--yellow); }
-  .art { position: absolute; right: 0.5in; top: 1.2in; width: 2.1in; height: 2.4in; }
+  .art { position: absolute; right: 0.5in; top: 0.9in; width: 1.9in; height: 2.1in; }
   .art .c { position: absolute; width: 1.3in; height: 1.3in; border-radius: 50%; background: var(--red); opacity: 0.88; top: 0; left: 0.55in; }
   .art .s { position: absolute; width: 1.05in; height: 1.05in; background: var(--blue); opacity: 0.9; bottom: 0; right: 0; }
   .art .t { position: absolute; bottom: 0; left: 0; width: 0; height: 0; border-left: 0.6in solid transparent; border-right: 0.6in solid transparent; border-bottom: 1.05in solid var(--yellow); opacity: 0.95; }
   .art .l { position: absolute; left: -0.2in; right: -0.2in; top: 1.25in; height: 2px; background: var(--ink); }
-  .links { margin-top: 0.35in; display: grid; gap: 0.5rem; }
+  .links { margin-top: 0.2in; display: grid; gap: 0.35rem; }
   .link { display: flex; gap: 0.7rem; align-items: center; background: var(--paper); border: 1px solid var(--line); border-radius: 10px; padding: 0.55rem 0.8rem; }
   .link b { font-family: var(--display); min-width: 1.4in; }
-  .tiles { display: grid; grid-template-columns: repeat(4, 1fr); gap: 0.6rem; margin: 0.35in 0 0; }
+  .tiles { display: grid; grid-template-columns: repeat(4, 1fr); gap: 0.6rem; margin: 0.2in 0 0; }
   .tile { background: var(--paper); border-radius: 10px; padding: 0.7rem 0.8rem; border-top: 4px solid var(--line-strong); }
   .tile b { display: block; font-family: var(--display); font-size: 19pt; line-height: 1.1; }
   .tile span { font-size: 8.5pt; color: var(--muted); }
@@ -93,6 +93,12 @@
   .flow div + div { margin-left: 2px; }
   .flow small { display: block; font-family: var(--body); font-size: 7.4pt; opacity: 0.9; }
   .toc { columns: 2; font-size: 9.5pt; padding-left: 1.1rem; margin: 0; }
+  .graders { margin-top: 0.2in; background: var(--tint-yellow); border: 2px solid var(--yellow); border-radius: 12px; padding: 0.6rem 0.9rem 0.3rem; }
+  .graders h3 { margin: 0 0 0.3rem; font-size: 13pt; }
+  .graders ol { margin: 0 0 0.4rem; padding-left: 1.2rem; font-size: 9.6pt; }
+  .graders li { margin-bottom: 0.25rem; }
+  .code { font-family: Consolas, "Courier New", monospace; font-weight: 700; background: #fff; border: 1.5px solid var(--ink);
+          border-radius: 6px; padding: 0.05rem 0.45rem; font-size: 10.5pt; white-space: nowrap; }
 
   @page { size: Letter; margin: 0.45in; }
   @media print {
@@ -115,7 +121,7 @@
 <section class="cover">
   <div class="brand"><span class="marks"><span class="m-c"></span><span class="m-s"></span><span class="m-t"></span></span> Through Line</div>
   <div class="art" aria-hidden="true"><div class="l"></div><div class="c"></div><div class="t"></div><div class="s"></div></div>
-  <p class="eyebrow" style="margin-top:0.6in">AI Foundations · Final Project · Yale School of Management</p>
+  <p class="eyebrow" style="margin-top:0.35in">AI Foundations · Final Project · Yale School of Management</p>
   <h1>From mission to evidence to story.</h1>
   <p class="lede">Through Line is a web app where a team of AI agents helps a small nonprofit say what change it creates, measure whether it's happening, and turn the results into funder reports and grant applications, without hiring an evaluation consultant.</p>
   <div class="links">
@@ -129,11 +135,17 @@
     <div class="tile"><b>$0.24</b><span>AI cost of Keystone's whole journey, upper bound</span></div>
     <div class="tile"><b>59</b><span>offline tests, including adversarial privacy and injection tests</span></div>
   </div>
-  <h3 style="margin-top:0.4in">Contents</h3>
-  <ol class="toc">
-    <li>Motivation</li><li>What's new</li><li>The agents</li><li>A real run: Keystone, step by step</li>
-    <li>Tokenomics</li><li>Safety</li><li>Impact</li><li>Limits and next steps</li>
-  </ol>
+  <div class="graders">
+    <h3>For graders: how to try it (about 10 minutes)</h3>
+    <ol>
+      <li>Open <a href="https://through-line.onrender.com/"><b>through-line.onrender.com</b></a></li>
+      <li>Click <b>Create a staff account</b> → <b>New organization</b>. Enter any organization name and the access code
+        <span class="code">{{ACCESS_CODE}}</span>. Choose any username and a password (at least 10 characters, with a capital letter and a number).</li>
+      <li>In <b>Logic Model</b>, share a website or a short program description (or skip), answer the five questions, and approve the logic model and metrics. Then try <b>Survey Tools</b>, <b>Dashboard</b>, <b>Impact Report</b>, and <b>Grants</b>.</li>
+    </ol>
+    <!--DEMO-->
+    <p class="small">Each organization is private and has its own usage limits, so nothing you do affects anyone else. All data is synthetic, so please don't enter real people's information.</p>
+  </div>
   <footer><span>Doug Palmer · doug.palmer@yale.edu</span><span>All organizations and participants shown are fictional (synthetic data)</span></footer>
 </section>
 
@@ -372,6 +384,8 @@
     </tbody>
   </table>
   <p class="small muted">Web searches: the Funder Researcher may run up to 6 per research run. Search counts were added to the ledger after Keystone's run, so Keystone's are shown as the maximum.</p>
+  <p><b>Cached input.</b> OpenAI bills input that repeats a recent prompt (the agents' long instructions, for example) at the <b>cached</b> rate of $0.01 per million tokens, a tenth of the normal input price. The ledger now records cached input separately, and the app's AI usage page shows it (below). Keystone's and The Place's runs were recorded before that column existed, so the costs above count <b>all</b> input at the full price. They are an upper bound: <span class="pending">PENDING · cached share from the testers' runs</span>.</p>
+  <figure><img src="img/usage.jpg" alt="AI usage page" style="max-height:3.6in;width:auto;max-width:100%;margin:auto"><figcaption>Evidence: the app's own AI usage page, showing measured tokens by tool, month, and person, plus each tool's remaining allowance. This one is Keystone's organization.</figcaption></figure>
   <h3>Our live-site runs and outside testers</h3>
   <table>
     <thead><tr><th>Organization</th><th>Who ran it</th><th class="n">Agent runs</th><th class="n">Tokens in / out</th><th class="n">Searches</th><th class="n">Est. cost</th></tr></thead>
@@ -405,6 +419,7 @@
   </table>
   <h3>At scale</h3>
   <p>Treating each user as one organization, and using Keystone's measured costs: a <b>typical year</b> is one Studio session, 4 survey reviews, one report with a revision and a few privacy checks, and 12 grant drafts. That comes to about <b>$1 per organization per year</b> in AI fees, most of it web search. The <b>most an organization could spend</b> while staying within every allowance (2 Studio sessions at their caps, 36 grants, and the full daily privacy-check ceiling all year) is about <b>$8 per year</b>.</p>
+  <p><b>Per run and per user per month.</b> One Studio session (setting up a new organization) costs 5–6¢ in model fees plus at most 12¢ of web search. A grant draft is about 1¢ plus at most 6¢ of search. A report design is under 1¢. Per user (organization) per month, that's about <b>8¢ in a typical month</b> and at most <b>about 70¢</b> within the allowances.</p>
   <table>
     <thead><tr><th>Users (organizations)</th><th class="n">AI, typical / year</th><th class="n">AI, worst case / year</th><th class="n">Hosting (Render) / year</th></tr></thead>
     <tbody>

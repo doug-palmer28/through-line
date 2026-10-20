@@ -20,6 +20,8 @@ Safety is built in:
 - Every agent run is written to an append-only, hash-chained audit log.
 - Every run's tokens are recorded per person, and each tool has a usage allowance.
 
+**Final report:** [`docs/report/index.html`](docs/report/index.html) (open it in a browser; prints to 14 pages). **Slides:** [`docs/Through_Line_final_deck.pptx`](docs/Through_Line_final_deck.pptx).
+
 **How the agents work** (prompts, tools, limits, guardrails, audit, test evidence): see [`output/harness.md`](output/harness.md). **How it was built**, prompt by prompt: [`AI_prompts.md`](AI_prompts.md).
 
 ---

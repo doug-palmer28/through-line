@@ -1,0 +1,508 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>Through Line: Final Report</title>
+<style>
+  :root {
+    --red: #d96c4f; --blue: #3e63b0; --yellow: #e8b84a; --green: #4e8c7a; --purple: #8a6fb0;
+    --ink: #2b2b2b; --muted: #6f6a63; --paper: #f7f4ee; --card: #ffffff; --line: #e5dfd5; --line-strong: #cfc7ba;
+    --tint-red: #fbefea; --tint-blue: #edf1f9; --tint-yellow: #fcf5e4; --tint-green: #ebf3f0; --tint-purple: #f2eef8;
+    --display: "Futura", "Century Gothic", "Avenir Next", "Trebuchet MS", sans-serif;
+    --body: "Segoe UI", "Inter", system-ui, -apple-system, sans-serif;
+  }
+  * { box-sizing: border-box; }
+  html { background: var(--paper); }
+  body { margin: 0 auto; max-width: 8.5in; padding: 0 0.1in 1in; font-family: var(--body); color: var(--ink);
+         font-size: 10.5pt; line-height: 1.55; background: var(--paper); }
+  h1, h2, h3, h4 { font-family: var(--display); font-weight: 600; letter-spacing: 0.01em; line-height: 1.2; margin: 0; }
+  h2 { font-size: 20pt; margin: 0 0 0.6rem; display: flex; align-items: center; gap: 0.6rem; }
+  h3 { font-size: 13pt; margin: 1.2rem 0 0.4rem; }
+  h4 { font-size: 11pt; margin: 0.9rem 0 0.3rem; }
+  p { margin: 0 0 0.65rem; }
+  a { color: var(--blue); }
+  .eyebrow { font-family: var(--body); font-size: 8pt; font-weight: 700; letter-spacing: 0.14em; text-transform: uppercase; color: var(--muted); margin: 0 0 0.3rem; }
+  .muted { color: var(--muted); }
+  .small { font-size: 8.8pt; }
+  section { padding: 0.55in 0.55in 0.3in; background: var(--card); border: 1px solid var(--line); border-radius: 14px; margin: 0.35in 0; }
+  .num { display: inline-grid; place-items: center; width: 30px; height: 30px; border-radius: 50%; color: #fff; font-size: 12pt; flex: none; }
+  .sq { border-radius: 4px; }
+  .num--red { background: var(--red); } .num--blue { background: var(--blue); } .num--yellow { background: var(--yellow); color: var(--ink); }
+  .num--green { background: var(--green); } .num--purple { background: var(--purple); } .num--ink { background: var(--ink); }
+
+  /* cover */
+  .cover { position: relative; overflow: hidden; padding: 0.8in 0.65in 0.6in; min-height: 9.6in; display: flex; flex-direction: column; }
+  .cover h1 { font-size: 36pt; line-height: 1.04; margin: 0.3in 0 0.2in; max-width: 4.5in; }
+  .cover .lede { font-size: 12.5pt; color: var(--muted); max-width: 4.7in; }
+  .brand { display: flex; align-items: center; gap: 10px; font-family: var(--display); font-weight: 600; letter-spacing: 0.04em; font-size: 14pt; }
+  .marks { display: flex; align-items: flex-end; gap: 4px; }
+  .m-c { width: 16px; height: 16px; border-radius: 50%; background: var(--red); }
+  .m-s { width: 16px; height: 16px; background: var(--blue); }
+  .m-t { width: 0; height: 0; border-left: 9px solid transparent; border-right: 9px solid transparent; border-bottom: 16px solid var(--yellow); }
+  .art { position: absolute; right: 0.5in; top: 1.2in; width: 2.1in; height: 2.4in; }
+  .art .c { position: absolute; width: 1.3in; height: 1.3in; border-radius: 50%; background: var(--red); opacity: 0.88; top: 0; left: 0.55in; }
+  .art .s { position: absolute; width: 1.05in; height: 1.05in; background: var(--blue); opacity: 0.9; bottom: 0; right: 0; }
+  .art .t { position: absolute; bottom: 0; left: 0; width: 0; height: 0; border-left: 0.6in solid transparent; border-right: 0.6in solid transparent; border-bottom: 1.05in solid var(--yellow); opacity: 0.95; }
+  .art .l { position: absolute; left: -0.2in; right: -0.2in; top: 1.25in; height: 2px; background: var(--ink); }
+  .links { margin-top: 0.35in; display: grid; gap: 0.5rem; }
+  .link { display: flex; gap: 0.7rem; align-items: center; background: var(--paper); border: 1px solid var(--line); border-radius: 10px; padding: 0.55rem 0.8rem; }
+  .link b { font-family: var(--display); min-width: 1.4in; }
+  .tiles { display: grid; grid-template-columns: repeat(4, 1fr); gap: 0.6rem; margin: 0.35in 0 0; }
+  .tile { background: var(--paper); border-radius: 10px; padding: 0.7rem 0.8rem; border-top: 4px solid var(--line-strong); }
+  .tile b { display: block; font-family: var(--display); font-size: 19pt; line-height: 1.1; }
+  .tile span { font-size: 8.5pt; color: var(--muted); }
+  .tile:nth-child(1) { border-top-color: var(--red); } .tile:nth-child(2) { border-top-color: var(--blue); }
+  .tile:nth-child(3) { border-top-color: var(--yellow); } .tile:nth-child(4) { border-top-color: var(--green); }
+  .cover footer { margin-top: auto; padding-top: 0.4in; font-size: 9pt; color: var(--muted); display: flex; justify-content: space-between; }
+
+  /* content blocks */
+  .callout { background: var(--tint-blue); border-left: 5px solid var(--blue); border-radius: 8px; padding: 0.7rem 0.9rem; margin: 0.8rem 0; }
+  .callout--red { background: var(--tint-red); border-left-color: var(--red); }
+  .callout--green { background: var(--tint-green); border-left-color: var(--green); }
+  .callout--yellow { background: var(--tint-yellow); border-left-color: var(--yellow); }
+  .quote { font-family: Georgia, serif; font-size: 12.5pt; font-style: italic; }
+  .two { display: grid; grid-template-columns: 1fr 1fr; gap: 0.9rem; }
+  .three { display: grid; grid-template-columns: repeat(3, 1fr); gap: 0.7rem; }
+  .stat { background: var(--paper); border-radius: 10px; padding: 0.7rem 0.8rem; }
+  .stat b { display: block; font-family: var(--display); font-size: 17pt; line-height: 1.1; }
+  .stat span { font-size: 8.6pt; color: var(--muted); }
+  table { width: 100%; border-collapse: collapse; margin: 0.5rem 0 0.8rem; font-size: 9pt; }
+  th { text-align: left; font-weight: 700; font-size: 8pt; letter-spacing: 0.06em; text-transform: uppercase; color: var(--muted);
+       border-bottom: 2px solid var(--ink); padding: 0.3rem 0.45rem; }
+  td { border-bottom: 1px solid var(--line); padding: 0.32rem 0.45rem; vertical-align: top; }
+  td.n, th.n { text-align: right; font-variant-numeric: tabular-nums; white-space: nowrap; }
+  tr.total td { font-weight: 700; border-top: 2px solid var(--ink); }
+  figure { margin: 0.6rem 0 0.9rem; }
+  figure img { width: 100%; display: block; border-radius: 8px; border: 1px solid var(--line); }
+  figcaption { font-size: 8.5pt; color: var(--muted); margin-top: 0.3rem; }
+  .shots { display: grid; grid-template-columns: 1fr 1fr; gap: 0.7rem; }
+  .shots figure { margin: 0; }
+  .step { display: grid; grid-template-columns: 34px 1fr; gap: 0.6rem; margin: 0.9rem 0 0.4rem; }
+  .step .num { width: 26px; height: 26px; font-size: 10pt; background: var(--ink); }
+  .step h4 { margin: 0.1rem 0 0.2rem; }
+  .pending { display: inline-block; background: var(--tint-yellow); border: 1px dashed #c99a2e; color: #7a5a12; font-weight: 700;
+             font-size: 8pt; letter-spacing: 0.04em; padding: 0.05rem 0.4rem; border-radius: 4px; }
+  .pending-block { background: var(--tint-yellow); border: 1.5px dashed #c99a2e; border-radius: 10px; padding: 0.7rem 0.9rem; color: #5b4510; margin: 0.6rem 0; }
+  .chip { display: inline-block; font-size: 7.8pt; font-weight: 700; padding: 0.05rem 0.45rem; border-radius: 999px; background: var(--paper); border: 1px solid var(--line); color: var(--muted); }
+  ol.refs { font-size: 8.4pt; padding-left: 1.2rem; }
+  ol.refs li { margin-bottom: 0.25rem; }
+  sup a { text-decoration: none; font-size: 7.5pt; }
+  .flow { display: flex; align-items: stretch; gap: 0; margin: 0.6rem 0 0.9rem; }
+  .flow div { flex: 1; text-align: center; padding: 0.5rem 0.2rem; font-family: var(--display); font-size: 9pt; color: #fff; position: relative; }
+  .flow div + div { margin-left: 2px; }
+  .flow small { display: block; font-family: var(--body); font-size: 7.4pt; opacity: 0.9; }
+  .toc { columns: 2; font-size: 9.5pt; padding-left: 1.1rem; margin: 0; }
+
+  @page { size: Letter; margin: 0.45in; }
+  @media print {
+    html, body { background: #fff; }
+    body { max-width: none; padding: 0; font-size: 10pt; }
+    section { border: none; border-radius: 0; padding: 0.1in 0.2in 0.25in; margin: 0; }
+    section + section { border-top: 2px solid var(--line); padding-top: 0.25in; }
+    section.cover { min-height: 0; padding: 0.3in 0.25in 0.2in; break-after: page; }
+    .cover footer { padding-top: 0.25in; }
+    figure, .step, table, .callout, .tiles, .three, .two, .shots { break-inside: avoid; }
+    h2, h3, h4 { break-after: avoid; }
+    .sh { break-inside: avoid; break-after: avoid; }
+    a { color: var(--ink); }
+  }
+</style>
+</head>
+<body>
+
+<!-- ============================================================ 1. TITLE -->
+<section class="cover">
+  <div class="brand"><span class="marks"><span class="m-c"></span><span class="m-s"></span><span class="m-t"></span></span> Through Line</div>
+  <div class="art" aria-hidden="true"><div class="l"></div><div class="c"></div><div class="t"></div><div class="s"></div></div>
+  <p class="eyebrow" style="margin-top:0.6in">AI Foundations · Final Project · Yale School of Management</p>
+  <h1>From mission to evidence to story.</h1>
+  <p class="lede">Through Line is a web app where a team of AI agents helps a small nonprofit say what change it creates, measure whether it's happening, and turn the results into funder reports and grant applications, without hiring an evaluation consultant.</p>
+  <div class="links">
+    <div class="link"><b>Live app</b> <a href="https://through-line.onrender.com/">through-line.onrender.com</a> <span class="muted small">Staff sign-up needs the pilot access code</span></div>
+    <div class="link"><b>Code (GitHub)</b> <a href="https://github.com/doug-palmer28/through-line">github.com/doug-palmer28/through-line</a></div>
+    <div class="link"><b>How the agents work</b> <a href="https://github.com/doug-palmer28/through-line/blob/main/output/harness.md">output/harness.md</a> <span class="muted small">prompts, tools, limits, audit</span></div>
+  </div>
+  <div class="tiles">
+    <div class="tile"><b>9</b><span>AI agents, all on gpt-6-luna</span></div>
+    <div class="tile"><b>~10 min</b><span>from documents to an approved logic model and metrics</span></div>
+    <div class="tile"><b>$0.24</b><span>AI cost of Keystone's whole journey, upper bound</span></div>
+    <div class="tile"><b>59</b><span>offline tests, including adversarial privacy and injection tests</span></div>
+  </div>
+  <h3 style="margin-top:0.4in">Contents</h3>
+  <ol class="toc">
+    <li>Motivation</li><li>What's new</li><li>The agents</li><li>A real run: Keystone, step by step</li>
+    <li>Tokenomics</li><li>Safety</li><li>Impact</li><li>Limits and next steps</li>
+  </ol>
+  <footer><span>Doug Palmer · doug.palmer@yale.edu</span><span>All organizations and participants shown are fictional (synthetic data)</span></footer>
+</section>
+
+<!-- ============================================================ 2. MOTIVATION -->
+<section>
+  <header class="sh"><p class="eyebrow">Motivation</p>
+  <h2><span class="num num--red">1</span> Funders want proof. Small nonprofits can't afford to produce it.</h2></header>
+  <p>Funders increasingly want data showing that their investment makes a real difference. That's a worthy goal, but it puts a heavy burden on small nonprofits that have no extra operating money to hire evaluation consultants, let alone full-time evaluation staff. Nonprofit leaders say funders' priorities and grant reporting requirements are among the biggest influences on what data they collect, while most lack the "funding and capacity" to go further.<sup><a href="#r1">1</a></sup> Nearly half say different foundations ask for different things.<sup><a href="#r2">2</a></sup></p>
+  <div class="three">
+    <div class="stat"><b>8%</b><span>of nonprofits have evaluation staff. In 63%, the executive director or program staff do the evaluation themselves.<sup><a href="#r3">3</a></sup></span></div>
+    <div class="stat"><b>84%</b><span>spend less than 5% of their budget on evaluation, below the 5–10% that evaluators recommend.<sup><a href="#r3">3</a></sup></span></div>
+    <div class="stat"><b>~60%</b><span>of U.S. nonprofits have budgets under $50,000. Together they received just 0.4% of foundation funding in 2019–2023.<sup><a href="#r4">4</a></sup></span></div>
+  </div>
+  <p style="margin-top:0.8rem">This can quietly deepen inequity in the social sector. Organizations that already have money can buy the evaluations that attract more money, while small, nimble nonprofits, often the ones closest to the people furthest from opportunity, are shut out of the capital they need. Organizations with $3M or less in revenue are 87% of U.S. nonprofits but raise barely 20% of the sector's revenue.<sup><a href="#r5">5</a></sup> The gap is starker by race: among strong applicants to Echoing Green, Black-led organizations had 24% smaller revenues and 76% smaller unrestricted net assets than white-led ones.<sup><a href="#r6">6</a></sup> In 2021, 41% of white-led organizations received half or more of their funding as unrestricted money, compared with 26% of organizations led by people of color.<sup><a href="#r7">7</a></sup></p>
+  <div class="callout callout--red">
+    <b>The design goal.</b> Through Line helps a small nonprofit define its logic model, choose the metrics that show its impact, and then actually collect and report that data. The staff member is walked through each step, so the organization builds the skill, not just the document.
+  </div>
+  <h3>Who it's for</h3>
+  <p>The intended user is the executive director or program manager of a nonprofit with one core program and no evaluation staff, for example a family housing program, a youth after-school program, or a food pantry. They're the person writing the grant reports late at night. Through Line gives them what a consultant would: a facilitated theory of change, research-backed measures, ready-to-use surveys, and funder-ready outputs.</p>
+</section>
+
+<!-- ============================================================ 3. WHAT'S NEW -->
+<section>
+  <header class="sh"><p class="eyebrow">What's new</p>
+  <h2><span class="num num--blue sq">2</span> An evaluation team in the nonprofit's own hands</h2></header>
+  <p>Today this work is usually bought from evaluation firms and consultants, and it is priced for organizations that have money.</p>
+  <table>
+    <thead><tr><th>What a small nonprofit would buy</th><th>Typical published price</th></tr></thead>
+    <tbody>
+      <tr><td>A facilitated logic model (one 4-hour session, a review call, and the written model)</td><td class="n">$3,000–$3,500 fixed<sup><a href="#r8">8</a></sup></td></tr>
+      <tr><td>Evaluator time (logic models, evaluation plans, survey design)</td><td class="n">$150–$250 / hour<sup><a href="#r9">9</a></sup></td></tr>
+      <tr><td>Evaluation plan and measurement framework <span class="muted">(estimate: 20–40 hours)</span></td><td class="n">$3,000–$8,000</td></tr>
+      <tr><td>Survey design <span class="muted">(estimate: 10–20 hours)</span></td><td class="n">$1,500–$4,000</td></tr>
+      <tr><td>Evaluation budget rule of thumb</td><td class="n">5–10% of the budget<sup><a href="#r3">3</a></sup></td></tr>
+    </tbody>
+  </table>
+  <p>Software helps with parts of the job, but each tool covers only one piece, and none connects the pieces:</p>
+  <table>
+    <thead><tr><th>Tool</th><th>What it does</th><th class="n">Price</th><th>What's missing</th></tr></thead>
+    <tbody>
+      <tr><td><b>Sopact Sense</b></td><td>AI survey and impact data platform</td><td class="n">from $299/mo + setup<sup><a href="#r10">10</a></sup></td><td>No facilitated logic model or grant drafting; assumes an internal data owner</td></tr>
+      <tr><td><b>UpMetrics</b></td><td>Impact framework, dashboards, funder reports</td><td class="n">free–$650/mo<sup><a href="#r11">11</a></sup></td><td>Data arrives by CSV; no pre/post surveys, AI team, decks, or grants</td></tr>
+      <tr><td><b>Bonterra Apricot</b></td><td>Case management and outcomes</td><td class="n">quote-based</td><td>Built for client records; no logic model or metric design</td></tr>
+      <tr><td><b>Salesforce Nonprofit Cloud</b></td><td>CRM with program management</td><td class="n">10 free licenses, then $60+/user/mo</td><td>Usually needs a consultant to implement; outcomes aren't built from a logic model</td></tr>
+      <tr><td><b>Google Forms, SurveyMonkey</b></td><td>General surveys</td><td class="n">free–~$30/user/mo</td><td>No link to metrics; no pre/post matching; no reports</td></tr>
+      <tr><td><b>Instrumentl, Grantable</b></td><td>Grant discovery and AI grant writing</td><td class="n">$50–$999/mo<sup><a href="#r12">12</a></sup></td><td>Writing isn't grounded in the organization's own outcome data</td></tr>
+      <tr><td><b>Logic model templates</b> (UW Extension, Kellogg)</td><td>Free guides and fill-in templates</td><td class="n">free</td><td>Static documents; nothing flows into surveys or reports</td></tr>
+    </tbody>
+  </table>
+  <h3>Two things are new</h3>
+  <div class="two">
+    <div class="callout"><b>1. The nonprofit does it itself.</b> Five AI specialists play the roles a consultant team would (facilitator, sector expert, client advocate, evaluator, funder researcher), with cited, verified sources. Staff answer five questions, edit what the team drafts, and approve it. The organization owns the result and understands it.</div>
+    <div class="callout callout--green"><b>2. Everything flows together.</b> The logic model's outcomes become the metrics, the metrics' questions become the surveys, the responses fill the dashboard, and the dashboard's live numbers fill the funder deck and grant drafts. There's no logic model in a drawer that has nothing to do with the data the organization reports.</div>
+  </div>
+  <div class="flow">
+    <div style="background:var(--red)">Logic model<small>theory of change</small></div>
+    <div style="background:#c9603f">Metrics<small>cited questions</small></div>
+    <div style="background:var(--blue)">Surveys<small>pre &amp; post</small></div>
+    <div style="background:#3456a0">Data<small>portal, Excel</small></div>
+    <div style="background:var(--yellow);color:var(--ink)">Dashboard<small>% improved</small></div>
+    <div style="background:var(--green)">Funder deck<small>live numbers</small></div>
+    <div style="background:var(--purple)">Grant draft<small>live numbers</small></div>
+  </div>
+</section>
+
+<!-- ============================================================ 4. AGENTS -->
+<section>
+  <header class="sh"><p class="eyebrow">The agents</p>
+  <h2><span class="num num--yellow" style="border-radius:0;background:none;width:auto;height:auto"><span style="display:inline-block;width:0;height:0;border-left:15px solid transparent;border-right:15px solid transparent;border-bottom:26px solid var(--yellow)"></span></span> Nine agents, one model, plain-code orchestration</h2></header>
+  <p>Every agent runs on <b>gpt-6-luna</b> through the Portkey gateway (OpenAI Responses API), built with Pydantic AI. We chose Luna for cost: at $0.10 per million input tokens and $0.50 per million output tokens, it is 20× cheaper than gpt-6-sol on both input and output.<sup><a href="#r13">13</a></sup> It also proved good enough in testing: the live Keystone run produced a coherent logic model, honest metrics, and correctly verified citations. Every agent returns a typed (Pydantic) output, so the app never parses free text. The orchestrator is ordinary Python, not an LLM, so the order of steps, the budgets, and the limits can't be talked around.</p>
+  <figure>
+    <svg viewBox="0 0 900 430" xmlns="http://www.w3.org/2000/svg" font-family="Segoe UI, sans-serif" role="img" aria-label="How the agent teams are organized">
+      <rect x="0" y="0" width="900" height="430" rx="14" fill="#f7f4ee"/>
+      <!-- pipeline -->
+      <g font-family="Century Gothic, Futura, sans-serif" font-size="13" font-weight="600" fill="#fff" text-anchor="middle">
+        <rect x="20" y="18" width="250" height="34" rx="6" fill="#d96c4f"/><text x="145" y="40">1–2 · Logic model &amp; metrics</text>
+        <rect x="280" y="18" width="190" height="34" rx="6" fill="#3e63b0"/><text x="375" y="40">3 · Surveys &amp; data</text>
+        <rect x="480" y="18" width="190" height="34" rx="6" fill="#4e8c7a"/><text x="575" y="40">4 · Impact report</text>
+        <rect x="680" y="18" width="200" height="34" rx="6" fill="#8a6fb0"/><text x="780" y="40">5 · Grants</text>
+      </g>
+      <!-- studio team -->
+      <rect x="20" y="66" width="250" height="250" rx="10" fill="#fff" stroke="#e5dfd5"/>
+      <text x="32" y="86" font-size="10.5" font-weight="700" fill="#6f6a63" letter-spacing="1.2">TEAM 1 · THE STUDIO</text>
+      <g stroke="#cfc7ba" stroke-width="2">
+        <line x1="145" y1="190" x2="70" y2="125"/><line x1="145" y1="190" x2="220" y2="125"/>
+        <line x1="145" y1="190" x2="70" y2="262"/><line x1="145" y1="190" x2="220" y2="262"/>
+      </g>
+      <circle cx="145" cy="190" r="30" fill="#d96c4f"/><text x="145" y="194" font-size="10" font-weight="700" fill="#fff" text-anchor="middle">Team Lead</text>
+      <polygon points="70,103 92,140 48,140" fill="#e8b84a"/><text x="70" y="156" font-size="9.5" text-anchor="middle" fill="#2b2b2b">Sector Expert</text>
+      <rect x="200" y="106" width="38" height="38" fill="#3e63b0"/><text x="220" y="158" font-size="9.5" text-anchor="middle" fill="#2b2b2b">Client Advocate</text>
+      <polygon points="70,242 90,262 70,282 50,262" fill="#4e8c7a"/><text x="70" y="298" font-size="9.5" text-anchor="middle" fill="#2b2b2b">Evaluation Specialist</text>
+      <polygon points="220,240 239,251 239,273 220,284 201,273 201,251" fill="#8a6fb0"/><text x="220" y="298" font-size="9.5" text-anchor="middle" fill="#2b2b2b">Funder Researcher</text>
+      <text x="145" y="236" font-size="8.5" text-anchor="middle" fill="#6f6a63">consult · peer review</text>
+      <!-- survey review -->
+      <rect x="280" y="66" width="190" height="250" rx="10" fill="#fff" stroke="#e5dfd5"/>
+      <polygon points="375,110 403,130 392,163 358,163 347,130" fill="#3e63b0"/>
+      <text x="375" y="186" font-size="11" font-weight="700" text-anchor="middle" fill="#2b2b2b">Survey Review Bot</text>
+      <text x="375" y="204" font-size="9" text-anchor="middle" fill="#6f6a63">wording · scales · timing</text>
+      <text x="375" y="218" font-size="9" text-anchor="middle" fill="#6f6a63">one-click fixes · staff requests</text>
+      <rect x="300" y="240" width="150" height="56" rx="8" fill="#edf1f9"/>
+      <text x="375" y="262" font-size="9" text-anchor="middle" fill="#2b2b2b">+ automatic checks</text>
+      <text x="375" y="277" font-size="9" text-anchor="middle" fill="#2b2b2b">(no AI): mixed scales,</text>
+      <text x="375" y="290" font-size="9" text-anchor="middle" fill="#2b2b2b">wording vs timing, burden</text>
+      <!-- report -->
+      <rect x="480" y="66" width="190" height="250" rx="10" fill="#fff" stroke="#e5dfd5"/>
+      <rect x="548" y="100" width="54" height="40" rx="6" fill="#4e8c7a"/><rect x="556" y="108" width="38" height="5" fill="#fff"/><rect x="556" y="118" width="26" height="5" fill="#fff"/>
+      <text x="575" y="164" font-size="11" font-weight="700" text-anchor="middle" fill="#2b2b2b">Report Designer</text>
+      <text x="575" y="182" font-size="9" text-anchor="middle" fill="#6f6a63">deck + speaker notes + flyer</text>
+      <text x="575" y="196" font-size="9" text-anchor="middle" fill="#6f6a63">numbers as live {{tokens}}</text>
+      <!-- grants -->
+      <rect x="680" y="66" width="200" height="250" rx="10" fill="#fff" stroke="#e5dfd5"/>
+      <polygon points="732,94 748,103 748,121 732,130 716,121 716,103" fill="#8a6fb0"/>
+      <text x="732" y="146" font-size="9" text-anchor="middle" fill="#2b2b2b">Funder Researcher</text>
+      <text x="732" y="158" font-size="8" text-anchor="middle" fill="#6f6a63">web search</text>
+      <line x1="752" y1="112" x2="796" y2="112" stroke="#cfc7ba" stroke-width="2" marker-end="url(#ar)"/>
+      <rect x="802" y="94" width="34" height="36" rx="4" fill="#8a6fb0"/><text x="819" y="118" font-size="16" fill="#fff" text-anchor="middle">✎</text>
+      <text x="819" y="146" font-size="9" text-anchor="middle" fill="#2b2b2b">Grant Writer</text>
+      <text x="780" y="186" font-size="9" text-anchor="middle" fill="#6f6a63">foundation profile → tailored</text>
+      <text x="780" y="200" font-size="9" text-anchor="middle" fill="#6f6a63">answers, checklist, [ADD:] gaps</text>
+      <!-- privacy reviewer spanning report + grants -->
+      <rect x="500" y="226" width="360" height="72" rx="10" fill="#fbefea" stroke="#d96c4f"/>
+      <path d="M538 238 l16 6 v12 c0 10 -7 16 -16 20 c-9 -4 -16 -10 -16 -20 v-12 z" fill="#d96c4f"/>
+      <text x="566" y="252" font-size="11" font-weight="700" fill="#2b2b2b">Privacy Reviewer</text>
+      <text x="566" y="268" font-size="9" fill="#6f6a63">checks every deck, flyer and grant draft for anything</text>
+      <text x="566" y="281" font-size="9" fill="#6f6a63">that could identify a person · the one on-demand agent</text>
+      <!-- orchestrator band -->
+      <rect x="20" y="332" width="860" height="80" rx="10" fill="#2b2b2b"/>
+      <text x="40" y="356" font-size="11" font-weight="700" fill="#fff" letter-spacing="1">PLAIN-CODE ORCHESTRATOR (no LLM) · every call goes through run_agent()</text>
+      <g font-size="9.5" fill="#e5dfd5">
+        <text x="40" y="378">• phases &amp; parallel rounds · per-run request/token caps</text>
+        <text x="40" y="396">• visible-text reader for every document &amp; web page</text>
+        <text x="330" y="378">• per-organization allowances · token ledger per person</text>
+        <text x="330" y="396">• typed outputs · code checks (charts, quotes, PII scan)</text>
+        <text x="630" y="378">• append-only, hash-chained audit log</text>
+        <text x="630" y="396">• gpt-6-luna via Portkey (Responses API)</text>
+      </g>
+      <defs><marker id="ar" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="6" markerHeight="6" orient="auto"><path d="M0,0 L10,5 L0,10 z" fill="#cfc7ba"/></marker></defs>
+    </svg>
+    <figcaption>Figure 1. How the agents are organized. Shapes match what users see in the app's live "team huddle." The Studio team works together; the other agents each work alone for one feature.</figcaption>
+  </figure>
+
+  <table>
+    <thead><tr><th>Agent</th><th>What it does</th><th>Tools it can use</th><th class="n">Cap per run</th></tr></thead>
+    <tbody>
+      <tr><td><b>Team Lead</b> ●</td><td>The only agent that talks to staff. Reads their materials, runs the five-question interview, writes working drafts, then final drafts from peer review, and revises from feedback.</td><td><code>consult(specialist)</code> (budgeted per phase); 8 read-only context tools</td><td class="n">10 req · 150K tok</td></tr>
+      <tr><td><b>Sector Expert</b> ▲</td><td>Best practices and standards in the field; proposes questions; peer-reviews every draft.</td><td>Context tools</td><td class="n">4 req · 40K tok</td></tr>
+      <tr><td><b>Client Advocate</b> ■</td><td>Keeps it in the nonprofit's voice, at its real capacity; watches survey burden and dignity.</td><td>Context tools</td><td class="n">4 req · 40K tok</td></tr>
+      <tr><td><b>Evaluation Specialist</b> ◆</td><td>Logic, measurability, pre/post design, scales.</td><td>Context tools</td><td class="n">4 req · 40K tok</td></tr>
+      <tr><td><b>Funder Researcher</b> ⬢</td><td>What funders in the field ask for; measures with real question items; for Grants, one foundation's priorities.</td><td><b>Live web search</b> (≤ 6); citations verified by code</td><td class="n">6 req · 120K tok</td></tr>
+      <tr><td><b>Survey Review Bot</b> ⬠</td><td>Checks each survey (wording, scales, timing, burden, sensitivity) and answers staff requests with one-click fixes.</td><td>None: reads the survey and the automatic checks</td><td class="n">3 req · 60K tok</td></tr>
+      <tr><td><b>Report Designer</b></td><td>A 10–14 slide funder deck with speaker notes, a one-page flyer, and design settings from the brand.</td><td>None: chosen charts, quotes, and the number catalog</td><td class="n">4 req · 120K tok</td></tr>
+      <tr><td><b>Grant Writer</b> ✎</td><td>Answers a foundation's questions around its priorities; checklist; <code>[ADD: …]</code> where facts are missing.</td><td>None: the foundation profile and organization data</td><td class="n">4 req · 150K tok</td></tr>
+      <tr><td><b>Privacy Reviewer</b> ⛨</td><td>Finds anything that could identify a person, with a safe replacement.</td><td>None</td><td class="n">3 req · 60K tok</td></tr>
+    </tbody>
+  </table>
+  <p class="small muted">How the Studio team works together: at intake, all four specialists work at the same time (sector brief, funder research with web search, question proposals). The Team Lead chooses interview questions from that pool. Every logic model and measurement plan goes through a working draft, a four-specialist peer review, and a final draft before staff see it. Full prompts and limits: <code>backend/prompts/</code> and <code>output/harness.md</code>.</p>
+</section>
+
+<!-- ============================================================ 4b. A REAL RUN -->
+<section>
+  <header class="sh"><p class="eyebrow">The agents · a real run</p>
+  <h2><span class="num num--ink">▶</span> Keystone Family Housing Partners, step by step</h2></header>
+  <p>Keystone is a fictional rapid-rehousing nonprofit in New Haven (one of ten synthetic test organizations). We ran it live on gpt-6-luna on October 20, 2026, from sign-up to grant draft. The screenshots are from that run.</p>
+
+  <div class="step"><span class="num">1</span><div><h4>Share and intake (~15 seconds)</h4>
+    <p>Staff upload Keystone's two-page program overview. The document passes through the visible-text reader. The four specialists then work in parallel: a sector brief, funder research (16 sources found, all 16 verified against real search results, including HUD Continuum of Care, Connecticut DOH, and the Community Foundation for Greater New Haven), and proposed questions. The Team Lead picks question 1 from the Evaluation Specialist's proposal.</p></div></div>
+  <div class="shots">
+    <figure><img src="img/live_04_share.jpg" alt="Share step"><figcaption>Share: optional files and website, read in memory only.</figcaption></figure>
+    <figure><img src="img/live_07_interview_thinking.jpg" alt="Interview with team huddle"><figcaption>Five questions, with the live team huddle showing who is consulting whom.</figcaption></figure>
+  </div>
+
+  <div class="step"><span class="num">2</span><div><h4>Five questions</h4>
+    <p>The questions were specific to Keystone, for example: <i>"When you say a family has 'kept their home,' how long after rental assistance ends do you mean, and what would you use to confirm the family is still housed?"</i> Answers are limited to 200 words. One weakness showed up: questions 3 and 4 asked nearly the same thing (see Limits).</p></div></div>
+
+  <div class="step"><span class="num">3</span><div><h4>Logic model: draft, peer review, final, one revision</h4>
+    <p>The Team Lead wrote a working draft. All four specialists reviewed it at once, and the final draft came back with a theory of change, five inputs, five activities, five outputs, four short-term outcomes, and two long-term outcomes. It also included an "aligned with funders" card citing 7 verified sources. Staff gave one round of feedback, and it was applied exactly.</p></div></div>
+  <div class="shots">
+    <figure><img src="img/live_08_peer_review_live.jpg" alt="Peer review in progress"><figcaption>Peer review: four specialists review the working draft in parallel.</figcaption></figure>
+    <figure><img src="img/live_10_logic_model_grid.jpg" alt="Logic model"><figcaption>The editable logic model, in Keystone's own words.</figcaption></figure>
+  </div>
+
+  <div class="step"><span class="num">4</span><div><h4>Metrics with cited questions</h4>
+    <p>Five metrics: three participant-survey metrics (confidence handling a rent or landlord problem, parent stress, knowing where to get help) and two from program records (time to move in, and housing status 12 months later). Each comes with 3–5 candidate questions and 13 verified sources. The team was candid that its stress items are inspired by PSS-10 but aren't PSS-10 itself, and shouldn't be scored as if they were.</p></div></div>
+  <div class="shots">
+    <figure><img src="img/live_16_metrics_plan.jpg" alt="Metrics"><figcaption>The measurement plan: switch questions on or off, edit, approve.</figcaption></figure>
+    <figure><img src="img/live_12_sources_verified.jpg" alt="Verified sources"><figcaption>Sources are marked verified only if the URL appeared in a real search result.</figcaption></figure>
+  </div>
+  <p class="small muted">Studio total: 10.5 minutes, 28 agent runs, 55 model requests. Three extra consults were refused by the per-phase consult budget.</p>
+</section>
+
+<section>
+  <p class="eyebrow">The agents · a real run (continued)</p>
+  <div class="step"><span class="num">5</span><div><h4>Surveys and the Survey Review Bot</h4>
+    <p>The approved metrics became a participant survey and a staff assessment. The Review Bot flagged two negatively worded stress items for reverse scoring, so that higher always means better, and suggested adding an open question. Both fixes were applied with one click. Since then the bot also takes staff requests ("turn the written questions into multiple choice") and checks wording against timing: a question asked before the program can't assume the person has been in it.</p></div></div>
+  <div class="shots">
+    <figure><img src="img/tool_editor.jpg" alt="Survey editor"><figcaption>The survey editor. Once answers exist, questions can be hidden but not reworded, which protects pre/post comparisons.</figcaption></figure>
+    <figure><img src="img/tools_guide.jpg" alt="Survey tools"><figcaption>Survey Tools: surveys, participant codes, staff entry (with an Excel template), and program numbers.</figcaption></figure>
+  </div>
+
+  <div class="step"><span class="num">6</span><div><h4>Collecting data and the dashboard</h4>
+    <p>24 participants signed in with a code and PIN (no names) and took the pre survey; 20 also took the post survey. Staff entered the case-manager assessment and 11 program numbers for six months, using the monthly Excel template. The dashboard updates by itself: 85%, 60%, and 70% of matched participants improved on the three survey metrics, and demographics are shown as percentages, with groups under 5 hidden.</p></div></div>
+  <div class="shots">
+    <figure><img src="img/dashboard.jpg" alt="Dashboard"><figcaption>The dashboard: headline tiles, % improved, before and after.</figcaption></figure>
+    <figure><img src="img/portal_home.jpg" alt="Participant portal" style="max-height:3.1in;width:auto;margin:auto"><figcaption>The participant portal on a phone: a code and PIN, no names.</figcaption></figure>
+  </div>
+
+  <div class="step"><span class="num">7</span><div><h4>Impact report: one design, live numbers (~2 minutes, 2 runs)</h4>
+    <p>We gave Keystone made-up brand standards (deep teal and warm gold, Georgia and Calibri, "say families, never clients") and a generated logo. The Report Designer built a 14-slide funder deck with speaker notes and a one-page flyer. It kept its claims honest ("these short-term results … do not establish long-term housing stability"). Every number is a live token, so the same deck updates as new surveys arrive, with no new AI call. The Privacy Reviewer found nothing to fix.</p></div></div>
+  <div class="shots">
+    <figure><img src="img/preview_funder_deck.jpg" alt="Funder deck"><figcaption>Keystone's 14-slide funder deck (native, editable PowerPoint charts).</figcaption></figure>
+    <figure><img src="img/preview_one_pager.jpg" alt="One-pager" style="max-height:3.4in;width:auto;margin:auto"><figcaption>The one-page flyer (PDF).</figcaption></figure>
+  </div>
+
+  <div class="step"><span class="num">8</span><div><h4>Grant draft for one foundation (3 runs)</h4>
+    <p>For a test application to the El Pomar Foundation, the Funder Researcher found 7 sources, all verified, and identified four priorities. The Grant Writer drafted five sections, with placeholders such as <code>[ADD: organization history and mission]</code> where facts were missing. It also <b>flagged honestly that Keystone may not be eligible</b>, since El Pomar funds Colorado. The Privacy Reviewer generalized two town references that were linked to participants.</p></div></div>
+  <figure><img src="img/grants_answers.jpg" alt="Grant answers"><figcaption>Grant answers with word counts, priorities addressed, source chips, and highlighted placeholders.</figcaption></figure>
+</section>
+
+<!-- ============================================================ 5. TOKENOMICS -->
+<section>
+  <header class="sh"><p class="eyebrow">Tokenomics</p>
+  <h2><span class="num num--green">$</span> What it costs to run</h2></header>
+  <p>Every agent run's tokens are recorded in a ledger: the organization, the staff member who clicked, the feature, the phase, and the agent. Failed runs are recorded too, because they still used tokens. Staff see their own and their organization's totals on an <b>AI usage</b> page; the operator gets every organization from one command. Prices are OpenAI's published rates for gpt-6-luna: <b>$0.10 per million input tokens, $0.50 per million output tokens</b>, and <b>$10 per 1,000 web searches</b>.<sup><a href="#r13">13</a>,<a href="#r14">14</a></sup></p>
+  <h3>Keystone, by task</h3>
+  <table>
+    <thead><tr><th>Task</th><th class="n">Runs</th><th class="n">Input tokens</th><th class="n">Output tokens</th><th class="n">Model cost</th><th class="n">Web search (max)</th></tr></thead>
+    <tbody>
+      <tr><td>Studio: intake (research, brief, questions)</td><td class="n">6</td><td class="n">48,599</td><td class="n">4,683</td><td class="n">$0.0072</td><td class="n" rowspan="1">≤ $0.06</td></tr>
+      <tr><td>Studio: interview (4 turns)</td><td class="n">4</td><td class="n">28,545</td><td class="n">1,707</td><td class="n">$0.0037</td><td class="n">–</td></tr>
+      <tr><td>Studio: logic model draft, review, final + revision</td><td class="n">7</td><td class="n">56,754</td><td class="n">5,312</td><td class="n">$0.0083</td><td class="n">–</td></tr>
+      <tr><td>Studio: metrics research, draft, review, final + revision</td><td class="n">10</td><td class="n">162,124</td><td class="n">27,634</td><td class="n">$0.0300</td><td class="n">≤ $0.06</td></tr>
+      <tr><td>Survey Review Bot (1 review)</td><td class="n">1</td><td class="n">2,226</td><td class="n">1,452</td><td class="n">$0.0010</td><td class="n">–</td></tr>
+      <tr><td>Impact report (design + privacy check)</td><td class="n">2</td><td class="n">8,292</td><td class="n">5,353</td><td class="n">$0.0035</td><td class="n">–</td></tr>
+      <tr><td>Grant draft (research, writing, privacy check)</td><td class="n">3</td><td class="n">32,161</td><td class="n">5,586</td><td class="n">$0.0060</td><td class="n">≤ $0.06</td></tr>
+      <tr class="total"><td>Total</td><td class="n">33</td><td class="n">338,701</td><td class="n">51,727</td><td class="n">$0.060</td><td class="n">≤ $0.18</td></tr>
+    </tbody>
+  </table>
+  <p class="small muted">Web searches: the Funder Researcher may run up to 6 per research run. Search counts were added to the ledger after Keystone's run, so Keystone's are shown as the maximum.</p>
+  <h3>Our live-site runs and outside testers</h3>
+  <table>
+    <thead><tr><th>Organization</th><th>Who ran it</th><th class="n">Agent runs</th><th class="n">Tokens in / out</th><th class="n">Searches</th><th class="n">Est. cost</th></tr></thead>
+    <tbody>
+      <tr><td>Keystone (above)</td><td>Doug, local, live model</td><td class="n">33</td><td class="n">339K / 52K</td><td class="n">≤ 18</td><td class="n">≤ $0.24</td></tr>
+      <tr><td>The Place</td><td>Doug, live site</td><td class="n" colspan="4"><span class="pending">PENDING · from operator report-data on Render</span></td></tr>
+      <tr><td>Kids at Their Best</td><td>Jodi Walker, executive director (outside tester)</td><td class="n" colspan="4"><span class="pending">PENDING</span></td></tr>
+      <tr><td>Sara's organization</td><td>Sara (outside tester)</td><td class="n" colspan="4"><span class="pending">PENDING</span></td></tr>
+    </tbody>
+  </table>
+  <h3>Keeping costs down</h3>
+  <p>The main lever is <b>limiting how often each organization can call the agents</b>. Every run also has hard request, token, and tool-call caps, so no loop can run on.</p>
+  <table>
+    <thead><tr><th>Tool</th><th>Limit per organization</th></tr></thead>
+    <tbody>
+      <tr><td>Logic Model Studio</td><td>2 sessions; inside each, exactly 5 questions, ≤ 2 extra documents, ≤ 2 revision rounds per artifact, and budgeted consults</td></tr>
+      <tr><td>Survey Review Bot</td><td>2 reviews per survey</td></tr>
+      <tr><td>Impact report</td><td>1 design + 1 feedback round; refreshing with new data is free (live number tokens, no AI call)</td></tr>
+      <tr><td>Grant applications</td><td>3 new per month, 1 feedback round each</td></tr>
+      <tr><td>Privacy check</td><td>Any time; re-checking an unchanged draft is free; at most 25 new checks per day</td></tr>
+    </tbody>
+  </table>
+  <h3>At scale</h3>
+  <p>Treating each user as one organization, and using Keystone's measured costs: a <b>typical year</b> is one Studio session, 4 survey reviews, one report with a revision and a few privacy checks, and 12 grant drafts. That comes to about <b>$1 per organization per year</b> in AI fees, most of it web search. The <b>most an organization could spend</b> while staying within every allowance (2 Studio sessions at their caps, 36 grants, and the full daily privacy-check ceiling all year) is about <b>$8 per year</b>.</p>
+  <table>
+    <thead><tr><th>Users (organizations)</th><th class="n">AI, typical / year</th><th class="n">AI, worst case / year</th><th class="n">Hosting (Render) / year</th></tr></thead>
+    <tbody>
+      <tr><td>100</td><td class="n">≈ $100</td><td class="n">≈ $800</td><td class="n">≈ $90 (1 Starter instance + 1 GB disk)</td></tr>
+      <tr><td>10,000</td><td class="n">≈ $10,000</td><td class="n">≈ $80,000</td><td class="n">≈ $2,000–$4,000 (larger instances + managed Postgres)</td></tr>
+    </tbody>
+  </table>
+  <p class="small muted">Estimates. Hosting at 10,000 users assumes moving from SQLite to Postgres and running more than one server. Gateway (Portkey) plan costs are not included. Even the worst case is about $8 per organization per year, compared with $3,000 or more for one consultant-led logic model.</p>
+  <h3>Did limiting runs make the app worse?</h3>
+  <p>In our own runs, the limits rarely got in the way. Keystone used 1 of 2 revision rounds for each artifact, and the consult budget refused three optional consults without hurting the drafts, since peer review is required rather than optional. Limits do change the experience in one place: one design and one feedback round for the funder deck means staff must put all their changes into one message, and anything after that is edited by hand in PowerPoint. <span class="pending">PENDING · testers' view on whether the limits felt restrictive</span></p>
+</section>
+
+<!-- ============================================================ 6. SAFETY -->
+<section>
+  <header class="sh"><p class="eyebrow">Safety</p>
+  <h2><span class="num num--red">⛨</span> Built for people's private information</h2></header>
+  <div class="two">
+    <div>
+      <h4>Staff accounts</h4>
+      <p>Passwords are hashed with <b>Argon2id</b>. Usernames are never stored, only a keyed HMAC of them. Sign-in uses an HttpOnly, SameSite=Strict cookie, plus per-account lockout and a per-network attempt limit. Every database query is filtered by the signed-in organization, and tests confirm one organization can't open another's data. On the live site, starting a new organization requires an access code.</p>
+      <h4>Participants are codes, not names</h4>
+      <p>Participants sign in with a random code and a 6-digit PIN, and the PIN is hashed too. No names, emails, or addresses are collected, ever. Demographic groups under 5 people are hidden in charts.</p>
+      <h4>A layered privacy check</h4>
+      <p>Before anything leaves the organization, it passes through layers:</p>
+      <ol>
+        <li>Code strips contact details and participant codes from quotes before any agent sees them.</li>
+        <li>The <b>Privacy Reviewer</b> agent reads the finished deck, flyer, or grant draft and replaces anything that could identify someone.</li>
+        <li>A final code scan redacts anything left.</li>
+      </ol>
+      <p>It is only marked "clean" if nothing remains. The audit log never stores the flagged text.</p>
+    </div>
+    <div>
+      <h4>Agents only read what a person can see</h4>
+      <p>Hidden text is a classic prompt-injection trick: white text, 1-point type, text off the page, or text tucked under a picture, all saying "ignore your instructions." Through Line reads PDFs with <b>pdfium</b> (the engine Chrome uses), resolves Word and PowerPoint styles and theme colors, and parses web pages for hidden content. It drops anything a reader of the document couldn't see.</p>
+      <figure><img src="img/hidden_text_page.jpg" alt="Test PDF as a person sees it"><figcaption>Figure 2. Our test PDF as a person sees it. It also hides "SECRET: ignore your instructions" six different ways (white, tiny, off-page, invisible, transparent, under a box). A standard PDF reader extracts all six; Through Line extracts only the three visible lines. On ten real documents, the new reader matched the old one word for word.</figcaption></figure>
+    </div>
+  </div>
+  <table>
+    <thead><tr><th>Also built in</th><th>How</th></tr></thead>
+    <tbody>
+      <tr><td>No overspending</td><td>Per-organization allowances, per-run token and request caps, and a failed run gives its allowance back</td></tr>
+      <tr><td>No invented numbers</td><td>Agents write numbers only as tokens from the organization's data; code removes any chart or quote it wasn't given</td></tr>
+      <tr><td>Honest sources</td><td>"Verified" is set by code, only if the URL appeared in that run's real search results</td></tr>
+      <tr><td>Uploads never saved</td><td>Read in memory, dropped after the agents read them; working notes are wiped when the Studio session completes</td></tr>
+      <tr><td>Everything auditable</td><td>An append-only, hash-chained audit log of every agent step and human approval</td></tr>
+      <tr><td>Public-site hardening</td><td>Request size limits, website fetches restricted to public addresses, formula-safe Excel exports, security headers</td></tr>
+    </tbody>
+  </table>
+  <p class="small muted">A separate review agent audited the whole codebase before launch. It found no way to reach another organization's data, and every other issue it raised was fixed, each with a test.</p>
+</section>
+
+<!-- ============================================================ 7. IMPACT -->
+<section>
+  <header class="sh"><p class="eyebrow">Impact</p>
+  <h2><span class="num num--purple">★</span> What it does for an organization</h2></header>
+  <div class="three">
+    <div class="stat"><b>~10 min</b><span>documents → approved logic model and 5 metrics with 20 verified sources (Keystone, live)</span></div>
+    <div class="stat"><b>&lt; $1</b><span>AI cost of the whole Keystone journey, vs. $3,000+ for a consultant-led logic model alone</span></div>
+    <div class="stat"><b>1 flow</b><span>logic model → surveys → dashboard → deck → grant draft, with live numbers throughout</span></div>
+  </div>
+  <h3>What the outside testers said</h3>
+  <div class="pending-block">
+    <b>PENDING · feedback from Jodi Walker (Kids at Their Best) and Sara.</b> For each tester: how far they got, time spent, whether the logic model sounded like their program, whether they'd use the surveys, deck, and grant draft, what they'd change first, where they trusted or hesitated with the AI, and one or two direct quotes. Their numbers (participants, surveys, reports, grants) come from report-data.
+  </div>
+  <div class="two">
+    <div class="callout"><span class="eyebrow">Kids at Their Best</span><p class="quote"><span class="pending">PENDING quote</span></p></div>
+    <div class="callout callout--green"><span class="eyebrow">Sara</span><p class="quote"><span class="pending">PENDING quote</span></p></div>
+  </div>
+  <h3>Why it matters</h3>
+  <p>For a small nonprofit, the biggest change is that program evaluation stops being something you buy and becomes something you do. The executive director comes away with a logic model they helped write and understand, surveys their staff can actually run, and funder materials that stay current as new data comes in. That is what a $3,000–$8,000 consultant engagement would produce, at a cost of cents.</p>
+</section>
+
+<!-- ============================================================ 8. LIMITS & NEXT STEPS -->
+<section>
+  <header class="sh"><p class="eyebrow">Limits and next steps</p>
+  <h2><span class="num num--ink sq">→</span> What it doesn't do yet</h2></header>
+  <h4>One program at a time</h4>
+  <p>Through Line works best for a fairly simple nonprofit with one core program, which is the target user. Organizations with several connected programs (shared participants, outcomes that feed each other, organization-wide metrics) would need a logic model per program plus a layer that rolls them up.</p>
+  <h4>Getting data in and out at scale</h4>
+  <p>Bulk Excel upload and download exist for responses and program numbers, but most nonprofits keep program data in several places: 92% store evaluation data in spreadsheets, and 85% use three or more storage methods.<sup><a href="#r3">3</a></sup> The natural next step is an <b>MCP server for Through Line</b>. It would expose tools such as <code>list_surveys</code>, <code>import_responses</code>, <code>add_program_numbers</code>, and <code>get_dashboard</code>, scoped to one organization with a revocable key. A staff member using an AI assistant could then connect it alongside the official MCP servers that already exist for Google Sheets, Airtable, and Salesforce,<sup><a href="#r15">15</a></sup> and say "move last month's attendance from our Airtable into Through Line." The app already validates every row on import, so the main work would be per-organization API keys and access scopes. Competitors such as Sopact are starting to offer MCP integrations.</p>
+  <h4>Quality issues we saw</h4>
+  <p>In the live run, the interview asked two near-duplicate questions (questions 3 and 4). The fix is a code check that compares a new question with earlier ones. The stress items were "inspired by" a validated scale rather than the scale itself; the team said so, but a library of licensed, validated instruments would be better. Web search verification proves a source exists, not that it supports the claim, so the app still tells staff to check citations.</p>
+  <h4>More ways to show results</h4>
+  <p>With more time we would add more chart types (trend lines by cohort, maps, distributions), comparisons with benchmarks from the field, report formats beyond a deck and a flyer (annual report pages, funder-specific templates), and qualitative coding of open answers. That last one is the planned "Team 2": a Privacy Guard, an Outcome Coder, and a Testimonial Writer.</p>
+  <h4>Other limits</h4>
+  <p>Allowances are per organization rather than per person; scanned PDFs yield no text (no OCR); and the live site runs as one server process, which is fine for a pilot and would need the Postgres move above to scale.</p>
+
+  <h3 style="margin-top:1.2rem">References</h3>
+  <ol class="refs">
+    <li id="r1">NTEN, <i>2025 Data Empowerment Report</i>, 2025. word.nten.org/wp-content/uploads/2025/07/2025-Data-Empowerment-Report.pdf</li>
+    <li id="r2">Center for Effective Philanthropy, <i>Room for Improvement</i>, 2012. cep.org</li>
+    <li id="r3">Innovation Network, <i>State of Evaluation 2016</i>, 2016. innonet.org/media/2016-State_of_Evaluation.pdf</li>
+    <li id="r4">G. Sato, "Very small nonprofits make up majority of US nonprofits," Candid, 2025. candid.org/blogs</li>
+    <li id="r5">Bridgespan, <i>The Strengths Small and Midsize US Nonprofits Build on to Create Resilient Funding Strategies</i>, 2025. bridgespan.org</li>
+    <li id="r6">C. Dorsey, J. Bradach, P. Kim, <i>Racial Equity and Philanthropy</i>, Echoing Green &amp; Bridgespan, 2020. bridgespan.org/insights/disparities-nonprofit-funding-for-leaders-of-color</li>
+    <li id="r7">Nonprofit Finance Fund, <i>2022 State of the Nonprofit Sector Survey</i>, 2022. nff.org</li>
+    <li id="r8">Texas Alliance of Child and Family Services, <i>Consultation &amp; Technical Assistance</i>, 2026. tacfs.org/resources-insights/cta/</li>
+    <li id="r9">UC San Diego ACTRI, <i>Evaluation Recharge Rates</i>, 2026; Namaste Data, <i>Rates</i>, 2026. namastedata.org/rates</li>
+    <li id="r10">Sopact, <i>Pricing</i>, 2026. sopact.com/pricing</li>
+    <li id="r11">UpMetrics, <i>Pricing</i>, 2026. upmetrics.com/pricing</li>
+    <li id="r12">Instrumentl, <i>Pricing</i>, 2026. instrumentl.com/pricing; Grantable, <i>Pricing</i>, 2026. grantable.co/pricing</li>
+    <li id="r13">OpenAI, <i>API Pricing</i> (gpt-6-luna, gpt-6-sol), 2026. developers.openai.com/api/docs/pricing</li>
+    <li id="r14">OpenAI, <i>API Pricing: built-in tools (web search)</i>, 2026. openai.com/api/pricing</li>
+    <li id="r15">Google Developers, <i>Sheets MCP server</i>; Airtable, <i>MCP server</i>; Salesforce, <i>Hosted MCP Servers</i>, 2026.</li>
+  </ol>
+  <p class="small muted">Also cited for context: A. Goggins Gregory &amp; D. Howard, "The Nonprofit Starvation Cycle," <i>Stanford Social Innovation Review</i>, 2009. Consultant price ranges marked "estimate" were derived from the published hourly rates above.</p>
+</section>
+
+</body>
+</html>

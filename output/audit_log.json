@@ -18642,5 +18642,57 @@
   "human": null,
   "error": null,
   "hash": "aeaca08bf9dab38487cc1b9abca25bf7ea233773cc4a1ddac15b2f326d8b27a0"
+},
+{
+  "seq": 455,
+  "prev_hash": "aeaca08bf9dab38487cc1b9abca25bf7ea233773cc4a1ddac15b2f326d8b27a0",
+  "logged_at": "2026-10-20T20:50:30+00:00",
+  "event": "login_success",
+  "run_id": null,
+  "session_id": null,
+  "step_id": null,
+  "parent_step_id": null,
+  "team": "accounts",
+  "phase": null,
+  "agent": "human",
+  "model": null,
+  "prompt_file": null,
+  "prompt_hash": null,
+  "input_summary": null,
+  "tool_calls": [],
+  "output": null,
+  "usage": null,
+  "human": {
+    "role": "staff",
+    "org_id": 1
+  },
+  "error": null,
+  "hash": "8857baa7e8c0dd5c026bc42f4909f9779e363b8440793a9a546d1871389aa04e"
+},
+{
+  "seq": 456,
+  "prev_hash": "8857baa7e8c0dd5c026bc42f4909f9779e363b8440793a9a546d1871389aa04e",
+  "logged_at": "2026-10-20T20:54:25+00:00",
+  "event": "login_success",
+  "run_id": null,
+  "session_id": null,
+  "step_id": null,
+  "parent_step_id": null,
+  "team": "accounts",
+  "phase": null,
+  "agent": "human",
+  "model": null,
+  "prompt_file": null,
+  "prompt_hash": null,
+  "input_summary": null,
+  "tool_calls": [],
+  "output": null,
+  "usage": null,
+  "human": {
+    "role": "staff",
+    "org_id": 1
+  },
+  "error": null,
+  "hash": "0d78294dc60d28780148be83c82770148aeaa5e442602ee6688f1e5f7cd0d3cf"
 }
 ]

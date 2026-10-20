@@ -1,0 +1,9 @@
+# Text files use LF in the repo (the Linux server and Docker expect it); binaries are never touched.
+* text=auto eol=lf
+*.pdf binary
+*.pptx binary
+*.docx binary
+*.xlsx binary
+*.png binary
+*.jpg binary
+*.ico binary

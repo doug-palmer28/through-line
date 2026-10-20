@@ -1,0 +1,52 @@
+# --- Secrets: never commit the real key. .env.example (template, no key) IS committed.
+.env
+.env.*
+!.env.example
+
+# --- Python environment and caches
+.venv/
+__pycache__/
+*.pyc
+.pytest_cache/
+
+# --- Frontend dependencies and build output
+node_modules/
+dist/
+*.tsbuildinfo
+
+# --- Databases (accounts and collected data; created on first run)
+*.db
+*.sqlite
+*.sqlite3
+
+# --- Session records (typed chat + drafts). Local only, never committed.
+data/sessions/*
+!data/sessions/.gitkeep
+
+# --- Audio (voice is a stretch goal; recordings could contain personal info).
+# Uploaded documents are read in memory and never written to disk, so there is no uploads folder.
+*.wav
+*.webm
+*.mp3
+*.m4a
+
+# --- Live agent audit log (real runs stay local; the empty starter file is committed)
+# Uncomment before the final push if real runs should not be published:
+# output/audit_log.json
+
+# --- Office lock files and OS clutter
+~$*
+.DS_Store
+Thumbs.db
+
+# --- Server secret for signing sign-in tokens and hashing usernames (generated on first run)
+data/secret.key
+
+# --- Organization logos uploaded for reports (local only)
+data/brand/
+
+# --- Operator usage reports (name staff and organizations)
+data/usage_reports/
+
+# --- Empty placeholder planning file (not part of the project)
+Idea building.docx

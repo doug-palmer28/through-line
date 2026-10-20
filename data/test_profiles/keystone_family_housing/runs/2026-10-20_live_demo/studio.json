@@ -1,0 +1,666 @@
+{
+  "mode": "LIVE gpt-6-luna via Portkey (Studio driven through the browser UI; tools/collect/numbers via scripts/run_test_profile.py)",
+  "date": "2026-10-20",
+  "studio_minutes": 10.5,
+  "studio_usage": {
+    "requests": 55,
+    "input_tokens": 296022,
+    "output_tokens": 39336
+  },
+  "interview": [
+    {
+      "question": "When you say a family has “kept their home,” how long after rental assistance ends do you mean, and what would you use to confirm the family is still housed?",
+      "answer": "We enter everything required into the regional homeless data system: enrollments, exits to permanent housing, and how long families were homeless. Case managers log home visits. Honestly we rarely look at our own data beyond the required reports. The board keeps asking whether families are still housed a year after the rent help ends, and whether case management matters beyond the money. We do not have a good answer."
+    },
+    {
+      "question": "During case management, what changes do you hope families make that help them stay housed, and what could staff realistically notice or record during visits?",
+      "answer": "In the first months families move in fast, usually within 45 days of enrolling, and kids get back into one school. Parents get calmer and start planning instead of reacting. They learn to budget around rent and know who to call when something goes wrong. A year out, what we hope for is that they are still housed, have not gone back to shelter, and have steadier income. Many parents tell us the biggest change is feeling in control again."
+    },
+    {
+      "question": "What does case management look like in practice—what support do families receive, how often do you meet or visit, and for how long?",
+      "answer": "We serve families with children who are living in shelter or doubled up, referred through the regional coordinated entry system. Most heads of household are single mothers in their twenties and thirties with one to three young kids. Many lost housing after an eviction, a job loss, or leaving a violent relationship. About a third speak Spanish at home. We serve roughly 70 families a year, about 220 people."
+    },
+    {
+      "question": "What kinds of support do case managers typically provide to a family, and how often and for how long do they meet or visit?",
+      "answer": "Three things. First, rapid rehousing: our housing locator finds an apartment, we pay the security deposit and first month, then step rent help down over up to 12 months. Second, Stay Housed case management: weekly home visits for six months, then monthly, covering budgeting, landlord issues, benefits, child care and school enrollment. Third, Fresh Start Furniture: volunteers furnish the apartment before move-in day so families walk into a real home."
+    },
+    {
+      "question": "Which grants or contracts fund these services, and what outcomes or reports do those funders ask you to provide?",
+      "answer": "About 55% of our money is federal homelessness funding passed through the regional Continuum of Care, 20% is state housing funds, 15% comes from local foundations and 10% from individual and congregational donors. The federal and state funders want exits to permanent housing and returns to homelessness. Foundations increasingly ask about family well-being and stories, not just placements."
+    }
+  ],
+  "transcript": [
+    {
+      "role": "team",
+      "text": "Thank you for sharing Keystone’s profile. I understand that you help families move from shelter into homes through apartment search, short-term rental assistance, home-based case management, and move-in furniture support. You already track key HMIS information and home visits, and you’re looking for a clearer picture of whether families stay housed and what difference the support makes.",
+      "at": "2026-10-20T12:02:29+00:00"
+    },
+    {
+      "role": "team",
+      "text": "Question 1 of 5: When you say a family has “kept their home,” how long after rental assistance ends do you mean, and what would you use to confirm the family is still housed?",
+      "at": "2026-10-20T12:02:29+00:00"
+    },
+    {
+      "role": "client",
+      "text": "We enter everything required into the regional homeless data system: enrollments, exits to permanent housing, and how long families were homeless. Case managers log home visits. Honestly we rarely look at our own data beyond the required reports. The board keeps asking whether families are still housed a year after the rent help ends, and whether case management matters beyond the money. We do not have a good answer.",
+      "at": "2026-10-20T12:03:52+00:00"
+    },
+    {
+      "role": "team",
+      "text": "You already record enrollments, exits to permanent housing, and homelessness length in the regional data system, and case managers log home visits. You’re not yet using those records to answer the board’s questions about housing stability one year later or what case management adds beyond rental assistance.",
+      "at": "2026-10-20T12:04:02+00:00"
+    },
+    {
+      "role": "team",
+      "text": "Question 2 of 5: During case management, what changes do you hope families make that help them stay housed, and what could staff realistically notice or record during visits?",
+      "at": "2026-10-20T12:04:02+00:00"
+    },
+    {
+      "role": "client",
+      "text": "In the first months families move in fast, usually within 45 days of enrolling, and kids get back into one school. Parents get calmer and start planning instead of reacting. They learn to budget around rent and know who to call when something goes wrong. A year out, what we hope for is that they are still housed, have not gone back to shelter, and have steadier income. Many parents tell us the biggest change is feeling in control again.",
+      "at": "2026-10-20T12:04:12+00:00"
+    },
+    {
+      "role": "team",
+      "text": "You hope families move into housing quickly, reconnect their children with one school, and build calmer, more practical ways to manage rent and problems. Longer term, success means staying housed, avoiding a return to shelter, and having steadier income; parents also describe feeling more in control.",
+      "at": "2026-10-20T12:04:23+00:00"
+    },
+    {
+      "role": "team",
+      "text": "Question 3 of 5: What does case management look like in practice—what support do families receive, how often do you meet or visit, and for how long?",
+      "at": "2026-10-20T12:04:23+00:00"
+    },
+    {
+      "role": "client",
+      "text": "We serve families with children who are living in shelter or doubled up, referred through the regional coordinated entry system. Most heads of household are single mothers in their twenties and thirties with one to three young kids. Many lost housing after an eviction, a job loss, or leaving a violent relationship. About a third speak Spanish at home. We serve roughly 70 families a year, about 220 people.",
+      "at": "2026-10-20T12:04:23+00:00"
+    },
+    {
+      "role": "team",
+      "text": "Thank you—that helps clarify who you serve: families with children living in shelter or doubled up, referred through coordinated entry, with about 70 families served each year. Many are navigating a recent housing loss, and about a third speak Spanish at home.",
+      "at": "2026-10-20T12:04:31+00:00"
+    },
+    {
+      "role": "team",
+      "text": "Question 4 of 5: What kinds of support do case managers typically provide to a family, and how often and for how long do they meet or visit?",
+      "at": "2026-10-20T12:04:31+00:00"
+    },
+    {
+      "role": "client",
+      "text": "Three things. First, rapid rehousing: our housing locator finds an apartment, we pay the security deposit and first month, then step rent help down over up to 12 months. Second, Stay Housed case management: weekly home visits for six months, then monthly, covering budgeting, landlord issues, benefits, child care and school enrollment. Third, Fresh Start Furniture: volunteers furnish the apartment before move-in day so families walk into a real home.",
+      "at": "2026-10-20T12:04:31+00:00"
+    },
+    {
+      "role": "team",
+      "text": "I’m hearing three connected pieces: help finding and moving into an apartment with rent support that steps down for up to 12 months, Stay Housed visits that shift from weekly to monthly, and volunteer-furnished homes before move-in. The visits cover practical needs like budgeting, landlord issues, benefits, child care, and school enrollment.",
+      "at": "2026-10-20T12:04:39+00:00"
+    },
+    {
+      "role": "team",
+      "text": "Question 5 of 5: Which grants or contracts fund these services, and what outcomes or reports do those funders ask you to provide?",
+      "at": "2026-10-20T12:04:39+00:00"
+    },
+    {
+      "role": "client",
+      "text": "About 55% of our money is federal homelessness funding passed through the regional Continuum of Care, 20% is state housing funds, 15% comes from local foundations and 10% from individual and congregational donors. The federal and state funders want exits to permanent housing and returns to homelessness. Foundations increasingly ask about family well-being and stories, not just placements.",
+      "at": "2026-10-20T12:04:50+00:00"
+    },
+    {
+      "role": "team",
+      "text": "Thank you, that's all five questions. Your team is now drafting your logic model.",
+      "at": "2026-10-20T12:04:50+00:00"
+    },
+    {
+      "role": "team",
+      "text": "Here is the revised logic model, with the housing pathway at its center and case management described as voluntary and tailored to each family. I removed income, calm/control, and school-continuity claims that were less directly supported, and made the near-term family changes more observable. Please edit any line directly or tell me what you’d like changed.",
+      "at": "2026-10-20T12:05:44+00:00"
+    },
+    {
+      "role": "client",
+      "text": "This is close. Please add our Fresh Start Furniture move-in support as its own activity, and make one short-term outcome about parents feeling more in control and less stressed, because families tell us that matters most.",
+      "at": "2026-10-20T12:06:27+00:00"
+    },
+    {
+      "role": "team",
+      "text": "I added Fresh Start Furniture as a clearly named move-in support activity and included the change families have emphasized: parents feeling more in control and less stressed. I kept the rest of the model as it was and retained alignment with common rapid-rehousing and housing-stability priorities. Please let me know if you’d like either new line worded differently.",
+      "at": "2026-10-20T12:06:49+00:00"
+    },
+    {
+      "role": "team",
+      "text": "Your logic model is approved. Next, let's choose how you'll know it's working.",
+      "at": "2026-10-20T12:07:01+00:00"
+    },
+    {
+      "role": "team",
+      "text": "Here is the revised measurement plan, with the team’s suggestions folded in. It keeps the participant check-in brief and voluntary, makes housing follow-up more feasible, and reports missing or unknown information openly. You can switch optional questions on or off, edit any wording, or tell me what you would like changed.",
+      "at": "2026-10-20T12:11:11+00:00"
+    },
+    {
+      "role": "client",
+      "text": "Please keep the participant survey short, no more than about 8 recommended questions, and make sure we measure whether families stay housed 12 months after move-in.",
+      "at": "2026-10-20T12:11:39+00:00"
+    },
+    {
+      "role": "team",
+      "text": "I’ve kept the participant survey to four recommended questions, with the optional alternatives still switched off. I also changed the housing follow-up to be measured 12 months after each family’s move-in date and made unknown status visible rather than treating it as housed or unhoused. One distinction to note: this follow-up may happen while rental assistance is still active for some families, so it complements—but does not replace—the outcome about staying housed after assistance ends.",
+      "at": "2026-10-20T12:12:40+00:00"
+    },
+    {
+      "role": "team",
+      "text": "Your measurement plan is approved. Download your logic model and plan below.",
+      "at": "2026-10-20T12:12:46+00:00"
+    }
+  ],
+  "logic_model_versions": 2,
+  "plan_versions": 2,
+  "alignment": [
+    {
+      "note": "The model centers rapid exits to permanent housing and fewer returns to homelessness, common CoC and RRH reporting priorities.",
+      "source_ids": [
+        "S2",
+        "S4",
+        "S6"
+      ]
+    },
+    {
+      "note": "Fresh Start Furniture is framed as a practical move-in support that contributes to housing setup and family well-being, rather than as an end in itself.",
+      "source_ids": [
+        "S8"
+      ]
+    },
+    {
+      "note": "The model keeps case management and other supports tailored to household priorities, consistent with person-centered RRH and coordinated-access approaches.",
+      "source_ids": [
+        "S3",
+        "S9",
+        "S16"
+      ]
+    }
+  ],
+  "logic_model_sources": [
+    {
+      "id": "S2",
+      "title": "CoC System Performance Measures Table Shells",
+      "publisher": "HUD Exchange",
+      "url": "https://www.hudexchange.info/resource/4483/system-performance-measures-tools/",
+      "note": "Provides tools for consistent calculation and analysis of CoC system performance measures.",
+      "verified": true
+    },
+    {
+      "id": "S3",
+      "title": "CoC Program Components - Rapid Re-housing (RRH)",
+      "publisher": "HUD Exchange",
+      "url": "https://www.hudexchange.info/homelessness-assistance/coc-esg-virtual-binders/coc-program-components/permanent-housing/rapid-re-housing/",
+      "note": "Defines RRH as permanent housing with short- or medium-term rental assistance and supportive services for households experiencing homelessness.",
+      "verified": true
+    },
+    {
+      "id": "S4",
+      "title": "CoC Performance Profile Reports",
+      "publisher": "HUD Exchange",
+      "url": "https://www.hudexchange.info/programs/coc/coc-performance-profile-reports/",
+      "note": "Lists CoC indicators including length of time homeless, returns to homelessness, and exits to permanent housing.",
+      "verified": true
+    },
+    {
+      "id": "S6",
+      "title": "Statewide Rapid Rehousing Requirements & Operations Guide",
+      "publisher": "Connecticut Balance of State Continuum of Care / Connecticut Department of Housing",
+      "url": "https://www.ctbos.org/wp-content/uploads/CTDOH-Statewide-RRH-Operations-Guide-v19.pdf",
+      "note": "States that the guide establishes RRH policies and procedures for Connecticut DOH- and CoC-funded projects.",
+      "verified": true
+    },
+    {
+      "id": "S8",
+      "title": "Basic Needs Fund Grants",
+      "publisher": "The Community Foundation for Greater New Haven",
+      "url": "https://www.cfgnh.org/articles/basic-needs-fund-grants",
+      "note": "Describes local grants for material basic needs, including shelter and housing stability, and emphasizes dignity and well-being.",
+      "verified": true
+    },
+    {
+      "id": "S9",
+      "title": "Ending Homelessness — Coordinated Access Network",
+      "publisher": "United Way of Greater New Haven",
+      "url": "https://www.uwgnh.org/coordinated-access-network",
+      "note": "Frames regional work around identifying people experiencing homelessness, connecting them to housing/resources, and supporting long-term stable housing.",
+      "verified": true
+    },
+    {
+      "id": "S16",
+      "title": "Navigating the Coordinated Access Network",
+      "publisher": "Connecticut Department of Social Services",
+      "url": "https://portal.ct.gov/dss/-/media/departments-and-agencies/dss/health-and-home-care/pcmh-plus/canmeeting9122019.pdf?hash=750FF1A73602A960CBC10E66E5AA4DE6&rev=bdb3e2ab33404b28bd64438578286ff0",
+      "note": "Describes Connecticut’s coordinated access approach and identifies Housing First as removing barriers to permanent housing as quickly as possible.",
+      "verified": true
+    }
+  ],
+  "approved_logic_model": {
+    "program_name": "Keystone Family Housing: Rapid Rehousing, Stay Housed, and Fresh Start Furniture",
+    "theory_of_change": "If Keystone helps families move quickly into permanent housing with time-limited rent assistance, move-in essentials, and voluntary, individualized case management, then families can settle into housing and address barriers that threaten stability. This support is intended to help families remain housed after assistance ends, though housing stability also depends on factors outside Keystone’s control.",
+    "inputs": [
+      "Executive director, four case managers, housing locator, and part-time finance manager",
+      "Rental assistance and program operating funds",
+      "About 20 volunteers and donated furniture",
+      "Small office and regional homeless response system",
+      "Referrals through regional coordinated entry"
+    ],
+    "activities": [
+      "Identify apartments and help families move into permanent housing",
+      "Pay security deposits and first month’s rent, then step down rent help for up to 12 months",
+      "Offer voluntary, individualized Stay Housed case management through home visits; frequency is adjusted with each family, with more frequent visits early when appropriate",
+      "Help families address budgeting, landlord issues, benefits, child care, and school enrollment based on their priorities",
+      "Provide Fresh Start Furniture move-in support by furnishing apartments before move-in"
+    ],
+    "outputs": [
+      "Families enrolled",
+      "Families moved into permanent housing and days from enrollment to move-in",
+      "Rental assistance payments and duration of assistance",
+      "Stay Housed home visits completed",
+      "Apartments furnished before move-in"
+    ],
+    "short_term_outcomes": [
+      "Families move from homelessness into permanent housing",
+      "Families report greater confidence taking a next step to address a rent or landlord issue",
+      "Parents report feeling more in control and less stressed",
+      "Parents can identify where to seek help for at least one priority need they selected"
+    ],
+    "long_term_outcomes": [
+      "Families remain housed after time-limited rental assistance ends",
+      "Fewer families return to homelessness or shelter"
+    ],
+    "assumptions": [
+      "Families can access suitable, affordable apartments in the local housing market",
+      "Families can choose whether to engage in case management and identify supports that fit their needs",
+      "Rent assistance, practical move-in support, and case management can address different barriers to housing stability"
+    ],
+    "external_factors": [
+      "Availability and affordability of rental housing",
+      "Changes in household income, employment, and benefit access",
+      "Landlord decisions and housing conditions",
+      "Availability of child care, school supports, and other community resources"
+    ]
+  },
+  "approved_plan": {
+    "summary": "This plan pairs existing program/HMIS records with a brief, voluntary participant check-in to track housing move-in, families’ confidence, stress, and resource knowledge. It also checks families’ housing status 12 months after move-in, where follow-up is feasible; results are reported as outcomes Keystone contributes to, not outcomes it alone causes. The participant survey has four recommended questions, below the requested limit of about eight.",
+    "metrics": [
+      {
+        "name": "Permanent-housing move-in and time to move-in",
+        "outcome": "Families move from homelessness into permanent housing",
+        "method": "program_records",
+        "questions": [
+          {
+            "text": "How many families in the reporting cohort have had the full, comparable observation period to move into housing?",
+            "scale": "number",
+            "included": true,
+            "note": "Use a consistent cohort definition and observation window, set to match applicable HMIS and award rules; show families not yet observed for the full period separately.",
+            "source_ids": [
+              "S17",
+              "S18"
+            ]
+          },
+          {
+            "text": "How many families in that cohort moved into permanent housing during the observation period?",
+            "scale": "number",
+            "included": true,
+            "note": "Use the applicable HMIS/award definition for permanent-housing destination and move-in date.",
+            "source_ids": [
+              "S17",
+              "S18",
+              "S19"
+            ]
+          },
+          {
+            "text": "Among families who moved in, what was the median number of days from enrollment to move-in?",
+            "scale": "number",
+            "included": true,
+            "note": "Calculate from enrollment and physical move-in dates for the same cohort and observation period.",
+            "source_ids": [
+              "S17",
+              "S19"
+            ]
+          }
+        ],
+        "timing": "Update enrollment and move-in records as they occur; review by reporting period using a consistent cohort and observation window. Separately show households not yet observed for the full window.",
+        "how_scored": "Report the count and share of families in the fully observed cohort who moved into permanent housing, plus median days from enrollment to move-in among those who moved in. Show the cohort size and the not-yet-fully-observed count; align definitions with applicable HMIS and award rules.",
+        "why_it_matters": "Shows whether families are moving from homelessness into permanent housing and how quickly, a central rapid rehousing result.",
+        "funder_relevance": "HUD CoC materials frame exits to permanent housing and time homeless as system performance indicators; Connecticut RRH describes helping households move into housing. These are useful alignment points, not automatically the project's required calculation. Confirm award-specific definitions. [S2, S17, S18, S19]",
+        "source_ids": [
+          "S2",
+          "S17",
+          "S18",
+          "S19"
+        ]
+      },
+      {
+        "name": "Confidence addressing a rent or landlord issue",
+        "outcome": "Families report greater confidence taking a next step to address a rent or landlord issue",
+        "method": "participant_survey",
+        "questions": [
+          {
+            "text": "Think about this same situation each time: you have a problem paying rent or with your landlord. How confident are you that you can take one next step to address it?",
+            "scale": "scale_0_10",
+            "included": true,
+            "note": "Ask everyone about the same hypothetical situation at both survey points, whether or not they have a current issue. 0 = not at all confident; 10 = completely confident. Locally adapted check-in, not the validated housing self-efficacy scale.",
+            "source_ids": [
+              "S20"
+            ]
+          },
+          {
+            "text": "How confident are you that you would know what to do if your landlord did not respond to a concern?",
+            "scale": "scale_0_10",
+            "included": false,
+            "note": "Optional alternative; use the same hypothetical situation and 0–10 anchors at both survey points. Locally adapted item, not a validated scale.",
+            "source_ids": [
+              "S20"
+            ]
+          },
+          {
+            "text": "How confident are you that you could find someone or an organization to help with a rent or landlord issue?",
+            "scale": "scale_0_10",
+            "included": false,
+            "note": "Optional alternative; overlaps somewhat with the separate resource-knowledge item. Locally adapted item, not a validated scale.",
+            "source_ids": [
+              "S20"
+            ]
+          }
+        ],
+        "timing": "At program entry and at a consistent later point, such as program exit or the end of case-management support. Ask the same hypothetical scenario and item both times, after urgent intake needs are addressed.",
+        "how_scored": "Report the item’s score distribution and median change for participants with paired answers, alongside baseline, follow-up, paired-response, and missing counts. Do not use a 1-point improvement threshold as a validated measure of meaningful change.",
+        "why_it_matters": "A change in confidence can show whether families feel more able to take a next step when a housing problem arises.",
+        "funder_relevance": "Housing-specific self-efficacy has been studied with people who are homeless or vulnerably housed. This brief locally adapted question adds a family-level view of a support outcome; it does not replace housing-status reporting. [S20]",
+        "source_ids": [
+          "S20"
+        ]
+      },
+      {
+        "name": "Parent-reported stress",
+        "outcome": "Parents report feeling more in control and less stressed",
+        "method": "participant_survey",
+        "questions": [
+          {
+            "text": "In the past month, how often did you feel that problems were too much to handle?",
+            "scale": "frequency_5",
+            "included": true,
+            "note": "Locally written check-in item, not copied from the PSS-10. Response options: Never, Rarely, Sometimes, Often, Very often. Do not combine a subset into a PSS-10 score.",
+            "source_ids": [
+              "S21",
+              "S22"
+            ]
+          },
+          {
+            "text": "In the past month, how often did you feel worried about things you could not control?",
+            "scale": "frequency_5",
+            "included": true,
+            "note": "Locally written check-in item, not copied from the PSS-10. Use the same five response options; do not combine items into a PSS-10 score.",
+            "source_ids": [
+              "S21",
+              "S22"
+            ]
+          },
+          {
+            "text": "In the past month, how often did you feel you had enough support to manage your worries?",
+            "scale": "frequency_5",
+            "included": false,
+            "note": "Optional locally written item; higher frequency may indicate more support, not necessarily less stress. Do not combine it with the other items as a validated score.",
+            "source_ids": [
+              "S21",
+              "S22"
+            ]
+          }
+        ],
+        "timing": "At program entry and at the same later point used for the other check-in items; use the same past-month time frame and response choices.",
+        "how_scored": "Report responses to each item separately, with paired-response and missing counts. Lower frequency on the two included stress items suggests improvement. These are locally written items, not a validated scale; do not calculate a PSS-10 score. Confirm permission terms before reproducing or adapting any PSS-10 wording.",
+        "why_it_matters": "Offers a brief view of parents’ reported stress while families work through housing-related challenges.",
+        "funder_relevance": "The Community Foundation for Greater New Haven describes dignity and well-being as relevant to basic-needs work; this is a supplementary family-well-being measure, not a stated required metric. The PSS references inform the stress topic only; these items are not PSS-10 items. [S8, S21, S22]",
+        "source_ids": [
+          "S8",
+          "S21",
+          "S22"
+        ]
+      },
+      {
+        "name": "Knowing where to seek help for a chosen need",
+        "outcome": "Parents can identify where to seek help for at least one priority need they selected",
+        "method": "participant_survey",
+        "questions": [
+          {
+            "text": "If you wanted help with a need you chose, do you know who you could contact?",
+            "scale": "yes_no",
+            "included": true,
+            "note": "Offer Yes or No; participants may skip instead of answering. Keep the need broad and do not record personal details. At each survey point, record only its broad category where possible.",
+            "source_ids": [
+              "S23",
+              "S24"
+            ]
+          },
+          {
+            "text": "If you wanted help with a need you chose, do you know one place you could go for help?",
+            "scale": "yes_no",
+            "included": false,
+            "note": "Optional alternative with the same broad-need and privacy guidance; locally adapted, not a validated test.",
+            "source_ids": [
+              "S23",
+              "S24"
+            ]
+          },
+          {
+            "text": "Would you like help finding someone to contact about the need you chose?",
+            "scale": "yes_no",
+            "included": false,
+            "note": "Optional service-planning alternative, not itself a measure of the outcome.",
+            "source_ids": [
+              "S23",
+              "S24"
+            ]
+          }
+        ],
+        "timing": "At program entry and at the same later point used for the other check-in items. Compare answers over time only when the same broad need category is being discussed; if it changed or is unknown, report the answers separately rather than as a direct change.",
+        "how_scored": "Report Yes, No, skipped, and missing responses separately. For paired comparisons, include only participants whose broad need category stayed the same. Record whether resource information was offered or accessed only if this can be done without personal details.",
+        "why_it_matters": "Shows whether parents feel they know where to turn for help with a priority they chose, consistent with individualized case management.",
+        "funder_relevance": "HUD housing-search and case-management resources include assessment and mainstream-resource referral tools, and 211 Connecticut provides housing and human-service referral information. This is a practical local check, not a stated funder requirement. [S23, S24]",
+        "source_ids": [
+          "S23",
+          "S24"
+        ]
+      },
+      {
+        "name": "Housing status 12 months after move-in",
+        "outcome": "Families remain housed after time-limited rental assistance ends",
+        "method": "program_records",
+        "questions": [
+          {
+            "text": "How many families are due for a 12-month housing-status follow-up after move-in?",
+            "scale": "number",
+            "included": true,
+            "note": "Set each family’s follow-up due date from the recorded physical move-in date. Use a consistent follow-up window. A 6-month check may also be collected where feasible, but the 12-month check is the priority.",
+            "source_ids": [
+              "S17",
+              "S18"
+            ]
+          },
+          {
+            "text": "How many families due for follow-up were contacted, and how many had a known housing status?",
+            "scale": "number",
+            "included": true,
+            "note": "Keep contacted and known-status counts separate in the record. Use a consent-based, preferred contact method and a limited, pre-set number of attempts; no impact on services. HMIS may not capture homelessness outside its system.",
+            "source_ids": [
+              "S18",
+              "S25",
+              "S26"
+            ]
+          },
+          {
+            "text": "How many families with a known status were in permanent housing at follow-up?",
+            "scale": "number",
+            "included": true,
+            "note": "Count a move to another permanent unit as permanent housing; use consistent definitions at each follow-up window.",
+            "source_ids": [
+              "S18",
+              "S19"
+            ]
+          },
+          {
+            "text": "How many families with a known status were staying in shelter, outside, or another place not meant for housing?",
+            "scale": "number",
+            "included": true,
+            "note": "Record the status source and follow-up date. Self-report supplements but is not equivalent to HUD’s HMIS-based system return-to-homelessness measure.",
+            "source_ids": [
+              "S18",
+              "S25",
+              "S26"
+            ]
+          },
+          {
+            "text": "How many families with a known status were in another or unstable housing situation?",
+            "scale": "number",
+            "included": true,
+            "note": "Use a consistent local status definition; keep this category separate from permanent housing, homelessness, and unknown status.",
+            "source_ids": [
+              "S18",
+              "S19"
+            ]
+          }
+        ],
+        "timing": "Prioritize a follow-up 12 months after each family’s recorded physical move-in date; collect a 6-month status after move-in too only where feasible. Use HMIS or a consent-based, brief follow-up with the family’s preferred contact method and a limited, pre-set number of attempts. Do not imply every family can be reached.",
+        "how_scored": "For each follow-up window, report the number due, contacted, with known status, and with unknown status. Among families with known status, report permanent housing, homelessness, and other/unstable housing separately; include the numerator and denominator for the share housed. Also show the number in permanent housing out of all families due, clearly labeled as including unknowns in the denominator. Unknown status is not evidence of either retention or housing loss. Treat any self-reported return as supplementary to, not equivalent to, the HMIS-based system measure; this is a contribution measure, not proof of program-caused retention.",
+        "why_it_matters": "Shows whether families are in permanent housing 12 months after move-in while making follow-up coverage and unknown status visible. This is a useful check on housing stability, though it may not always fall after rental assistance ends.",
+        "funder_relevance": "HUD CoC system performance materials track permanent-housing exits and returns to homelessness; Connecticut RRH guidance provides the program context. A local 12-month follow-up from move-in is a practical measure, not an asserted state requirement, and self-report does not replace HMIS system reporting. [S6, S18, S25, S26]",
+        "source_ids": [
+          "S6",
+          "S18",
+          "S19",
+          "S25",
+          "S26"
+        ]
+      }
+    ],
+    "tools": [
+      {
+        "name": "Brief participant check-in",
+        "method": "participant_survey",
+        "when": "Offer at entry and at a consistent later point, after urgent intake needs are addressed. Use a short script: taking part is voluntary, any question may be skipped, and answers will not affect services. Offer read-aloud and translated options where available; use the same wording and response choices each time. The four included questions cover confidence, stress, and resource knowledge; optional items remain off unless Keystone chooses to add them.",
+        "metrics": [
+          "Confidence addressing a rent or landlord issue",
+          "Parent-reported stress",
+          "Knowing where to seek help for a chosen need"
+        ]
+      },
+      {
+        "name": "Housing outcomes and follow-up records",
+        "method": "program_records",
+        "when": "Use program records/HMIS throughout enrollment and move-in, with consistent cohort definitions and observation windows. Prioritize 12-month status after physical move-in; use a consent-based preferred contact method, limited attempts, and report due, contacted, known, and unknown status separately.",
+        "metrics": [
+          "Permanent-housing move-in and time to move-in",
+          "Housing status 12 months after move-in"
+        ]
+      }
+    ],
+    "sources": [
+      {
+        "id": "S2",
+        "title": "CoC System Performance Measures Table Shells",
+        "publisher": "HUD Exchange",
+        "url": "https://www.hudexchange.info/resource/4483/system-performance-measures-tools/",
+        "note": "Provides tools for consistent calculation and analysis of CoC system performance measures.",
+        "verified": true
+      },
+      {
+        "id": "S6",
+        "title": "Statewide Rapid Rehousing Requirements & Operations Guide",
+        "publisher": "Connecticut Balance of State Continuum of Care / Connecticut Department of Housing",
+        "url": "https://www.ctbos.org/wp-content/uploads/CTDOH-Statewide-RRH-Operations-Guide-v19.pdf",
+        "note": "States that the guide establishes RRH policies and procedures for Connecticut DOH- and CoC-funded projects.",
+        "verified": true
+      },
+      {
+        "id": "S8",
+        "title": "Basic Needs Fund Grants",
+        "publisher": "The Community Foundation for Greater New Haven",
+        "url": "https://www.cfgnh.org/articles/basic-needs-fund-grants",
+        "note": "Describes local grants for material basic needs, including shelter and housing stability, and emphasizes dignity and well-being.",
+        "verified": true
+      },
+      {
+        "id": "S17",
+        "title": "HMIS Data Standards: Universal Data Elements: 3.20 Housing Move-in Date",
+        "publisher": "U.S. Department of Housing and Urban Development, HUD Exchange",
+        "url": "https://www.hudexchange.info/programs/hmis/hmis-data-standards/standards/universal-data-elements/320-housing-move-in-date/",
+        "note": "Explains that the Housing Move-in Date documents when a household physically moves into housing and distinguishes housed households from those still experiencing literal homelessness.",
+        "verified": true
+      },
+      {
+        "id": "S18",
+        "title": "CoC System Performance Measures",
+        "publisher": "U.S. Department of Housing and Urban Development, HUD Exchange",
+        "url": "https://www.hudexchange.info/programs/coc/system-performance-measures/",
+        "note": "Describes HUD measures used by Continuums of Care to assess homelessness-system performance.",
+        "verified": true
+      },
+      {
+        "id": "S19",
+        "title": "Rapid Rehousing (RRH)",
+        "publisher": "Connecticut HMIS",
+        "url": "https://cthmis.com/programs/rapid-rehousing/",
+        "note": "Describes Connecticut RRH as a program focused on ending homelessness quickly by finding housing and connecting families and individuals to services.",
+        "verified": true
+      },
+      {
+        "id": "S20",
+        "title": "General, Health-Specific, and Housing-Specific Self-Efficacy Scales: Preliminary Reliability and Validity Evidence with Homeless or Vulnerably Housed Adults",
+        "publisher": "Journal of Well-Being Assessment / Springer Nature",
+        "url": "https://link.springer.com/article/10.1007/s41543-018-0005-1",
+        "note": "Examines relevant self-efficacy scales, including housing-specific self-efficacy, with people who are homeless or vulnerably housed.",
+        "verified": true
+      },
+      {
+        "id": "S21",
+        "title": "Official PSS-10 | Perceived Stress Scale - 10 items",
+        "publisher": "Mapi Research Trust, ePROVIDE",
+        "url": "https://eprovide.mapi-trust.org/instruments/perceived-stress-scale-10-items",
+        "note": "Describes the PSS-10 as a perceived-stress instrument and provides current instrument, copyright, and use information.",
+        "verified": true
+      },
+      {
+        "id": "S22",
+        "title": "Perceived Stress Scale 10 item (PSS 10)",
+        "publisher": "National Institutes of Health",
+        "url": "https://www.nih.gov/node/20256",
+        "note": "Identifies the PSS-10 as a measure of the degree to which people appraise situations in their lives as stressful.",
+        "verified": true
+      },
+      {
+        "id": "S23",
+        "title": "Housing Search Assistance Toolkit: Client Intake and Case Management Resources",
+        "publisher": "U.S. Department of Housing and Urban Development, HUD Exchange",
+        "url": "https://www.hudexchange.info/resources/housingsearchtool/?housingsearchtoolaction=public%3Amain.client-intake-and-case-management-resources",
+        "note": "Provides a housing assessment template for identifying housing-stability barriers and a mainstream-resources checklist for case managers.",
+        "verified": true
+      },
+      {
+        "id": "S24",
+        "title": "211 Connecticut: Housing",
+        "publisher": "United Way of Connecticut / 211 Connecticut",
+        "url": "https://www.211ct.org/topic_pages/housing",
+        "note": "Provides access to Connecticut housing assistance, services, and referral information.",
+        "verified": true
+      },
+      {
+        "id": "S25",
+        "title": "CoC Performance Profile Reports",
+        "publisher": "U.S. Department of Housing and Urban Development, HUD Exchange",
+        "url": "https://www.hudexchange.info/programs/coc/coc-performance-profile-reports/",
+        "note": "States that CoC performance profiles include returns to homelessness over time and exits to permanent housing.",
+        "verified": true
+      },
+      {
+        "id": "S26",
+        "title": "System Performance Measures Introductory Guide",
+        "publisher": "U.S. Department of Housing and Urban Development, HUD Exchange",
+        "url": "https://files.hudexchange.info/resources/documents/System-Performance-Measures-Introductory-Guide.pdf",
+        "note": "Explains HUD's CoC system performance measures, including the measure addressing returns to homelessness.",
+        "verified": true
+      }
+    ]
+  }
+}

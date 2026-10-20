@@ -1,0 +1,416 @@
+{
+  "_about": "Reusable FICTIONAL test profile for Through Line. Everything here is synthetic. Use with scripts/run_test_profile.py.",
+  "slug": "keystone_family_housing",
+  "org": {
+    "name": "Keystone Family Housing Partners",
+    "sector": "Family homelessness: rapid rehousing and case management",
+    "documents": [
+      "../../test_organizations/05_keystone_family_housing_partners.pdf"
+    ],
+    "website": null
+  },
+  "account": {
+    "username": "keystone.test",
+    "password": "Keystone-Test-2026",
+    "display_name": "Maria Okafor (test ED)",
+    "_note": "Test-only credentials for a fictional org. Never reuse for anything real."
+  },
+  "interview": {
+    "_how": "Each question gets the unused answer whose keywords match most (whole words/phrases). Answers stay under 200 words.",
+    "answer_bank": [
+      {
+        "topic": "who we serve",
+        "keywords": [
+          "come to you",
+          "eligible",
+          "families",
+          "population",
+          "referred",
+          "serve",
+          "situation",
+          "who"
+        ],
+        "answer": "We serve families with children who are living in shelter or doubled up, referred through the regional coordinated entry system. Most heads of household are single mothers in their twenties and thirties with one to three young kids. Many lost housing after an eviction, a job loss, or leaving a violent relationship. About a third speak Spanish at home. We serve roughly 70 families a year, about 220 people."
+      },
+      {
+        "topic": "what we do",
+        "keywords": [
+          "activities",
+          "day",
+          "day to day",
+          "program",
+          "services",
+          "steps",
+          "support",
+          "typical",
+          "week",
+          "week to week"
+        ],
+        "answer": "Three things. First, rapid rehousing: our housing locator finds an apartment, we pay the security deposit and first month, then step rent help down over up to 12 months. Second, Stay Housed case management: weekly home visits for six months, then monthly, covering budgeting, landlord issues, benefits, child care and school enrollment. Third, Fresh Start Furniture: volunteers furnish the apartment before move-in day so families walk into a real home."
+      },
+      {
+        "topic": "changes we see",
+        "keywords": [
+          "after",
+          "better",
+          "change",
+          "changes",
+          "difference",
+          "different",
+          "first months",
+          "hope",
+          "improve",
+          "notice",
+          "outcome",
+          "result",
+          "six months",
+          "success"
+        ],
+        "answer": "In the first months families move in fast, usually within 45 days of enrolling, and kids get back into one school. Parents get calmer and start planning instead of reacting. They learn to budget around rent and know who to call when something goes wrong. A year out, what we hope for is that they are still housed, have not gone back to shelter, and have steadier income. Many parents tell us the biggest change is feeling in control again."
+      },
+      {
+        "topic": "resources",
+        "keywords": [
+          "budget",
+          "capacity",
+          "cost",
+          "funding",
+          "partners",
+          "resources",
+          "staff",
+          "takes",
+          "team",
+          "volunteers"
+        ],
+        "answer": "We have an executive director, four case managers, one housing locator and a part-time finance manager. About 20 volunteers do move-ins and furniture pickups. Our budget is about $640,000 a year, a lot of which is rental assistance that passes straight through to landlords. Key partners are about 35 landlords we work with regularly, the coordinated entry system, two local schools and a food pantry."
+      },
+      {
+        "topic": "how we know",
+        "keywords": [
+          "check",
+          "collect",
+          "confirm",
+          "data",
+          "evidence",
+          "follow up",
+          "follow-up",
+          "how long after",
+          "kept their home",
+          "know",
+          "measure",
+          "numbers",
+          "records",
+          "report",
+          "still housed",
+          "track",
+          "verify",
+          "working"
+        ],
+        "answer": "We enter everything required into the regional homeless data system: enrollments, exits to permanent housing, and how long families were homeless. Case managers log home visits. Honestly we rarely look at our own data beyond the required reports. The board keeps asking whether families are still housed a year after the rent help ends, and whether case management matters beyond the money. We do not have a good answer."
+      },
+      {
+        "topic": "funders",
+        "keywords": [
+          "contract",
+          "foundation",
+          "fund",
+          "funder",
+          "government",
+          "grant",
+          "hud",
+          "require"
+        ],
+        "answer": "About 55% of our money is federal homelessness funding passed through the regional Continuum of Care, 20% is state housing funds, 15% comes from local foundations and 10% from individual and congregational donors. The federal and state funders want exits to permanent housing and returns to homelessness. Foundations increasingly ask about family well-being and stories, not just placements."
+      },
+      {
+        "topic": "anything else",
+        "keywords": [
+          "add",
+          "anything",
+          "else",
+          "important",
+          "missing",
+          "tell us"
+        ],
+        "answer": "The relationship between the case manager and the parent is the heart of it. Families say they stay housed because someone keeps showing up. We also lose touch with some families after assistance ends, which makes long-term follow-up hard."
+      }
+    ],
+    "logic_model_feedback": "This is close. Please add our Fresh Start Furniture move-in support as its own activity, and make one short-term outcome about parents feeling more in control and less stressed, because families tell us that matters most.",
+    "metrics_feedback": "Please keep the participant survey short, no more than about 8 recommended questions, and make sure we measure whether families stay housed 12 months after move-in."
+  },
+  "survey_review": {
+    "_how": "After the Survey Review Bot runs, the script applies every fix with severity high or medium except 'hide', as a staff member accepting the suggestions."
+  },
+  "participants": {
+    "count": 24,
+    "seed": 20261020,
+    "demographics": {
+      "age_range": {
+        "18–24": 5,
+        "25–34": 11,
+        "35–44": 6,
+        "45–54": 2
+      },
+      "gender": {
+        "Woman": 20,
+        "Man": 3,
+        "Prefer not to say": 1
+      },
+      "race_ethnicity": {
+        "Black or African American": 10,
+        "Hispanic or Latino/a/e": 8,
+        "White": 4,
+        "Another race or ethnicity": 1,
+        "Prefer not to say": 1
+      },
+      "primary_language": {
+        "English": 15,
+        "Spanish": 8,
+        "Haitian Creole": 1
+      },
+      "town": {
+        "New Haven": 14,
+        "West Haven": 7,
+        "Hamden": 3
+      },
+      "household": {
+        "Yes": 24
+      }
+    },
+    "response_model": {
+      "_how": "Rating questions: pre drawn around pre_mean (as a share of the scale), post around post_mean for 'improvers' and pre_mean for others. Yes/no: share answering the 'good' answer. Reverse-scored items are flipped automatically.",
+      "improver_share": 0.75,
+      "pre_mean": 0.38,
+      "post_mean": 0.72,
+      "noise": 0.12,
+      "yes_good_pre": 0.15,
+      "yes_good_post": 0.83,
+      "skip_post_share": 0.08
+    },
+    "reflections": [
+      "Having someone check on us every week made me feel like I wasn't alone.",
+      "My kids have their own beds now. They sleep through the night.",
+      "I learned to put rent first and plan the rest around it.",
+      "When the landlord tried to raise the rent, my case manager helped me talk to him.",
+      "We finally have a door that locks and a place that is ours.",
+      "It's still hard some months but I know who to call now.",
+      "The furniture on move-in day made me cry. It felt like a real home.",
+      "I got my son back into one school instead of switching every few months.",
+      "Less stress. I can think about the future again.",
+      "I started a job closer to home because I wasn't moving around anymore."
+    ]
+  },
+  "program_numbers": {
+    "_how": "Plan-derived numbers (whose names the AI writes) are matched to 'plan_rules' by keywords, first match wins; unmatched ones fall back to 'plan_series' in order. 'custom' numbers are created by the script. Re-running replaces values for these months instead of duplicating them.",
+    "months": [
+      "2026-04",
+      "2026-05",
+      "2026-06",
+      "2026-07",
+      "2026-08",
+      "2026-09"
+    ],
+    "plan_series": [
+      [
+        5,
+        6,
+        7,
+        5,
+        6,
+        8
+      ],
+      [
+        22,
+        25,
+        27,
+        24,
+        26,
+        30
+      ],
+      [
+        4,
+        5,
+        6,
+        5,
+        5,
+        7
+      ]
+    ],
+    "custom": [
+      {
+        "name": "Rental assistance paid to landlords",
+        "unit": "$",
+        "values": [
+          31500,
+          34200,
+          36800,
+          33900,
+          35400,
+          38100
+        ]
+      },
+      {
+        "name": "Apartments furnished by volunteers",
+        "unit": "apartments",
+        "values": [
+          4,
+          6,
+          6,
+          5,
+          5,
+          7
+        ]
+      },
+      {
+        "name": "Active landlord partners",
+        "unit": "landlords",
+        "values": [
+          31,
+          32,
+          33,
+          33,
+          34,
+          35
+        ]
+      }
+    ],
+    "plan_rules": [
+      {
+        "keywords": [
+          "median",
+          "days"
+        ],
+        "values": [
+          44,
+          41,
+          39,
+          42,
+          38,
+          36
+        ]
+      },
+      {
+        "keywords": [
+          "due for",
+          "12-month"
+        ],
+        "values": [
+          5,
+          6,
+          6,
+          7,
+          6,
+          7
+        ]
+      },
+      {
+        "keywords": [
+          "contacted"
+        ],
+        "values": [
+          4,
+          5,
+          5,
+          6,
+          5,
+          6
+        ]
+      },
+      {
+        "keywords": [
+          "shelter",
+          "outside",
+          "not meant"
+        ],
+        "values": [
+          1,
+          0,
+          1,
+          0,
+          1,
+          0
+        ]
+      },
+      {
+        "keywords": [
+          "unstable",
+          "another"
+        ],
+        "values": [
+          0,
+          1,
+          0,
+          1,
+          0,
+          1
+        ]
+      },
+      {
+        "keywords": [
+          "permanent housing at follow-up",
+          "in permanent housing at"
+        ],
+        "values": [
+          3,
+          4,
+          4,
+          5,
+          4,
+          5
+        ]
+      },
+      {
+        "keywords": [
+          "moved into permanent",
+          "moved in"
+        ],
+        "values": [
+          6,
+          7,
+          8,
+          7,
+          8,
+          9
+        ]
+      },
+      {
+        "keywords": [
+          "observation period",
+          "cohort",
+          "enrolled"
+        ],
+        "values": [
+          8,
+          9,
+          10,
+          9,
+          10,
+          11
+        ]
+      }
+    ]
+  },
+  "brand": {
+    "_about": "Made-up design standards for the Report Designer test. The logo is generated (keystone_logo.png).",
+    "logo": "keystone_logo.png",
+    "standards": "Keystone's look is warm, steady, and hopeful: never clinical, never pity-driven. Deep teal is our anchor color, with warm gold for highlights and a soft cream accent. Generous white space, rounded and friendly but not childish. Headlines in Georgia, body in Calibri. Show homes, keys, and neighborhoods, not people's faces. Always say 'families', never 'clients' or 'the homeless'.",
+    "primary": "#1F4E5F",
+    "secondary": "#D98E04",
+    "accent": "#F2C14E",
+    "heading_font": "Georgia",
+    "body_font": "Calibri",
+    "tagline": "Every family, a home to build on",
+    "contact": "keystonefamilyhousing.example.org"
+  },
+  "report": {
+    "audience": "Foundation funders",
+    "minutes": 12,
+    "include_quotes": true,
+    "groups": [
+      "outcomes",
+      "people",
+      "program"
+    ],
+    "notes": "This is for our renewal conversation with a regional family foundation. Lead with housing stability, show who we serve, and close with the cost of keeping a family housed."
+  }
+}

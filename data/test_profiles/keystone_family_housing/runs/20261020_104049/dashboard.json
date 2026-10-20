@@ -1,0 +1,800 @@
+{
+  "org_name": "Keystone Family Housing Partners",
+  "headline": {
+    "participants": 24,
+    "responses_pre": 24,
+    "responses_post": 20,
+    "matched": 20,
+    "top_improvement": {
+      "metric": "Confidence addressing a rent or landlord issue",
+      "pct": 85
+    }
+  },
+  "metrics": [
+    {
+      "metric": "Confidence addressing a rent or landlord issue",
+      "instrument": "Brief participant check-in",
+      "scale": "scale_0_10",
+      "n_pre": 24,
+      "n_post": 20,
+      "n_matched": 20,
+      "mean_pre": 3.35,
+      "mean_post": 6.6,
+      "pct_improved": 85
+    },
+    {
+      "metric": "Knowing where to seek help for a chosen need",
+      "instrument": "Brief participant check-in",
+      "scale": "yes_no",
+      "n_pre": 24,
+      "n_post": 20,
+      "n_matched": 20,
+      "mean_pre": 0.2,
+      "mean_post": 0.7,
+      "pct_improved": 60
+    },
+    {
+      "metric": "Parent-reported stress",
+      "instrument": "Brief participant check-in",
+      "scale": "frequency_5",
+      "n_pre": 24,
+      "n_post": 20,
+      "n_matched": 20,
+      "mean_pre": 2.55,
+      "mean_post": 3.6,
+      "pct_improved": 70
+    }
+  ],
+  "indicators": [
+    {
+      "name": "How many families in the reporting cohort have had the full, comparable observation period to move into housing",
+      "unit": "",
+      "total": 57.0,
+      "entries": 6
+    },
+    {
+      "name": "How many families in that cohort moved into permanent housing during the observation period",
+      "unit": "",
+      "total": 45.0,
+      "entries": 6
+    },
+    {
+      "name": "Among families who moved in, what was the median number of days from enrollment to move-in",
+      "unit": "",
+      "total": 240.0,
+      "entries": 6
+    },
+    {
+      "name": "How many families are due for a 12-month housing-status follow-up after move-in",
+      "unit": "",
+      "total": 37.0,
+      "entries": 6
+    },
+    {
+      "name": "How many families due for follow-up were contacted, and how many had a known housing status",
+      "unit": "",
+      "total": 37.0,
+      "entries": 6
+    },
+    {
+      "name": "How many families with a known status were in permanent housing at follow-up",
+      "unit": "",
+      "total": 25.0,
+      "entries": 6
+    },
+    {
+      "name": "How many families with a known status were staying in shelter, outside, or another place not meant for housing",
+      "unit": "",
+      "total": 3.0,
+      "entries": 6
+    },
+    {
+      "name": "How many families with a known status were in another or unstable housing situation",
+      "unit": "",
+      "total": 3.0,
+      "entries": 6
+    },
+    {
+      "name": "Rental assistance paid to landlords",
+      "unit": "$",
+      "total": 209900.0,
+      "entries": 6
+    },
+    {
+      "name": "Apartments furnished by volunteers",
+      "unit": "apartments",
+      "total": 33.0,
+      "entries": 6
+    },
+    {
+      "name": "Active landlord partners",
+      "unit": "landlords",
+      "total": 198.0,
+      "entries": 6
+    }
+  ],
+  "charts": [
+    {
+      "id": "improved",
+      "group": "outcomes",
+      "title": "Share of participants who improved",
+      "kind": "bar",
+      "unit": "%",
+      "categories": [
+        "Confidence addressing a rent or landlord issue",
+        "Knowing where to seek help for a chosen need",
+        "Parent-reported stress"
+      ],
+      "series": [
+        {
+          "name": "% improved",
+          "values": [
+            85,
+            60,
+            70
+          ]
+        }
+      ],
+      "note": "Among participants with both a pre and a post answer. 'Improved' means at least 1 point higher on rating scales, or moving from no to yes."
+    },
+    {
+      "id": "metric-1-0",
+      "group": "outcomes",
+      "metric": "Confidence addressing a rent or landlord issue",
+      "title": "Confidence addressing a rent or landlord issue: average, before and after",
+      "kind": "bar",
+      "unit": "Rating 0–10",
+      "categories": [
+        "Before (pre)",
+        "After (post)"
+      ],
+      "series": [
+        {
+          "name": "Average",
+          "values": [
+            3.35,
+            6.6
+          ]
+        }
+      ],
+      "note": "20 participants answered both pre and post."
+    },
+    {
+      "id": "metric-1-1",
+      "group": "outcomes",
+      "metric": "Knowing where to seek help for a chosen need",
+      "title": "Knowing where to seek help for a chosen need: share answering yes, before and after",
+      "kind": "bar",
+      "unit": "%",
+      "categories": [
+        "Before (pre)",
+        "After (post)"
+      ],
+      "series": [
+        {
+          "name": "% yes",
+          "values": [
+            20,
+            70
+          ]
+        }
+      ],
+      "note": "20 participants answered both pre and post."
+    },
+    {
+      "id": "metric-1-2",
+      "group": "outcomes",
+      "metric": "Parent-reported stress",
+      "title": "Parent-reported stress: average, before and after",
+      "kind": "bar",
+      "unit": "How often (1–5) · reverse-scored, so higher = better",
+      "categories": [
+        "Before (pre)",
+        "After (post)"
+      ],
+      "series": [
+        {
+          "name": "Average",
+          "values": [
+            2.55,
+            3.6
+          ]
+        }
+      ],
+      "note": "20 participants answered both pre and post."
+    },
+    {
+      "id": "responses",
+      "group": "program",
+      "title": "Surveys completed",
+      "kind": "bar",
+      "unit": "responses",
+      "categories": [
+        "Brief participant check-in"
+      ],
+      "series": [
+        {
+          "name": "Pre",
+          "values": [
+            24
+          ]
+        },
+        {
+          "name": "Post",
+          "values": [
+            20
+          ]
+        }
+      ],
+      "note": "Pre and post responses received for each survey tool."
+    },
+    {
+      "id": "demo-age_range",
+      "group": "people",
+      "title": "Age",
+      "kind": "bar",
+      "unit": "%",
+      "categories": [
+        "18–24",
+        "25–34",
+        "35–44",
+        "Groups under 5 (hidden)"
+      ],
+      "series": [
+        {
+          "name": "% of participants",
+          "values": [
+            21,
+            46,
+            25,
+            8
+          ]
+        }
+      ],
+      "counts": [
+        5,
+        11,
+        6,
+        2
+      ],
+      "note": "Share of the 24 participants who answered. Groups with fewer than 5 people are combined to protect privacy."
+    },
+    {
+      "id": "demo-gender",
+      "group": "people",
+      "title": "Gender",
+      "kind": "bar",
+      "unit": "%",
+      "categories": [
+        "Woman",
+        "Groups under 5 (hidden)"
+      ],
+      "series": [
+        {
+          "name": "% of participants",
+          "values": [
+            83,
+            17
+          ]
+        }
+      ],
+      "counts": [
+        20,
+        4
+      ],
+      "note": "Share of the 24 participants who answered. Groups with fewer than 5 people are combined to protect privacy."
+    },
+    {
+      "id": "demo-race_ethnicity",
+      "group": "people",
+      "title": "Race and ethnicity",
+      "kind": "bar",
+      "unit": "%",
+      "categories": [
+        "Black or African American",
+        "Hispanic or Latino/a/e",
+        "Groups under 5 (hidden)"
+      ],
+      "series": [
+        {
+          "name": "% of participants",
+          "values": [
+            42,
+            33,
+            25
+          ]
+        }
+      ],
+      "counts": [
+        10,
+        8,
+        6
+      ],
+      "note": "Share of the 24 participants who answered (people could choose more than one, so shares can add up to more than 100%). Groups with fewer than 5 people are combined to protect privacy."
+    },
+    {
+      "id": "demo-primary_language",
+      "group": "people",
+      "title": "Language spoken at home",
+      "kind": "bar",
+      "unit": "%",
+      "categories": [
+        "English",
+        "Spanish",
+        "Groups under 5 (hidden)"
+      ],
+      "series": [
+        {
+          "name": "% of participants",
+          "values": [
+            62,
+            33,
+            4
+          ]
+        }
+      ],
+      "counts": [
+        15,
+        8,
+        1
+      ],
+      "note": "Share of the 24 participants who answered. Groups with fewer than 5 people are combined to protect privacy."
+    },
+    {
+      "id": "demo-town",
+      "group": "people",
+      "title": "Town",
+      "kind": "bar",
+      "unit": "%",
+      "categories": [
+        "New Haven",
+        "West Haven",
+        "Groups under 5 (hidden)"
+      ],
+      "series": [
+        {
+          "name": "% of participants",
+          "values": [
+            58,
+            29,
+            12
+          ]
+        }
+      ],
+      "counts": [
+        14,
+        7,
+        3
+      ],
+      "note": "Share of the 24 participants who answered. Groups with fewer than 5 people are combined to protect privacy."
+    },
+    {
+      "id": "demo-household",
+      "group": "people",
+      "title": "Children under 18 at home",
+      "kind": "bar",
+      "unit": "%",
+      "categories": [
+        "Yes"
+      ],
+      "series": [
+        {
+          "name": "% of participants",
+          "values": [
+            100
+          ]
+        }
+      ],
+      "counts": [
+        24
+      ],
+      "note": "Share of the 24 participants who answered. Groups with fewer than 5 people are combined to protect privacy."
+    },
+    {
+      "id": "indicator-1",
+      "group": "program",
+      "title": "How many families in the reporting cohort have had the full, comparable observation period to move into housing",
+      "kind": "line",
+      "unit": "count",
+      "categories": [
+        "2026-04",
+        "2026-05",
+        "2026-06",
+        "2026-07",
+        "2026-08",
+        "2026-09"
+      ],
+      "series": [
+        {
+          "name": "How many families in the reporting cohort have had the full, comparable observation period to move into housing",
+          "values": [
+            8.0,
+            9.0,
+            10.0,
+            9.0,
+            10.0,
+            11.0
+          ]
+        }
+      ],
+      "note": "Entered by staff. Latest month (2026-09): 11."
+    },
+    {
+      "id": "indicator-2",
+      "group": "program",
+      "title": "How many families in that cohort moved into permanent housing during the observation period",
+      "kind": "line",
+      "unit": "count",
+      "categories": [
+        "2026-04",
+        "2026-05",
+        "2026-06",
+        "2026-07",
+        "2026-08",
+        "2026-09"
+      ],
+      "series": [
+        {
+          "name": "How many families in that cohort moved into permanent housing during the observation period",
+          "values": [
+            6.0,
+            7.0,
+            8.0,
+            7.0,
+            8.0,
+            9.0
+          ]
+        }
+      ],
+      "note": "Entered by staff. Latest month (2026-09): 9."
+    },
+    {
+      "id": "indicator-3",
+      "group": "program",
+      "title": "Among families who moved in, what was the median number of days from enrollment to move-in",
+      "kind": "line",
+      "unit": "count",
+      "categories": [
+        "2026-04",
+        "2026-05",
+        "2026-06",
+        "2026-07",
+        "2026-08",
+        "2026-09"
+      ],
+      "series": [
+        {
+          "name": "Among families who moved in, what was the median number of days from enrollment to move-in",
+          "values": [
+            44.0,
+            41.0,
+            39.0,
+            42.0,
+            38.0,
+            36.0
+          ]
+        }
+      ],
+      "note": "Entered by staff. Latest month (2026-09): 36."
+    },
+    {
+      "id": "indicator-4",
+      "group": "program",
+      "title": "How many families are due for a 12-month housing-status follow-up after move-in",
+      "kind": "line",
+      "unit": "count",
+      "categories": [
+        "2026-04",
+        "2026-05",
+        "2026-06",
+        "2026-07",
+        "2026-08",
+        "2026-09"
+      ],
+      "series": [
+        {
+          "name": "How many families are due for a 12-month housing-status follow-up after move-in",
+          "values": [
+            5.0,
+            6.0,
+            6.0,
+            7.0,
+            6.0,
+            7.0
+          ]
+        }
+      ],
+      "note": "Entered by staff. Latest month (2026-09): 7."
+    },
+    {
+      "id": "indicator-5",
+      "group": "program",
+      "title": "How many families due for follow-up were contacted, and how many had a known housing status",
+      "kind": "line",
+      "unit": "count",
+      "categories": [
+        "2026-04",
+        "2026-05",
+        "2026-06",
+        "2026-07",
+        "2026-08",
+        "2026-09"
+      ],
+      "series": [
+        {
+          "name": "How many families due for follow-up were contacted, and how many had a known housing status",
+          "values": [
+            5.0,
+            6.0,
+            6.0,
+            7.0,
+            6.0,
+            7.0
+          ]
+        }
+      ],
+      "note": "Entered by staff. Latest month (2026-09): 7."
+    },
+    {
+      "id": "indicator-6",
+      "group": "program",
+      "title": "How many families with a known status were in permanent housing at follow-up",
+      "kind": "line",
+      "unit": "count",
+      "categories": [
+        "2026-04",
+        "2026-05",
+        "2026-06",
+        "2026-07",
+        "2026-08",
+        "2026-09"
+      ],
+      "series": [
+        {
+          "name": "How many families with a known status were in permanent housing at follow-up",
+          "values": [
+            3.0,
+            4.0,
+            4.0,
+            5.0,
+            4.0,
+            5.0
+          ]
+        }
+      ],
+      "note": "Entered by staff. Latest month (2026-09): 5."
+    },
+    {
+      "id": "indicator-7",
+      "group": "program",
+      "title": "How many families with a known status were staying in shelter, outside, or another place not meant for housing",
+      "kind": "line",
+      "unit": "count",
+      "categories": [
+        "2026-04",
+        "2026-05",
+        "2026-06",
+        "2026-07",
+        "2026-08",
+        "2026-09"
+      ],
+      "series": [
+        {
+          "name": "How many families with a known status were staying in shelter, outside, or another place not meant for housing",
+          "values": [
+            1.0,
+            0.0,
+            1.0,
+            0.0,
+            1.0,
+            0.0
+          ]
+        }
+      ],
+      "note": "Entered by staff. Latest month (2026-09): 0."
+    },
+    {
+      "id": "indicator-8",
+      "group": "program",
+      "title": "How many families with a known status were in another or unstable housing situation",
+      "kind": "line",
+      "unit": "count",
+      "categories": [
+        "2026-04",
+        "2026-05",
+        "2026-06",
+        "2026-07",
+        "2026-08",
+        "2026-09"
+      ],
+      "series": [
+        {
+          "name": "How many families with a known status were in another or unstable housing situation",
+          "values": [
+            0.0,
+            1.0,
+            0.0,
+            1.0,
+            0.0,
+            1.0
+          ]
+        }
+      ],
+      "note": "Entered by staff. Latest month (2026-09): 1."
+    },
+    {
+      "id": "indicator-9",
+      "group": "program",
+      "title": "Rental assistance paid to landlords",
+      "kind": "line",
+      "unit": "$",
+      "categories": [
+        "2026-04",
+        "2026-05",
+        "2026-06",
+        "2026-07",
+        "2026-08",
+        "2026-09"
+      ],
+      "series": [
+        {
+          "name": "Rental assistance paid to landlords",
+          "values": [
+            31500.0,
+            34200.0,
+            36800.0,
+            33900.0,
+            35400.0,
+            38100.0
+          ]
+        }
+      ],
+      "note": "Entered by staff. Total across 6 months: $209,900."
+    },
+    {
+      "id": "indicator-10",
+      "group": "program",
+      "title": "Apartments furnished by volunteers",
+      "kind": "line",
+      "unit": "apartments",
+      "categories": [
+        "2026-04",
+        "2026-05",
+        "2026-06",
+        "2026-07",
+        "2026-08",
+        "2026-09"
+      ],
+      "series": [
+        {
+          "name": "Apartments furnished by volunteers",
+          "values": [
+            4.0,
+            6.0,
+            6.0,
+            5.0,
+            5.0,
+            7.0
+          ]
+        }
+      ],
+      "note": "Entered by staff. Latest month (2026-09): 7 apartments."
+    },
+    {
+      "id": "indicator-11",
+      "group": "program",
+      "title": "Active landlord partners",
+      "kind": "line",
+      "unit": "landlords",
+      "categories": [
+        "2026-04",
+        "2026-05",
+        "2026-06",
+        "2026-07",
+        "2026-08",
+        "2026-09"
+      ],
+      "series": [
+        {
+          "name": "Active landlord partners",
+          "values": [
+            31.0,
+            32.0,
+            33.0,
+            33.0,
+            34.0,
+            35.0
+          ]
+        }
+      ],
+      "note": "Entered by staff. Latest month (2026-09): 35 landlords."
+    }
+  ],
+  "open_responses": [
+    {
+      "instrument": "Brief participant check-in",
+      "question": "Is there anything else you would like us to know about the support you received or what would help next?",
+      "text": "When the landlord tried to raise the rent, my case manager helped me talk to him.",
+      "wave": "post",
+      "at": "2026-10-20T12:13:44.007862+00:00"
+    },
+    {
+      "instrument": "Brief participant check-in",
+      "question": "Is there anything else you would like us to know about the support you received or what would help next?",
+      "text": "I learned to put rent first and plan the rest around it.",
+      "wave": "post",
+      "at": "2026-10-20T12:13:42.622807+00:00"
+    },
+    {
+      "instrument": "Brief participant check-in",
+      "question": "Is there anything else you would like us to know about the support you received or what would help next?",
+      "text": "My kids have their own beds now. They sleep through the night.",
+      "wave": "post",
+      "at": "2026-10-20T12:13:41.297861+00:00"
+    },
+    {
+      "instrument": "Brief participant check-in",
+      "question": "Is there anything else you would like us to know about the support you received or what would help next?",
+      "text": "Having someone check on us every week made me feel like I wasn't alone.",
+      "wave": "post",
+      "at": "2026-10-20T12:13:40.382680+00:00"
+    },
+    {
+      "instrument": "Brief participant check-in",
+      "question": "Is there anything else you would like us to know about the support you received or what would help next?",
+      "text": "Less stress. I can think about the future again.",
+      "wave": "post",
+      "at": "2026-10-20T12:13:39.612678+00:00"
+    },
+    {
+      "instrument": "Brief participant check-in",
+      "question": "Is there anything else you would like us to know about the support you received or what would help next?",
+      "text": "I got my son back into one school instead of switching every few months.",
+      "wave": "post",
+      "at": "2026-10-20T12:13:39.191660+00:00"
+    },
+    {
+      "instrument": "Brief participant check-in",
+      "question": "Is there anything else you would like us to know about the support you received or what would help next?",
+      "text": "The furniture on move-in day made me cry. It felt like a real home.",
+      "wave": "post",
+      "at": "2026-10-20T12:13:38.890932+00:00"
+    },
+    {
+      "instrument": "Brief participant check-in",
+      "question": "Is there anything else you would like us to know about the support you received or what would help next?",
+      "text": "It's still hard some months but I know who to call now.",
+      "wave": "post",
+      "at": "2026-10-20T12:13:38.372572+00:00"
+    },
+    {
+      "instrument": "Brief participant check-in",
+      "question": "Is there anything else you would like us to know about the support you received or what would help next?",
+      "text": "When the landlord tried to raise the rent, my case manager helped me talk to him.",
+      "wave": "post",
+      "at": "2026-10-20T12:13:37.601956+00:00"
+    },
+    {
+      "instrument": "Brief participant check-in",
+      "question": "Is there anything else you would like us to know about the support you received or what would help next?",
+      "text": "My kids have their own beds now. They sleep through the night.",
+      "wave": "post",
+      "at": "2026-10-20T12:13:36.883325+00:00"
+    },
+    {
+      "instrument": "Brief participant check-in",
+      "question": "Is there anything else you would like us to know about the support you received or what would help next?",
+      "text": "Having someone check on us every week made me feel like I wasn't alone.",
+      "wave": "post",
+      "at": "2026-10-20T12:13:36.322110+00:00"
+    },
+    {
+      "instrument": "Brief participant check-in",
+      "question": "Is there anything else you would like us to know about the support you received or what would help next?",
+      "text": "I started a job closer to home because I wasn't moving around anymore.",
+      "wave": "post",
+      "at": "2026-10-20T12:13:35.780580+00:00"
+    }
+  ],
+  "min_group_size": 5
+}

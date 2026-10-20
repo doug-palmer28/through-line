@@ -1,0 +1,29 @@
+# Web API
+fastapi==0.143.0
+uvicorn[standard]==0.54.0
+python-multipart==0.0.32
+
+# Agents (OpenAI via Portkey, model gpt-6-luna)
+pydantic-ai-slim[openai]==2.55.0
+openai==3.29.0
+python-dotenv==1.2.4
+httpx==0.28.1
+
+# Database
+sqlmodel==0.0.48
+
+# Auth & security
+argon2-cffi==25.1.0
+pyjwt==2.15.1
+
+# Documents: read uploads in memory; build the PowerPoint decks, Excel files, and PDF one-pager
+pypdf==6.20.1
+python-docx==1.2.0
+python-pptx==1.0.2
+openpyxl==3.1.5
+reportlab==5.0.1
+pillow==12.3.0
+pypdfium2==5.14.0
+
+# Testing
+pytest==9.1.1

@@ -1,0 +1,249 @@
+{
+  "id": 1,
+  "created_at": "2026-10-20T14:42+00:00",
+  "request": {
+    "chart_ids": [
+      "improved",
+      "metric-1-0",
+      "metric-1-1",
+      "metric-1-2",
+      "responses",
+      "demo-age_range",
+      "demo-gender",
+      "demo-race_ethnicity",
+      "demo-primary_language",
+      "demo-town",
+      "demo-household",
+      "indicator-1"
+    ],
+    "audience": "Foundation funders",
+    "minutes": 12,
+    "include_quotes": true,
+    "notes": "This is for our renewal conversation with a regional family foundation. Lead with housing stability, show who we serve, and close with the cost of keeping a family housed."
+  },
+  "draft": {
+    "deck_title": "Keystone Family Housing Partners",
+    "deck_subtitle": "Housing stability takes more than a move-in",
+    "slides": [
+      {
+        "layout": "title",
+        "headline": "A home to build on",
+        "body": [
+          "Keystone Family Housing Partners",
+          "Funder renewal conversation"
+        ],
+        "stats": [],
+        "chart_id": null,
+        "quote": null,
+        "speaker_notes": "Thank you for making time to hear about Keystone Family Housing Partners. Our work starts with a practical goal: helping families move from homelessness into permanent housing, and helping them build the supports and confidence that can make a home more stable. We will share what the current participant feedback tells us, what it does not yet tell us, and where continued foundation support can help. Our guiding idea is simple: every family, a home to build on."
+      },
+      {
+        "layout": "statement",
+        "headline": "A move-in is a beginning",
+        "body": [
+          "A lease starts housing stability; practical support helps families work toward keeping it."
+        ],
+        "stats": [],
+        "chart_id": null,
+        "quote": null,
+        "speaker_notes": "A move into a home matters enormously, but it is not the whole story. Rent, landlord issues, benefits, child care, school enrollment, and the pressure of settling in can all affect whether a family feels able to move forward. Keystone’s approach pairs help getting into permanent housing with time-limited rent assistance, move-in essentials, and voluntary individualized support. That support is intended to help families remain housed after assistance ends, while recognizing that housing stability also depends on factors outside Keystone’s control."
+      },
+      {
+        "layout": "logic",
+        "headline": "Pair a home with practical support",
+        "body": [
+          "Find an apartment and help families move in",
+          "Provide deposits, stepped-down rent help, and furniture",
+          "Offer voluntary, individualized case management",
+          "Support family-selected steps toward housing stability"
+        ],
+        "stats": [],
+        "chart_id": null,
+        "quote": null,
+        "speaker_notes": "The program combines several supports around each move. Keystone identifies apartments and helps families move into permanent housing, provides security deposits and first month’s rent, and steps down rental help for up to 12 months. Fresh Start Furniture furnishes apartments before move-in. Stay Housed case management is voluntary and individualized, with home-visit frequency adjusted with each family. Together, these supports are meant to ease the move and help families address the practical barriers they identify as important."
+      },
+      {
+        "layout": "stats",
+        "headline": "A promising signal from matched responses",
+        "body": [],
+        "stats": [
+          {
+            "value": "24",
+            "label": "participants"
+          },
+          {
+            "value": "20",
+            "label": "answered both surveys"
+          },
+          {
+            "value": "85%",
+            "label": "improved in confidence"
+          }
+        ],
+        "chart_id": null,
+        "quote": null,
+        "speaker_notes": "The results here come from a small reporting group, so we want to be clear about who answered. There were 24 participants represented in the headline data, and 20 provided both a pre and post response. Among participants who answered both surveys, 85% improved in confidence addressing a rent or landlord issue. That is an encouraging participant-reported signal. It is not a claim that every family improved, and it is not by itself evidence of long-term housing stability."
+      },
+      {
+        "layout": "chart",
+        "headline": "More participants reported improvement",
+        "body": [
+          "Among participants who answered both surveys, improvement was most common in confidence addressing a rent or landlord issue."
+        ],
+        "stats": [],
+        "chart_id": "improved",
+        "quote": null,
+        "speaker_notes": "This chart brings together three participant-reported measures. Among people with both a pre and a post answer, 85% improved in confidence addressing a rent or landlord issue, 60% improved in knowing where to seek help for a chosen need, and 70% improved on the parent-reported stress measure. Improvement means at least one point higher on a rating scale, or a change from no to yes. These are meaningful short-term signals, but they describe reported change—not proof that the program alone caused it."
+      },
+      {
+        "layout": "chart",
+        "headline": "Confidence addressing housing issues rose",
+        "body": [
+          "Participants who answered both surveys reported higher average confidence taking a next step on a rent or landlord issue."
+        ],
+        "stats": [],
+        "chart_id": "metric-1-0",
+        "quote": null,
+        "speaker_notes": "For the confidence measure, the average rating was 3.35 before and 6.6 after, on a scale from 0 to 10. The same 20 participants answered both the pre and post surveys. This change is consistent with the program’s focus on helping families work through rent and landlord concerns. A confidence rating does not mean a problem was solved, or that a housing challenge will not arise. It does suggest that many respondents felt better equipped to take a next step."
+      },
+      {
+        "layout": "chart",
+        "headline": "More knew where to seek help",
+        "body": [
+          "The share answering yes about where to seek help for a chosen need rose from 20% to 70%."
+        ],
+        "stats": [],
+        "chart_id": "metric-1-1",
+        "quote": null,
+        "speaker_notes": "This measure asks whether parents know where to seek help for a priority need they chose. Among the 20 participants who answered both surveys, 20% said yes before and 70% said yes after. Knowing where to turn can be a useful step toward addressing needs such as benefits, child care, budgeting, or school enrollment, depending on the family’s priorities. This is a reported measure of knowing where to seek help; it does not tell us whether a service was available or whether the need was ultimately resolved."
+      },
+      {
+        "layout": "chart",
+        "headline": "Parents reported a better stress measure",
+        "body": [
+          "The reverse-scored average moved from 2.55 to 3.6, where higher means better."
+        ],
+        "stats": [],
+        "chart_id": "metric-1-2",
+        "quote": null,
+        "speaker_notes": "The stress measure is reverse-scored, so a higher number indicates a better result on this scale. The average moved from 2.55 before to 3.6 after among the 20 participants who answered both surveys. The chart offers a brief view of how parents reported stress while navigating housing-related challenges. It should be read as a change in survey responses, not as a clinical assessment or a promise that stress has gone away. Families’ experiences and circumstances can continue to change."
+      },
+      {
+        "layout": "chart",
+        "headline": "Follow-up tracking is still developing",
+        "body": [
+          "By 2026-09, 11 families had the full comparable observation period for move-in tracking; this is not a move-in result."
+        ],
+        "stats": [],
+        "chart_id": "indicator-1",
+        "quote": null,
+        "speaker_notes": "This staff-entered indicator tracks how many families in the reporting cohort have had a full, comparable observation period to move into housing. The count is 11 in 2026-09. It helps us understand whether the cohort has had enough comparable time for move-in tracking; it does not tell us how many families moved into housing or remained housed. We include it because careful timing and follow-up matter when interpreting outcomes. We want to keep building reporting that separates program activity, move-in results, and longer-term stability."
+      },
+      {
+        "layout": "chart",
+        "headline": "Respondents were families with children",
+        "body": [
+          "100% of participants who answered reported children under 18 at home."
+        ],
+        "stats": [],
+        "chart_id": "demo-household",
+        "quote": null,
+        "speaker_notes": "This profile chart shows that 100% of the 24 participants who answered reported children under 18 at home. It is one useful piece of context for understanding the families represented in these responses, not a complete description of every family Keystone serves. We are keeping this profile at an aggregate level and not presenting small demographic groups. The program’s work with families—from securing a home to arranging move-in essentials and individualized support—is grounded in the realities of family life."
+      },
+      {
+        "layout": "quote",
+        "headline": "Knowing who to call matters",
+        "body": [],
+        "stats": [],
+        "chart_id": null,
+        "quote": "It's still hard some months but I know who to call now.",
+        "speaker_notes": "This participant’s words hold both parts of the experience: some months are still hard, and knowing who to call is a change they value. We appreciate that the quote does not suggest that support removes every challenge. It speaks instead to one of the program’s intended short-term outcomes: helping parents identify where to seek help for a priority need. We share this anonymously, alongside the survey results, as one person’s perspective rather than as a summary of every family’s experience."
+      },
+      {
+        "layout": "story",
+        "headline": "Encouraging signals, with important limits",
+        "body": [
+          "Matched survey responses show reported short-term changes",
+          "The current results do not establish long-term housing stability",
+          "A 12-month housing-status result is not included here",
+          "Keep improving follow-up and cost reporting"
+        ],
+        "stats": [],
+        "chart_id": null,
+        "quote": null,
+        "speaker_notes": "The matched responses give us a useful view of short-term changes in confidence, knowing where to seek help, and reported stress. There are important limits: 20 participants answered both surveys, results are self-reported, and we cannot attribute every change to Keystone. The materials provided do not include a 12-month housing-status result, so we are not claiming that these data demonstrate that families remained housed after assistance ended. Better follow-up and clearer reporting on program costs would help the foundation and Keystone assess progress more fully."
+      },
+      {
+        "layout": "ask",
+        "headline": "Sustain the supports around a move",
+        "body": [
+          "Renew support for time-limited rent assistance",
+          "Keep move-in essentials and voluntary case management available",
+          "Strengthen follow-up on housing status and program costs"
+        ],
+        "stats": [],
+        "chart_id": null,
+        "quote": null,
+        "speaker_notes": "For this renewal conversation, we are asking for support that helps sustain the combination of supports around a family’s move: time-limited rent assistance, move-in essentials through Fresh Start Furniture, and voluntary, individualized Stay Housed case management. We do not have a cost-per-family figure in the information we are sharing today, so we will not put forward an unsupported amount. Support can also help Keystone strengthen follow-up on housing status and cost reporting, so future renewal conversations can connect resources with clearer outcome information."
+      },
+      {
+        "layout": "closing",
+        "headline": "Thank you",
+        "body": [
+          "Every family, a home to build on",
+          "keystonefamilyhousing.example.org"
+        ],
+        "stats": [],
+        "chart_id": null,
+        "quote": null,
+        "speaker_notes": "Thank you for considering Keystone’s work and for investing in families as they move toward a stable home. The participant responses shared today are encouraging, while also reminding us to keep listening and to improve how we track longer-term housing status and costs. We welcome a conversation about the mix of support that can help families settle into housing and address the barriers they identify. You can learn more or connect with Keystone at keystonefamilyhousing.example.org."
+      }
+    ],
+    "one_pager": {
+      "headline": "A home to build on",
+      "subhead": "Keystone Family Housing Partners helps families move from homelessness into permanent housing and supports their next steps toward stability.",
+      "stats": [
+        {
+          "value": "24",
+          "label": "participants"
+        },
+        {
+          "value": "20",
+          "label": "answered both surveys"
+        },
+        {
+          "value": "85%",
+          "label": "improved in housing-issue confidence"
+        },
+        {
+          "value": "100%",
+          "label": "reported children under 18 at home"
+        }
+      ],
+      "story": "Among participants who answered both surveys, many reported improvement in confidence addressing rent or landlord issues, knowing where to seek help, and parent-reported stress. These short-term survey results are encouraging, but they do not establish long-term housing stability; continued follow-up can help Keystone understand what happens after move-in and time-limited assistance.",
+      "chart_ids": [
+        "improved",
+        "metric-1-0"
+      ],
+      "quote": "It's still hard some months but I know who to call now.",
+      "call_to_action": "Support time-limited rent assistance, move-in essentials, individualized case management, and stronger outcome follow-up."
+    },
+    "design": {
+      "primary": "#1F4E5F",
+      "secondary": "#D98E04",
+      "accent": "#F2C14E",
+      "background": "#FFFFFF",
+      "heading_font": "Georgia",
+      "body_font": "Calibri",
+      "mood": "Warm, steady, and hopeful; spacious, readable, and grounded in homes and neighborhood imagery rather than participant faces."
+    }
+  },
+  "privacy": {
+    "agent_clean": true,
+    "agent_summary": "No participant or staff member identifiers or groups small enough to point to an individual were found in the materials.",
+    "agent_findings": [],
+    "code_findings": [],
+    "quotes_scrubbed_before_agent": 0,
+    "clean": true
+  }
+}

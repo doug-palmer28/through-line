@@ -1,0 +1,30 @@
+# Render Blueprint: New → Blueprint → pick this repo. Render reads this file and creates the service.
+# You'll be asked for the two secrets marked `sync: false` (they're never stored in git).
+services:
+  - type: web
+    name: through-line
+    runtime: docker
+    plan: starter            # paid plan: needed for the persistent disk below (free instances lose all files)
+    region: virginia
+    healthCheckPath: /api/health
+    disk:
+      name: through-line-data
+      mountPath: /var/data   # database, sessions, logos, and the audit log survive restarts and redeploys
+      sizeGB: 1
+    envVars:
+      - key: PORTKEY_API_KEY
+        sync: false          # paste your Portkey key in the Render dashboard
+      - key: THROUGH_LINE_SIGNUP_CODE
+        sync: false          # the access code new organizations need to sign up
+      - key: THROUGH_LINE_SECRET
+        generateValue: true  # signs sign-in cookies and keys the username hashes; keep it stable
+      - key: THROUGH_LINE_HTTPS
+        value: "1"
+      - key: THROUGH_LINE_DB
+        value: /var/data/through_line.db
+      - key: THROUGH_LINE_SESSIONS
+        value: /var/data/sessions
+      - key: THROUGH_LINE_AUDIT
+        value: /var/data/audit_log.json
+      - key: THROUGH_LINE_BRAND_DIR
+        value: /var/data/brand

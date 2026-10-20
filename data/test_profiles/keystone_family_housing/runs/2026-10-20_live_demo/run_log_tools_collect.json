@@ -1,0 +1,77 @@
+{
+  "profile": "keystone_family_housing",
+  "base": "http://127.0.0.1:8000",
+  "started": "2026-10-20T08:13:07",
+  "stages": {
+    "account": {
+      "org": {
+        "id": 1,
+        "name": "Keystone Family Housing Partners"
+      }
+    },
+    "tools": {
+      "reviews": [
+        {
+          "instrument": "Brief participant check-in",
+          "summary": "Not quite ready: the survey is brief and most questions are clear, but the stress items need reverse-scoring and the outcome about feeling more in control is not directly measured. Add a short open-response question to hear participants’ perspectives; the program-record outcomes do not need to be added to this survey.",
+          "ready": false,
+          "applied": [
+            {
+              "action": "set_reverse",
+              "problem": "More frequent feelings of being overwhelmed indicate worse stress, so higher values should not be treated as better."
+            },
+            {
+              "action": "set_reverse",
+              "problem": "More frequent worry indicates worse stress, so higher values should not be treated as better."
+            },
+            {
+              "action": "add_open_question",
+              "problem": "There is no open-response question, so participants cannot share their perspective in their own words."
+            }
+          ],
+          "remaining_checks": []
+        }
+      ]
+    },
+    "collect": {
+      "participant_pre": 24,
+      "participant_post": 20,
+      "staff_rows": 0
+    },
+    "numbers": {
+      "indicators": 6
+    },
+    "export": {
+      "charts": [
+        "Share of participants who improved",
+        "Confidence addressing a rent or landlord issue: average, before and after",
+        "Knowing where to seek help for a chosen need: share answering yes, before and after",
+        "Parent-reported stress: average, before and after",
+        "Surveys completed",
+        "Who we serve: What is your age",
+        "Who we serve: What is your gender",
+        "Who we serve: How do you describe your race or ethnicity? (choose all that apply)",
+        "Who we serve: What language do you speak most at home",
+        "Who we serve: Which town do you live in",
+        "Who we serve: Do you have children under 18 living with you",
+        "How many families in the reporting cohort have had the full, comparable observation period to move into housing",
+        "How many families in that cohort moved into permanent housing during the observation period",
+        "Among families who moved in, what was the median number of days from enrollment to move-in",
+        "Rental assistance paid to landlords",
+        "Apartments furnished by volunteers",
+        "Active landlord partners"
+      ],
+      "headline": {
+        "participants": 24,
+        "responses_pre": 24,
+        "responses_post": 20,
+        "matched": 20,
+        "top_improvement": {
+          "metric": "Confidence addressing a rent or landlord issue",
+          "pct": 85
+        }
+      }
+    }
+  },
+  "finished": "2026-10-20T08:13:45"
+}

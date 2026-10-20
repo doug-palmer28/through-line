@@ -1,0 +1,112 @@
+{
+  "profile": "keystone_family_housing",
+  "base": "http://127.0.0.1:8000",
+  "started": "2026-10-20T10:40:49",
+  "stages": {
+    "account": {
+      "org": {
+        "id": 1,
+        "name": "Keystone Family Housing Partners"
+      }
+    },
+    "numbers": {
+      "indicators": 11,
+      "uploads": [
+        {
+          "month": "2026-04",
+          "saved": 11,
+          "errors": []
+        },
+        {
+          "month": "2026-05",
+          "saved": 11,
+          "errors": []
+        },
+        {
+          "month": "2026-06",
+          "saved": 11,
+          "errors": []
+        },
+        {
+          "month": "2026-07",
+          "saved": 11,
+          "errors": []
+        },
+        {
+          "month": "2026-08",
+          "saved": 11,
+          "errors": []
+        },
+        {
+          "month": "2026-09",
+          "saved": 11,
+          "errors": []
+        }
+      ]
+    },
+    "export": {
+      "charts": [
+        "Share of participants who improved",
+        "Confidence addressing a rent or landlord issue: average, before and after",
+        "Knowing where to seek help for a chosen need: share answering yes, before and after",
+        "Parent-reported stress: average, before and after",
+        "Surveys completed",
+        "Age",
+        "Gender",
+        "Race and ethnicity",
+        "Language spoken at home",
+        "Town",
+        "Children under 18 at home",
+        "How many families in the reporting cohort have had the full, comparable observation period to move into housing",
+        "How many families in that cohort moved into permanent housing during the observation period",
+        "Among families who moved in, what was the median number of days from enrollment to move-in",
+        "How many families are due for a 12-month housing-status follow-up after move-in",
+        "How many families due for follow-up were contacted, and how many had a known housing status",
+        "How many families with a known status were in permanent housing at follow-up",
+        "How many families with a known status were staying in shelter, outside, or another place not meant for housing",
+        "How many families with a known status were in another or unstable housing situation",
+        "Rental assistance paid to landlords",
+        "Apartments furnished by volunteers",
+        "Active landlord partners"
+      ],
+      "headline": {
+        "participants": 24,
+        "responses_pre": 24,
+        "responses_post": 20,
+        "matched": 20,
+        "top_improvement": {
+          "metric": "Confidence addressing a rent or landlord issue",
+          "pct": 85
+        }
+      }
+    },
+    "report": {
+      "report_id": 1,
+      "charts": [
+        "improved",
+        "metric-1-0",
+        "metric-1-1",
+        "metric-1-2",
+        "responses",
+        "demo-age_range",
+        "demo-gender",
+        "demo-race_ethnicity",
+        "demo-primary_language",
+        "demo-town",
+        "demo-household",
+        "indicator-1"
+      ],
+      "slides": 14,
+      "privacy": {
+        "agent_clean": true,
+        "agent_summary": "No participant or staff member identifiers or groups small enough to point to an individual were found in the materials.",
+        "agent_findings": [],
+        "code_findings": [],
+        "quotes_scrubbed_before_agent": 0,
+        "clean": true
+      },
+      "minutes": 2.1
+    }
+  },
+  "finished": "2026-10-20T10:42:59"
+}

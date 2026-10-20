@@ -99,6 +99,27 @@ def compute(db: Session, org: Organization) -> dict:
                     "note": f"{len(pairs)} participants answered both pre and post"
                             + (" (small group: interpret with care)" if len(pairs) < MIN_GROUP else "") + ".",
                 })
+        # Choice questions: the share of respondents who picked each choice, by wave.
+        for q in [q for q in scored_qs if q["scale"] in surveys.CHOICE and q.get("options")]:
+            series = []
+            for wave in [w for w in ("pre", "post") if w in q["waves"]]:
+                answered = [r.answers[q["id"]] for r in rs if r.wave == wave and q["id"] in r.answers]
+                if len(answered) < MIN_GROUP:
+                    continue  # too few people to report safely
+                picks = Counter(o for a in answered for o in (a if isinstance(a, list) else [a]))
+                series.append({"name": "Pre" if wave == "pre" else "Post",
+                               "values": [round(100 * picks[o] / len(answered)) for o in q["options"]],
+                               "n": len(answered)})
+            if series:
+                multi = q["scale"] == "multi_choice"
+                charts.append({
+                    "id": f"choice-{inst.id}-{q['id']}", "group": "answers", "title": q["text"], "kind": "bar",
+                    "unit": "%", "categories": q["options"],
+                    "series": [{"name": s["name"], "values": s["values"]} for s in series],
+                    "note": f"Share of the {' / '.join(str(s['n']) for s in series)} people who answered"
+                            + (" (they could pick more than one, so shares can add up to more than 100%)" if multi else "")
+                            + ".",
+                })
         for r in rs:
             for qid, val in r.answers.items():
                 q = qmap.get(qid)
@@ -250,7 +271,10 @@ def data_xlsx(db: Session, org: Organization) -> bytes:
     for n, inst in enumerate(instruments, start=1):
         for q in inst.questions:
             opts = surveys.SCALES[q["scale"]]["options"]
-            values = ", ".join(f"{i + surveys.MIN_VALUE.get(q['scale'], 0)}={o}" for i, o in enumerate(opts)) if opts else q["scale"]
+            if q["scale"] in surveys.CHOICE:
+                values = "; ".join(q.get("options") or [])
+            else:
+                values = ", ".join(f"{i + surveys.MIN_VALUE.get(q['scale'], 0)}={o}" for i, o in enumerate(opts)) if opts else q["scale"]
             code_ws.append([excel_safe(inst.name), q["id"], excel_safe(q["text"]), q["scale"], values, excel_safe(q.get("metric") or ""),
                             "/".join(q["waves"]), "yes" if q.get("reverse") else "", "yes" if q["hidden"] else ""])
         ws = wb.create_sheet(re.sub(r"[\\/*?:\[\]]", "-", f"{n}. {inst.name}")[:31])  # Excel forbids \ / * ? : [ ]
@@ -265,7 +289,9 @@ def data_xlsx(db: Session, org: Organization) -> bytes:
         for r in rs:
             demo = [", ".join(v) if isinstance(v := r.demographics.get(k, ""), list) else v for k in demo_keys]
             ws.append([codes.get(r.participant_id, ""), r.wave, r.entered_by, r.created_at.date().isoformat()]
-                      + [excel_safe(v) for v in demo] + [excel_safe(r.answers.get(q["id"], "")) for q in inst.questions])
+                      + [excel_safe(v) for v in demo]
+                      + [excel_safe("; ".join(a) if isinstance(a := r.answers.get(q["id"], ""), list) else a)
+                         for q in inst.questions])
     ind_ws = wb.create_sheet("Program numbers")
     ind_ws.append(["Number", "Unit", "Period", "Value", "Note"])
     names = {i.id: i for i in db.exec(select(Indicator).where(Indicator.org_id == org.id)).all()}

@@ -319,8 +319,12 @@ class AuditEntry(BaseModel):
 class SurveyFix(BaseModel):
     """A change staff can apply with one click."""
 
-    action: Literal["rewrite", "change_scale", "hide", "set_waves", "set_reverse", "add_open_question"]
-    text: str | None = Field(default=None, description="New wording (rewrite) or the new question (add_open_question).")
+    action: Literal["rewrite", "change_scale", "hide", "set_waves", "set_reverse", "add_open_question", "make_choice"]
+    text: str | None = Field(default=None, description="New wording (rewrite, optional for make_choice) or the new "
+                                                        "question (add_open_question).")
+    options: list[str] | None = Field(default=None, description="make_choice only: 3-8 short, distinct answer choices "
+                                                                 "that cover the likely answers; include 'Other' if needed.")
+    multi: bool | None = Field(default=None, description="make_choice only: true if people may pick several choices.")
     scale: Scale | None = Field(default=None, description="New scale (change_scale).")
     waves: list[Literal["pre", "post"]] | None = Field(default=None, description="When to ask (set_waves).")
     reverse: bool | None = Field(default=None, description="Mark as reverse-scored (set_reverse).")

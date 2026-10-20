@@ -5,6 +5,7 @@ import { when } from "../format";
 
 const GROUPS: { key: string; label: string }[] = [
   { key: "outcomes", label: "Outcomes" },
+  { key: "answers", label: "Survey answers" },
   { key: "people", label: "Who we serve" },
   { key: "program", label: "Program activity" },
 ];

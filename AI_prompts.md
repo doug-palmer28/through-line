@@ -508,6 +508,39 @@ The full product plan lives in [PROJECT_PLAN.md](PROJECT_PLAN.md).
 
 ---
 
+## Step 19b: Fixes from Doug's Walk-Through
+
+**Goal:** Polish what Doug found while using the app before sharing it with a pilot organization, and get the Keystone example onto the live site.
+
+### Verbatim prompt
+
+> When working through the logic model progression, I want the six steps to always be visible. So when you scroll up, I want the stages to be clear.
+> You can remove the “we skipped text you can’t see” thing. We want this safety feature, but we do not need to broadcast it.
+> WEhen they put the logic model together it says “step 3 logic model” and then it also says  4: logic model. Similar mis-match on step 4 metrics and 5-metrics
+>
+> On the metrics page, in the cells with questions, make them automatically be big enough that you can read the whole thing, right now it is too small to read.
+> Can you have the review bot for the survey to also accept feedback. Like I wanted it to make the text response question and turn them into data fields (so that it could be easier to make it quantitative than qualitative.
+> Need more instructions on the survey tools tab to let folks know that that there are their surveys, and then there are ways to generate custom information for participants to fill out their responses, and you can enter responses yourself and upload ht eprogram numbers  Also, just like how you can upload data in the program numbers, have a download excel file that you can fill in to mass upload information in the "enter responses" section.
+> There was a problem with my survey where it was changed into a pre survey and then the questions didn't make sense. This is something that the survey checker agent should help to fix--if they change the timing of the surveys, they may also need to adjust the wording of the pre and post surveys as well. Can you update the website to have the data from the keystone example on the render website? Or walk me through how to do it.
+
+*Outputs:*
+- A sticky Studio stepper; headings numbered from the stepper; the hidden-text notice removed from the UI (the protection and its audit entry stay)
+- Question boxes that grow to fit (`AutoTextarea`)
+- **Multiple-choice questions** (choose one / choose all that apply) end to end, with a "Survey answers" dashboard section
+- The Survey Review Bot takes an optional request and can convert a written question into multiple choice (`make_choice`); a new automatic check and prompt rule catch wording that doesn't fit when a question is asked
+- Survey Tools guide; Excel template download/upload for Enter responses (`response_sheets.py`)
+- Completed Studio sessions no longer expire
+- `operator_tools.py export-org` / `import-org` and the Keystone bundle (`scripts/demo/keystone_family_housing.json`)
+- Tests: `test_survey_upgrades.py`, `test_org_import.py` (59 passing in total)
+
+### Follow-up prompt
+
+>
+
+### Reflection
+
+---
+
 ## Stretch Goals (only after the MVP is done)
 
 ### S1: Voice Reflections

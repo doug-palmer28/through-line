@@ -3,6 +3,8 @@
     .venv/Scripts/python scripts/operator_tools.py usage               # print totals + write an Excel report
     .venv/Scripts/python scripts/operator_tools.py orgs                # organizations and what they've used
     .venv/Scripts/python scripts/operator_tools.py backfill            # once: copy pre-ledger usage from the audit log
+    .venv/Scripts/python scripts/operator_tools.py export-org 1 scripts/demo/keystone.json   # package an organization
+    python ../scripts/operator_tools.py import-org ../scripts/demo/keystone.json --username keystone.demo   # on Render
     .venv/Scripts/python scripts/operator_tools.py allow 1 grants      # give org 1 one more grant this month
     .venv/Scripts/python scripts/operator_tools.py allow 1 report-revision --item 3
 
@@ -15,6 +17,7 @@ report goes to data/usage_reports/ (git-ignored): it names staff and organizatio
 """
 
 import argparse
+import os
 import sys
 from collections import defaultdict
 from datetime import datetime
@@ -136,6 +139,155 @@ def backfill() -> str:
     return f"Copied {added} earlier agent runs from the audit log ({skipped} had no organization, e.g. pre-accounts tests)."
 
 
+# ============================================================ copying an organization (e.g. the Keystone demo)
+#
+# export-org writes one JSON file with an organization's work: logic model and plan, survey tools, participants
+# (codes only), responses, program numbers, brand + logo, reports, grant drafts, and its Studio record.
+# It never includes passwords, PINs, usernames, or token usage. import-org loads that file into another
+# database (e.g. the live site) under a NEW staff login you choose; participants get fresh random PINs.
+
+
+def _iso(dt) -> str | None:
+    return dt.isoformat() if dt else None
+
+
+def export_org(org_id: int, out: Path) -> str:
+    import base64
+    import json
+
+    from branding import load_logo
+    from db import Indicator, IndicatorEntry, Participant, Response
+    from sessions import sessions_dir
+
+    with Session(engine()) as db:
+        org = db.get(Organization, org_id)
+        if not org:
+            raise SystemExit(f"No organization {org_id}.")
+        by = lambda model: db.exec(select(model).where(model.org_id == org_id)).all()  # noqa: E731
+        people = {p.id: p.code for p in by(Participant)}
+        session_path = sessions_dir() / f"{org.studio_session_id}.json"
+        logo = load_logo(org_id)
+        bundle = {
+            "format": "through-line-org/1", "exported_at": datetime.now().isoformat(timespec="seconds"),
+            "organization": {"name": org.name, "logic_model": org.logic_model, "measurement_plan": org.measurement_plan,
+                             "brand": org.brand},
+            "logo_png_base64": base64.b64encode(logo).decode() if logo else None,
+            "studio_session": json.loads(session_path.read_text(encoding="utf-8")) if session_path.exists() else None,
+            "participants": [{"code": code} for code in people.values()],
+            "instruments": [{"old_id": i.id, "name": i.name, "method": i.method, "when": i.when, "status": i.status,
+                             "questions": i.questions, "demographics": i.demographics, "review": i.review,
+                             "review_count": i.review_count, "created_at": _iso(i.created_at)} for i in by(Instrument)],
+            "responses": [{"instrument": r.instrument_id, "participant": people.get(r.participant_id), "wave": r.wave,
+                           "answers": r.answers, "demographics": r.demographics, "entered_by": r.entered_by,
+                           "created_at": _iso(r.created_at)} for r in by(Response)],
+            "indicators": [{"old_id": i.id, "name": i.name, "unit": i.unit, "description": i.description,
+                            "source": i.source} for i in by(Indicator)],
+            "entries": [{"indicator": e.indicator_id, "period": e.period.isoformat(), "value": e.value, "note": e.note}
+                        for e in by(IndicatorEntry)],
+            "reports": [{"request": r.request, "draft": r.draft, "privacy": r.privacy, "revisions": r.revisions,
+                         "feedback": r.feedback, "created_at": _iso(r.created_at)} for r in by(ReportRun)],
+            "grants": [{"foundation": g.foundation, "foundation_url": g.foundation_url, "request": g.request,
+                        "sources": g.sources, "profile": g.profile, "research_mode": g.research_mode, "draft": g.draft,
+                        "privacy": g.privacy, "revisions": g.revisions, "feedback": g.feedback,
+                        "created_at": _iso(g.created_at)} for g in by(GrantApplication)],
+        }
+    out.parent.mkdir(parents=True, exist_ok=True)
+    out.write_text(json.dumps(bundle, indent=1, ensure_ascii=False), encoding="utf-8")
+    return (f"Exported '{bundle['organization']['name']}' to {out}: {len(bundle['participants'])} participants, "
+            f"{len(bundle['responses'])} responses, {len(bundle['entries'])} program values, "
+            f"{len(bundle['reports'])} report(s), {len(bundle['grants'])} grant draft(s). No passwords or PINs.")
+
+
+def import_org(path: Path, username: str, password: str, display_name: str) -> str:
+    import base64
+    import json
+    import re
+    import secrets
+    from datetime import date
+
+    from branding import save_logo
+    from db import Indicator, IndicatorEntry, Participant, Response, StaffUser
+    from security import hash_secret, username_hash
+    from sessions import sessions_dir
+
+    b = json.loads(path.read_text(encoding="utf-8"))
+    if b.get("format") != "through-line-org/1":
+        raise SystemExit("That file isn't a Through Line organization export.")
+    when = lambda s: datetime.fromisoformat(s) if s else datetime.now()  # noqa: E731
+    with Session(engine()) as db:
+        if db.exec(select(StaffUser).where(StaffUser.username_hash == username_hash(username))).first():
+            raise SystemExit(f"The username '{username}' is taken. Choose another with --username.")
+        o = b["organization"]
+        org = Organization(name=o["name"], logic_model=o["logic_model"], measurement_plan=o["measurement_plan"],
+                           brand=o["brand"], allowance_used={"studio_starts": 1, "report_designs": len(b["reports"])})
+        db.add(org)
+        db.commit()
+        db.refresh(org)
+        db.add(StaffUser(org_id=org.id, username_hash=username_hash(username), password_hash=hash_secret(password),
+                         display_name=display_name, role="admin"))
+        people = {}
+        for p in b["participants"]:  # fresh random PINs: nobody (including the exporter) knows them
+            row = Participant(org_id=org.id, code=p["code"], pin_hash=hash_secret(f"{secrets.randbelow(10**6):06d}"))
+            db.add(row)
+            db.flush()
+            people[p["code"]] = row.id
+        inst_ids, ind_ids = {}, {}
+        for i in b["instruments"]:
+            row = Instrument(org_id=org.id, name=i["name"], method=i["method"], when=i["when"], status=i["status"],
+                             questions=i["questions"], demographics=i["demographics"], review=i["review"],
+                             review_count=i.get("review_count") or 0, created_at=when(i.get("created_at")))
+            db.add(row)
+            db.flush()
+            inst_ids[i["old_id"]] = row.id
+        for r in b["responses"]:
+            if r["participant"] in people and r["instrument"] in inst_ids:
+                db.add(Response(org_id=org.id, instrument_id=inst_ids[r["instrument"]], participant_id=people[r["participant"]],
+                                wave=r["wave"], answers=r["answers"], demographics=r["demographics"],
+                                entered_by=r["entered_by"], created_at=when(r.get("created_at"))))
+        for i in b["indicators"]:
+            row = Indicator(org_id=org.id, name=i["name"], unit=i["unit"], description=i["description"], source=i["source"])
+            db.add(row)
+            db.flush()
+            ind_ids[i["old_id"]] = row.id
+        for e in b["entries"]:
+            if e["indicator"] in ind_ids:
+                db.add(IndicatorEntry(org_id=org.id, indicator_id=ind_ids[e["indicator"]],
+                                      period=date.fromisoformat(e["period"]), value=e["value"], note=e["note"]))
+
+        def remap(obj):
+            """Chart ids embed database ids (metric-<tool>-…, choice-<tool>-…, indicator-<n>): point them at the new rows."""
+            text = json.dumps(obj)
+            text = re.sub(r'"(metric|choice)-(\d+)-', lambda m: f'"{m.group(1)}-{inst_ids.get(int(m.group(2)), m.group(2))}-', text)
+            text = re.sub(r'"indicator-(\d+)"', lambda m: f'"indicator-{ind_ids.get(int(m.group(1)), m.group(1))}"', text)
+            return json.loads(text)
+
+        for r in b["reports"]:
+            db.add(ReportRun(org_id=org.id, request=remap(r["request"]), draft=remap(r["draft"]), privacy=r["privacy"],
+                             revisions=r.get("revisions") or 0, feedback=r.get("feedback") or [],
+                             created_at=when(r.get("created_at"))))
+        for g in b["grants"]:
+            db.add(GrantApplication(org_id=org.id, foundation=g["foundation"], foundation_url=g["foundation_url"],
+                                    request=g["request"], sources=g["sources"], profile=g["profile"],
+                                    research_mode=g["research_mode"], draft=g["draft"], privacy=g["privacy"],
+                                    revisions=g.get("revisions") or 0, feedback=g.get("feedback") or [],
+                                    created_at=when(g.get("created_at"))))
+        if b.get("studio_session"):  # the Studio record, re-owned by the new organization
+            s = {**b["studio_session"], "org_id": org.id}
+            sessions_dir().mkdir(parents=True, exist_ok=True)
+            (sessions_dir() / f"{s['session_id']}.json").write_text(json.dumps(s, indent=2), encoding="utf-8")
+            org.studio_session_id = s["session_id"]
+            db.add(org)
+        db.commit()
+        if b.get("logo_png_base64"):
+            save_logo(org.id, base64.b64decode(b["logo_png_base64"]))
+        audit_append(event="operator_import", agent="human", team="operator",
+                     human={"role": "operator", "action": "imported organization", "org_id": org.id},
+                     output={"participants": len(people), "responses": len(b["responses"]), "reports": len(b["reports"])})
+        return (f"Imported '{org.name}' as organization {org.id}. Sign in with username '{username}' and the password "
+                f"you chose. {len(people)} participants (new random PINs), {len(b['responses'])} responses, "
+                f"{len(b['entries'])} program values, {len(b['reports'])} report(s), {len(b['grants'])} grant draft(s).")
+
+
 def print_usage() -> None:
     with Session(engine()) as db:
         rows = ledger.platform_rows(db)
@@ -184,6 +336,13 @@ if __name__ == "__main__":
     sub.add_parser("usage", help="token totals by organization and person, plus an Excel report")
     sub.add_parser("orgs", help="organizations and their allowance use")
     sub.add_parser("backfill", help="copy token use from the audit log for runs before the ledger existed")
+    e = sub.add_parser("export-org", help="package an organization's work (no passwords or PINs) into a JSON file")
+    e.add_argument("org_id", type=int)
+    e.add_argument("out", type=Path)
+    i = sub.add_parser("import-org", help="load a packaged organization under a new staff login")
+    i.add_argument("bundle", type=Path)
+    i.add_argument("--username", required=True)
+    i.add_argument("--name", default="Demo administrator", help="display name for the new login")
     p = sub.add_parser("allow", help="give an organization more of a limited feature")
     p.add_argument("org_id", type=int)
     p.add_argument("kind", choices=["studio", "report", "grants", "report-revision", "grant-revision", "survey-review"])
@@ -197,5 +356,15 @@ if __name__ == "__main__":
         print_orgs()
     elif args.cmd == "backfill":
         print(backfill())
+    elif args.cmd == "export-org":
+        print(export_org(args.org_id, args.out))
+    elif args.cmd == "import-org":
+        import getpass
+
+        password = os.environ.get("IMPORT_PASSWORD") or getpass.getpass("Password for the new login (10+ characters, "
+                                                                        "with a capital letter and a number): ")
+        if len(password) < 10 or not any(ch.isupper() for ch in password) or not any(ch.isdigit() for ch in password):
+            raise SystemExit("Please use at least 10 characters with a capital letter and a number.")
+        print(import_org(args.bundle, args.username.strip().lower(), password, args.name))
     else:
         print(allow(args.org_id, args.kind, args.item, args.n))

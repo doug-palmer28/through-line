@@ -1,5 +1,6 @@
 import { useEffect, useRef, useState } from "react";
 import type { StudioSession } from "../../api";
+import { stepLabel } from "./Stepper";
 import Thinking from "./Thinking";
 import UploadOffer from "./UploadOffer";
 import WordCounter, { clampWords } from "./WordCounter";
@@ -32,7 +33,7 @@ export default function Chat({ session, busy, wordLimit, onAnswer, onUpload, onS
     <section className="card chat">
       <div className="chat__head">
         <div>
-          <p className="eyebrow">Five questions</p>
+          <p className="eyebrow">{stepLabel("interview")}</p>
           <h3>
             {open ? `Question ${session.question_number} of ${session.questions_total}` : "Getting to know you"}
           </h3>

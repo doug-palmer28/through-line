@@ -22,6 +22,7 @@ COPY requirements.txt ./
 RUN pip install -r requirements.txt
 COPY backend/ backend/
 COPY scripts/operator_tools.py scripts/
+COPY scripts/demo/ scripts/demo/
 COPY --from=web /app/frontend/dist frontend/dist
 
 # Data (database, sessions, logos, audit log) lives on the persistent disk mounted at /var/data; see render.yaml.

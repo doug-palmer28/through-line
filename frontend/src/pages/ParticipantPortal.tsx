@@ -193,6 +193,28 @@ function SurveyForm(props: { id: number; wave: string; onCancel: () => void; onE
           {q.scale === "open_text" ? (
             <textarea rows={3} maxLength={2000} value={(answers[q.id] as string) ?? ""}
                       onChange={(e) => setAnswers({ ...answers, [q.id]: e.target.value })} />
+          ) : q.scale === "multi_choice" ? (
+            <div className="pq__checks">
+              {(q.options ?? []).map((o) => {
+                const list = (answers[q.id] as string[]) ?? [];
+                return (
+                  <label key={o} className={`pq__opt ${list.includes(o) ? "is-on" : ""}`}>
+                    <input type="checkbox" checked={list.includes(o)}
+                           onChange={(e) => setAnswers({ ...answers, [q.id]: e.target.checked ? [...list, o] : list.filter((x) => x !== o) })} />
+                    {o}
+                  </label>
+                );
+              })}
+            </div>
+          ) : q.scale === "choice" ? (
+            <div className="pq__options">
+              {(q.options ?? []).map((o) => (
+                <label key={o} className={`pq__opt ${answers[q.id] === o ? "is-on" : ""}`}>
+                  <input type="radio" name={q.id} checked={answers[q.id] === o} onChange={() => setAnswers({ ...answers, [q.id]: o })} />
+                  {o}
+                </label>
+              ))}
+            </div>
           ) : q.scale === "number" ? (
             <input type="number" min={0} inputMode="numeric" value={(answers[q.id] as string) ?? ""}
                    onChange={(e) => setAnswers({ ...answers, [q.id]: e.target.value })} />

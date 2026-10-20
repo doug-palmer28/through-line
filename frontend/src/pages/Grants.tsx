@@ -1,6 +1,5 @@
 import { useEffect, useState } from "react";
 import { api, type GrantApplication, type GrantList } from "../api";
-import HiddenTextNotice from "../components/HiddenTextNotice";
 import PrivacyPanel from "../components/PrivacyPanel";
 import { SourceChips, SourcesList } from "../components/studio/Sources";
 import Thinking from "../components/studio/Thinking";
@@ -191,7 +190,6 @@ function ApplicationView({ app, onChange, onError, onDeleted }: {
               onClick={() => act("The Privacy Reviewer is reading…", () => api.checkGrantPrivacy(app.id))}>Run privacy check</button>
           </div>
         </div>
-        <HiddenTextNotice sources={app.sources} />
         {app.privacy && <PrivacyPanel privacy={app.privacy} />}
         {app.missing_numbers.length > 0 && (
           <p className="alert alert--soft small">Some numbers the draft uses no longer exist in your data (shown as “–”): {app.missing_numbers.join(", ")}.</p>

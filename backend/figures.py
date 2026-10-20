@@ -51,6 +51,11 @@ def catalog(data: dict) -> dict[str, dict[str, str]]:
                 if cat != HIDDEN:
                     out[f"share:{cid[5:]}:{slug(cat)}"] = {"value": fmt_value(v, "%"),
                                                           "label": f"of participants: {c['title'].lower()} = {cat}"}
+        elif cid.startswith("choice-"):  # the latest wave asked: share who picked each choice
+            latest = c["series"][-1]
+            for cat, v in zip(c["categories"], latest["values"]):
+                out[f"answer:{slug(c['title'])[:40]}:{slug(cat)}"] = {
+                    "value": fmt_value(v, "%"), "label": f"of people answering '{c['title']}' ({latest['name']}) chose {cat}"}
         elif cid.startswith("indicator-"):
             values = c["series"][0]["values"]
             months = c["categories"]

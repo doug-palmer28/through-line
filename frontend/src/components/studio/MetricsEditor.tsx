@@ -1,6 +1,7 @@
 import { useEffect, useState } from "react";
 import type { MeasurementPlan, Method, Metric, Scale, SurveyQuestion } from "../../api";
 import { SourceChips, SourcesList } from "./Sources";
+import AutoTextarea from "../AutoTextarea";
 
 export const SCALES: Record<Scale, string> = {
   agree_5: "Agree (1–5)",
@@ -189,7 +190,7 @@ export default function MetricsEditor({ plan, version, outcomes, readOnly, busy,
                             onChange={(e) => setQ({ included: e.target.checked })}
                           />
                           <div className="question__body">
-                            <input value={q.text} placeholder="Question wording" onChange={(e) => setQ({ text: e.target.value })} />
+                            <AutoTextarea value={q.text} placeholder="Question wording" onChange={(e) => setQ({ text: e.target.value })} />
                             {(q.note || q.source_ids.length > 0) && (
                               <p className="question__note">
                                 {q.note} <SourceChips ids={q.source_ids} sources={work.sources} />

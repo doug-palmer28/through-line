@@ -14,6 +14,8 @@ What lives where (the privacy design):
 Working notes are saved while a session is active only so a server restart
 doesn't lose someone's progress. Sessions stay open for SESSION_LIFETIME of
 inactivity, because people may take a long time to think through answers.
+A completed session never expires: its working notes are already wiped, and the
+organization should always be able to see the logic model and plan it approved.
 """
 
 import asyncio
@@ -262,7 +264,10 @@ def _expire(session: Session) -> None:
 def _purge_idle() -> None:
     cutoff = _now() - SESSION_LIFETIME
     for s in [s for s in _SESSIONS.values() if s.last_active < cutoff]:
-        _expire(s)
+        if s.phase == "complete":
+            _SESSIONS.pop(s.id, None)  # finished work stays viewable; it just leaves memory (notes were wiped at completion)
+        else:
+            _expire(s)
 
 
 def create(org_name: str, org_id: int | None = None) -> Session:
@@ -284,7 +289,7 @@ def get(session_id: str) -> Session | None:
         session = Session.from_record(json.loads(path.read_text(encoding="utf-8")))
         if session.ended:
             return None
-        if session.last_active < _now() - SESSION_LIFETIME:
+        if session.last_active < _now() - SESSION_LIFETIME and session.phase != "complete":
             _expire(session)
             return None
         _SESSIONS[session.id] = session

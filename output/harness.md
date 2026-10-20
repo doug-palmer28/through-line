@@ -149,6 +149,9 @@ All data types live in `backend/models.py`. **The orchestrator is Python code, n
 - **Output:** `SurveyReviewResult`: summary, ready yes/no, strengths, and up to 8 issues. Each concrete issue carries a **one-click fix** (`rewrite`, `change_scale`, `hide`, `set_waves`, `set_reverse`, `add_open_question`).
 - **Human in the loop:** the bot never edits a survey. Staff click a fix, which changes their draft, and nothing is saved until they click Save. Once responses exist, it only suggests hide/timing/new questions. Editing after a review marks the review "stale".
 - **Works with automatic checks** (`surveys.precheck`, no AI): mixed scales within a metric, rated questions asked only at post, too many questions, no open question, no rated questions, and possible double-barreled wording.
+- **Staff requests (Step 19b):** staff can type what they want from a review ("turn the written questions into multiple choice so we can count them"); it goes in the payload as `staff_request`, and the prompt makes it the first priority.
+- **Timing (Step 19b):** a question asked before the program can't assume the person has been in it. The prompt checks every question's wording against when it's asked, and a matching automatic check (`surveys.LOOKS_BACK`) flags phrases like "since you started" or "what has changed" at pre.
+- **Countable answers (Step 19b):** the `make_choice` fix turns a written question into multiple choice (choose one, or all that apply) with 3–8 options. If the question already has answers, the app hides it and adds the choice version as a new question.
 - **Limits:** ≤ 3 requests, ≤ 2 tool calls, ≤ 60,000 tokens. **2 reviews per survey tool** (Step 15b); a failed run doesn't count. Doug starts live runs.
 
 #### 7. Report Designer ✦ (new in Step 15; a refreshable shell since Step 15b)
@@ -376,6 +379,8 @@ Sessions stay open for **7 days of inactivity**, so people can take their time, 
 - **Matching:** responses are keyed by participant code + tool + wave (unique), so each participant's pre and post line up.
 - **Staff bulk entry:** a grid with one row per participant code and one column per question. Use it for paper surveys and staff assessments. Re-entering a code and wave replaces that form.
 - **Program numbers:** staff add monthly values (dollars spent, event attendance, …) to plan-derived or custom numbers.
+- **Multiple-choice questions (Step 19b):** "Choose one" and "Choose all that apply", with 2–12 staff-defined choices stored on the question. Answers are checked against the choices; once answers exist, choices can be added but not removed or renamed. The dashboard shows a "Survey answers" chart per question (share of people choosing each option, by wave, only with ≥ 5 respondents), and the numbers catalog gets `answer:<question>:<choice>` keys.
+- **Responses from Excel (Step 19b, `response_sheets.py`):** per survey and wave, a template with every active participant code and that wave's questions (dropdowns for rated and choice questions; existing answers pre-filled). Uploads are read in memory and saved through the same checks as the grid.
 
 ## 10d. Dashboard & Downloads (Step 10)
 
@@ -421,7 +426,7 @@ Hidden text is a classic way to slip instructions past a human to an AI ("ignore
 | Web pages, Markdown | HTML parser with inline styles and simple `<style>` rules | scripts, styles, templates, comments; `hidden`, `display:none`, `visibility:hidden`, `opacity:0`, tiny font sizes, off-screen positioning, clip tricks; screen-reader-only classes; white-on-white inline colors |
 | All text | | zero-width and formatting characters, bidi overrides, Unicode "tag" characters |
 
-- Staff see what was skipped ("Document 1 (PDF): 212 characters of text the same color as its background") on the Studio's question screen and on each grant application, and it's logged as `hidden_text_skipped`. Counts only, never the hidden text.
+- What was skipped is logged as `hidden_text_skipped` (counts by reason, never the hidden text) and kept in each source's record. Since Step 19b it isn't shown to staff: the protection works quietly.
 - **Proof:** an adversarial PDF hides "SECRET" six ways; the old reader (pypdf) returns all of it, and the new one returns none of it while keeping white text on a dark box. The same goes for Word, PowerPoint (including a dark-background slide), HTML, and Markdown. On the 10 real test-organization PDFs, the new reader matches the old one word for word (no false positives).
 
 ## 10g. Tokens, Allowances, and Live Numbers (Step 15b)
@@ -450,6 +455,12 @@ Refused requests get a plain 429 message. An allowance is committed **before** t
 - **Pipeline:** Funder Researcher (`FoundationProfile`, web search with fallback; citations verified in code) → Grant Writer (`GrantDraft`) → Privacy Reviewer.
 - **View and download:** answers with live numbers, word counts against limits (flagged when over), priorities and source chips, highlighted `[ADD: …]` placeholders, the checklist, and needs-input items. The **Word document** (`grant_docx.py`) has a fit summary, each question and answer, a "Before you submit" table, highlighted placeholders, and the foundation's priorities and sources (verified or "please check").
 - **Org isolation:** every route checks `org_id` (404 for other organizations).
+
+## 10h-2. Copying an Organization (Step 19b)
+
+`operator_tools.py export-org` packages an organization's work into one JSON file: logic model and plan, Studio record, survey tools, participant codes, responses, program numbers, brand and logo, reports, and grant drafts. It never includes passwords, PINs, usernames, or token usage. `import-org` loads it under a **new** staff login the operator chooses. Participants get fresh random PINs, and chart ids in reports are re-pointed at the new rows. The Keystone demo bundle ships at `scripts/demo/keystone_family_housing.json`; `test_org_import.py` proves it loads next to an existing organization and that every page works.
+
+Completed Studio sessions no longer expire after 7 idle days. Their working notes are already wiped, and the organization should always see the logic model and plan it approved.
 
 ## 10i. The Live Site (Step 19)
 
@@ -697,3 +708,4 @@ All Logic Model Studio routes now require a signed-in staff member, and a sessio
 | 15 | 2026-10-20 | **Report Designer** agent (funder deck with speaker notes + one-page PDF flyer, branded from the org's own design standards and logo) with a **three-layer privacy check** (code scrub → agent review → code scan). **Program numbers by monthly Excel template** (download, fill, upload; replaces per month). **Demographics as percentages.** **Redesigned quick report** (`design.py`, native charts, brand-aware). Run live for Keystone. **Cleanup:** removed unused `PageHeader`, the stale `docs/sample_logic_model.pptx`, the unused `data/seed/` and `data/uploads` ignore rules; pinned `reportlab` and `pillow`; added the missing "Invite a colleague" button for the existing invite route; refreshed this harness. |
 | 15b | 2026-10-20 | **Agents read only what a person can see** (`visible.py`: pdfium for PDFs, Word/PowerPoint style and theme resolution, HTML/Markdown, invisible characters), proven with adversarial fixtures. **Token ledger** per person (`TokenUsage`), the **AI usage** page, and `operator_tools.py` (usage Excel, allowances, audit-log backfill). **Allowances** per organization (Studio 2, Survey Review Bot 2 per tool, report 1 design + 1 revision, grants 3/month + 1 revision; privacy check unlimited). **Report shell** with live `{{number}}` tokens and free refresh; stable chart ids. **Privacy Reviewer** split out as its own on-demand agent. **Grants tab:** Funder Researcher foundation job, **Grant Writer**, Word export. Top bar wraps with six tabs; local-time timestamps. |
 | 19 | 2026-10-20 | **Live site:** Dockerfile + Render blueprint (Starter + persistent disk), FastAPI serves the website, sign-up access code, and the pre-launch review fixes in §10i. README written; pushed to GitHub. |
+| 19b | 2026-10-20 | From Doug's walk-through: sticky Studio stepper, consistent step numbers, auto-growing question boxes; the hidden-text notice removed from the UI; **multiple-choice questions** with dashboard charts; the Survey Review Bot takes staff requests, converts written questions to choices (`make_choice`), and checks timing vs wording (plus a new automatic check); a Survey Tools guide; Excel templates for entering responses; completed sessions persist; `export-org` / `import-org` and the Keystone demo bundle. |

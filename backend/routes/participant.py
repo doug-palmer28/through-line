@@ -56,7 +56,8 @@ def survey_form(instrument_id: int, wave: str, ctx: ParticipantCtx = Depends(cur
     return {
         "name": inst.name, "wave": wave,
         "questions": [{"id": q["id"], "text": q["text"], "scale": q["scale"],
-                       "options": surveys.SCALES[q["scale"]]["options"]} for q in qs],
+                       "options": q.get("options") if q["scale"] in surveys.CHOICE else surveys.SCALES[q["scale"]]["options"]}
+                      for q in qs],
         "demographics": [{"key": k, **{f: surveys.DEMOGRAPHICS[k][f] for f in ("label", "options", "multi")}}
                          for k in inst.demographics] if show_demo else [],
     }

@@ -7,13 +7,14 @@ import json
 import re
 from datetime import date, datetime, timezone
 
-from fastapi import APIRouter, Depends, File, HTTPException, UploadFile
+from fastapi import APIRouter, Depends, File, HTTPException, Query, UploadFile
 from fastapi.responses import Response as FileResponse  # (db.Response is a survey response)
 from pydantic import BaseModel, Field
 from sqlmodel import func, select
 
 import allowances
 import program_numbers
+import response_sheets
 import sessions
 import surveys
 from agents.common import TeamDeps, new_id, run_agent
@@ -25,6 +26,7 @@ from models import SurveyReviewResult
 from security import hash_secret, new_participant_code, new_pin
 
 router = APIRouter(prefix="/api/tools", tags=["tools"])
+XLSX = "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet"
 
 COLLECTION_MODES = [
     {"key": "participant_survey", "name": "Participant survey",
@@ -185,8 +187,12 @@ def unpublish(instrument_id: int, ctx: StaffCtx = Depends(current_staff)):
     return _detail(ctx, inst)
 
 
+class ReviewIn(BaseModel):
+    request: str = Field(default="", max_length=600)  # optional: what staff want from this review
+
+
 @router.post("/instruments/{instrument_id}/review")
-async def review(instrument_id: int, ctx: StaffCtx = Depends(current_staff)):
+async def review(instrument_id: int, body: ReviewIn | None = None, ctx: StaffCtx = Depends(current_staff)):
     """Run the Survey Review Bot (one gpt-6-luna run). Suggestions are only applied if staff click them."""
     inst = _instrument(ctx, instrument_id)
     allowances.claim_count(ctx.db, inst, "review_count", allowances.SURVEY_REVIEWS_PER_TOOL,
@@ -197,12 +203,13 @@ async def review(instrument_id: int, ctx: StaffCtx = Depends(current_staff)):
     model = ctx.org.logic_model or {}
     payload = {
         "type": inst.method, "responses_exist": detail["locked"],
-        "questions": [{k: q[k] for k in ("id", "text", "scale", "metric", "waves", "hidden", "reverse")}
-                      for q in inst.questions],
+        "questions": [{**{k: q[k] for k in ("id", "text", "scale", "metric", "waves", "hidden", "reverse")},
+                       **({"options": q["options"]} if q.get("options") else {})} for q in inst.questions],
         "demographics": inst.demographics,
         "outcomes": {"short_term": model.get("short_term_outcomes", []), "long_term": model.get("long_term_outcomes", [])},
         "metrics": [{k: m.get(k) for k in ("name", "outcome", "method", "how_scored")} for m in plan.get("metrics", [])],
         "automatic_checks": [{k: c[k] for k in ("question_id", "kind", "problem")} for c in detail["checks"]],
+        "staff_request": (body.request.strip() if body else "") or None,
     }
     # An ephemeral session object carries the run's feed/usage; nothing about it is saved.
     shadow = sessions.Session(id=f"org-{ctx.org.id}-review", org_name=ctx.org.name, org_id=ctx.org.id,
@@ -308,30 +315,29 @@ class BulkIn(BaseModel):
     rows: list[BulkRow] = Field(max_length=200)
 
 
-@router.post("/instruments/{instrument_id}/responses")
-def bulk_entry(instrument_id: int, body: BulkIn, ctx: StaffCtx = Depends(current_staff)):
-    """Staff enter many forms at once (paper surveys or staff assessments). One row per participant."""
-    inst = _instrument(ctx, instrument_id)
+def _save_rows(ctx: StaffCtx, inst: Instrument, wave: str, rows: list[dict], how: str) -> dict:
+    """Save staff-entered forms (from the grid or an uploaded template). Each row replaces that person's form."""
     saved, errors = 0, []
-    for n, row in enumerate(body.rows, start=1):
-        code = row.participant_code.strip().upper()
+    for n, row in enumerate(rows, start=1):
+        line = row.get("line", n)
+        code = str(row.get("participant_code", "")).strip().upper()
         if not code:
             continue
         p = ctx.db.exec(select(Participant).where(Participant.org_id == ctx.org.id, Participant.code == code)).first()
         if not p:
-            errors.append({"row": n, "error": f"No participant with code {code}."})
+            errors.append({"row": line, "error": f"No participant with code {code}."})
             continue
         try:
-            answers = surveys.clean_answers(inst.questions, body.wave, row.answers)
-            demo = surveys.clean_demographics(inst.demographics, row.demographics) if body.wave == "pre" else {}
+            answers = surveys.clean_answers(inst.questions, wave, row.get("answers") or {})
+            demo = surveys.clean_demographics(inst.demographics, row.get("demographics") or {}) if wave == "pre" else {}
         except ValueError as exc:
-            errors.append({"row": n, "error": str(exc)})
+            errors.append({"row": line, "error": f"{code}: {exc}"})
             continue
         if not answers and not demo:
             continue
         existing = ctx.db.exec(select(Response).where(Response.instrument_id == inst.id, Response.participant_id == p.id,
-                                                      Response.wave == body.wave)).first()
-        r = existing or Response(org_id=ctx.org.id, instrument_id=inst.id, participant_id=p.id, wave=body.wave,
+                                                      Response.wave == wave)).first()
+        r = existing or Response(org_id=ctx.org.id, instrument_id=inst.id, participant_id=p.id, wave=wave,
                                  entered_by="staff")
         r.answers, r.demographics, r.entered_by, r.staff_id = answers, demo, "staff", ctx.user.id
         r.created_at = datetime.now(timezone.utc)
@@ -339,9 +345,48 @@ def bulk_entry(instrument_id: int, body: BulkIn, ctx: StaffCtx = Depends(current
         saved += 1
     ctx.db.commit()
     audit_append(event="responses_entered", agent="human", team="data_collection",
-                 human={"role": "staff", "action": "bulk_entry", "org_id": ctx.org.id},
-                 output={"instrument_id": inst.id, "wave": body.wave, "saved": saved, "errors": len(errors)})
+                 human={"role": "staff", "action": how, "org_id": ctx.org.id},
+                 output={"instrument_id": inst.id, "wave": wave, "saved": saved, "errors": len(errors)})
     return {"saved": saved, "errors": errors, "responses": _counts(ctx, inst.id)}
+
+
+@router.post("/instruments/{instrument_id}/responses")
+def bulk_entry(instrument_id: int, body: BulkIn, ctx: StaffCtx = Depends(current_staff)):
+    """Staff enter many forms at once (paper surveys or staff assessments). One row per participant."""
+    inst = _instrument(ctx, instrument_id)
+    return _save_rows(ctx, inst, body.wave, [r.model_dump() for r in body.rows], "bulk_entry")
+
+
+@router.get("/instruments/{instrument_id}/responses/template.xlsx")
+def responses_template(instrument_id: int, wave: str = Query(pattern="^(pre|post)$"),
+                       ctx: StaffCtx = Depends(current_staff)):
+    """An Excel sheet with every active participant code and this wave's questions (answers so far pre-filled)."""
+    inst = _instrument(ctx, instrument_id)
+    people = ctx.db.exec(select(Participant).where(Participant.org_id == ctx.org.id, Participant.active == True)).all()  # noqa: E712
+    have = ctx.db.exec(select(Response).where(Response.instrument_id == inst.id)).all()
+    data = response_sheets.template_xlsx(ctx.org.name, inst, wave, people, have)
+    name = re.sub(r"[^A-Za-z0-9]+", "_", inst.name).strip("_")[:40] or "survey"
+    return FileResponse(content=data, media_type=XLSX,
+                        headers={"Content-Disposition": f'attachment; filename="{name}_{wave}_responses.xlsx"'})
+
+
+@router.post("/instruments/{instrument_id}/responses/upload")
+async def responses_upload(instrument_id: int, wave: str = Query(pattern="^(pre|post)$"),
+                           file: UploadFile = File(...), ctx: StaffCtx = Depends(current_staff)):
+    """Read a filled-in responses template (in memory, never saved) and save it like the grid does."""
+    inst = _instrument(ctx, instrument_id)
+    if not (file.filename or "").lower().endswith(".xlsx"):
+        raise HTTPException(400, "Please upload the .xlsx template.")
+    data = await file.read(5 * 1024 * 1024 + 1)
+    await file.close()
+    if len(data) > 5 * 1024 * 1024:
+        raise HTTPException(400, "That file is too large.")
+    try:
+        rows, sheet_errors = response_sheets.parse_upload(data, inst, wave)
+    except ValueError as exc:
+        raise HTTPException(400, str(exc)) from exc
+    result = _save_rows(ctx, inst, wave, rows, "uploaded_responses")
+    return {**result, "errors": sheet_errors + result["errors"]}
 
 
 # ============================================================ program numbers
@@ -382,7 +427,7 @@ def numbers_template(month: str | None = None, ctx: StaffCtx = Depends(current_s
     entries = ctx.db.exec(select(IndicatorEntry).where(IndicatorEntry.org_id == ctx.org.id)).all()
     data = program_numbers.template_xlsx(ctx.org.name, inds, entries, month)
     slug = re.sub(r"[^A-Za-z0-9]+", "_", ctx.org.name).strip("_")[:40]
-    return FileResponse(content=data, media_type="application/vnd.openxmlformats-officedocument.spreadsheetml.sheet",
+    return FileResponse(content=data, media_type=XLSX,
                     headers={"Content-Disposition": f'attachment; filename="{slug}_program_numbers_{month}.xlsx"'})
 
 

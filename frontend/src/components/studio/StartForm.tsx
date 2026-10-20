@@ -1,4 +1,5 @@
 import { useState } from "react";
+import { stepLabel } from "./Stepper";
 
 type Props = { busy: boolean; defaultOrgName?: string; onStart: (form: FormData) => void };
 
@@ -18,7 +19,7 @@ export default function StartForm({ busy, defaultOrgName = "", onStart }: Props)
 
   return (
     <form className="card start" onSubmit={submit}>
-      <p className="eyebrow">Step 1 · Share</p>
+      <p className="eyebrow">{stepLabel("share")}</p>
       <h2>Help your team get up to speed</h2>
       <p className="muted">
         Anything you already have helps: a deck, an old logic model, a grant proposal, an annual report, or your website.

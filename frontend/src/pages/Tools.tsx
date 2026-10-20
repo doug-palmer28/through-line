@@ -14,6 +14,17 @@ const TABS = [
 ] as const;
 type Tab = (typeof TABS)[number]["id"];
 
+const GUIDE: { tab: Tab; title: string; text: string }[] = [
+  { tab: "surveys", title: "Your surveys",
+    text: "Built from your approved metrics. Edit the wording, add questions (including multiple choice), ask the Review Bot to check them, then Publish." },
+  { tab: "participants", title: "Participant codes",
+    text: "Create a private code and PIN for each person (no names). They sign in on any phone at the participant page to answer your published surveys." },
+  { tab: "entry", title: "Enter responses yourself",
+    text: "For paper surveys and staff assessments: type forms in, or download an Excel sheet, fill it in, and upload it." },
+  { tab: "numbers", title: "Program numbers",
+    text: "Counts from your own records (families housed, dollars spent…): enter them by month, or upload the monthly Excel template." },
+];
+
 export default function Tools() {
   const [data, setData] = useState<ToolsData | null>(null);
   const [tab, setTab] = useState<Tab>("surveys");
@@ -33,8 +44,19 @@ export default function Tools() {
       <div className="page-title">
         <p className="eyebrow">Step 2 · Collect</p>
         <h1>Survey tools</h1>
-        <p className="muted">Built from the questions you chose in your measurement plan. Refine them, publish, then collect pre and post.</p>
+        <p className="muted">Everything you need to collect data, in four parts. Click one to open it.</p>
       </div>
+      <ol className="tools-guide">
+        {GUIDE.map((g, n) => (
+          <li key={g.tab}>
+            <button className={tab === g.tab ? "is-on" : ""} onClick={() => { setTab(g.tab); setEditing(null); }}>
+              <span className="tools-guide__num">{n + 1}</span>
+              <strong>{g.title}</strong>
+              <span className="small muted">{g.text}</span>
+            </button>
+          </li>
+        ))}
+      </ol>
       <nav className="tabs" role="tablist">
         {TABS.map((t) => (
           <button key={t.id} role="tab" aria-selected={tab === t.id} className={tab === t.id ? "is-on" : ""}

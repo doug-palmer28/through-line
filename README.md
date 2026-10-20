@@ -86,6 +86,14 @@ python ../scripts/operator_tools.py allow <org id> grants  # give an organizatio
 
 Limits per organization live in `backend/allowances.py`.
 
+**Load the Keystone example** (a fictional housing nonprofit with a full set of results, no AI calls). In the Shell:
+
+```bash
+python ../scripts/operator_tools.py import-org ../scripts/demo/keystone_family_housing.json --username keystone.demo --name "Keystone demo"
+```
+
+It asks you to choose a password, then you can sign in as `keystone.demo`. Run it once (a second run says the username is taken).
+
 ---
 
 ## Project layout

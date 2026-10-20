@@ -1,7 +1,6 @@
 import { useCallback, useEffect, useRef, useState } from "react";
 import { Link } from "react-router-dom";
 import { api, type StudioSession } from "../api";
-import HiddenTextNotice from "../components/HiddenTextNotice";
 import Chat from "../components/studio/Chat";
 import FeedbackCard from "../components/studio/FeedbackCard";
 import Huddle from "../components/studio/Huddle";
@@ -9,7 +8,7 @@ import LogicModelEditor from "../components/studio/LogicModelEditor";
 import MetricsEditor from "../components/studio/MetricsEditor";
 import { AlignmentCard } from "../components/studio/Sources";
 import StartForm from "../components/studio/StartForm";
-import Stepper, { type StageId } from "../components/studio/Stepper";
+import Stepper, { stepLabel, type StageId } from "../components/studio/Stepper";
 import Tutorial from "../components/studio/Tutorial";
 import UploadOffer from "../components/studio/UploadOffer";
 import { useAuth } from "../auth";
@@ -145,7 +144,6 @@ export default function LogicModel() {
       )}
 
       {/* ------------------------------------------------ five questions */}
-      {stage === "interview" && session && <HiddenTextNotice sources={session.sources} />}
       {stage === "interview" && session && (
         <div className="stage stage--split">
           <Chat
@@ -164,7 +162,7 @@ export default function LogicModel() {
       {stage === "logic" && session && (
         session.phase === "ready_to_draft" || !session.draft ? (
           <div className="stage stage--reveal">
-            <p className="eyebrow">Step 3 · Logic model</p>
+            <p className="eyebrow">{stepLabel("logic")}</p>
             <h2>Your team is putting it together</h2>
             <p className="muted">
               The Team Lead writes a working draft, the whole team reviews it, then you see the improved version.
@@ -220,7 +218,7 @@ export default function LogicModel() {
       {stage === "metrics" && session && (
         session.phase === "ready_for_metrics" || !session.metric_draft ? (
           <div className="stage stage--reveal">
-            <p className="eyebrow">Step 4 · Metrics</p>
+            <p className="eyebrow">{stepLabel("metrics")}</p>
             <h2>Your team is designing your measurement plan</h2>
             <p className="muted">
               The Funder Researcher is looking up the measures funders in your field use; then the team drafts and reviews
@@ -274,7 +272,7 @@ export default function LogicModel() {
         <div className="stage">
           <section className="card done">
             <div>
-              <p className="eyebrow">Step 5 · Download</p>
+              <p className="eyebrow">{stepLabel("done")}</p>
               <h2>Nice work. Your logic model and measurement plan are ready.</h2>
               <p className="muted">
                 The PowerPoint is fully editable. Your team's working notes have been deleted.

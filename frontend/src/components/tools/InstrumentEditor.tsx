@@ -1,5 +1,6 @@
 import { useEffect, useState } from "react";
-import { api, type InstrumentDetail, type SurveyFix, type SurveyIssue, type ToolQuestion, type ToolsData } from "../../api";
+import { api, CHOICE_SCALES, type InstrumentDetail, type SurveyFix, type SurveyIssue, type ToolQuestion, type ToolsData } from "../../api";
+import AutoTextarea from "../AutoTextarea";
 import Thinking from "../studio/Thinking";
 
 type Props = { id: number; meta: ToolsData; onBack: () => void; onChanged: () => void };
@@ -17,6 +18,7 @@ export default function InstrumentEditor({ id, meta, onBack, onChanged }: Props)
   const [work, setWork] = useState<{ name: string; questions: ToolQuestion[]; demographics: string[] } | null>(null);
   const [busy, setBusy] = useState<string | null>(null);
   const [error, setError] = useState<string | null>(null);
+  const [request, setRequest] = useState("");
 
   const load = (d: InstrumentDetail) => {
     setInst(d);
@@ -59,6 +61,24 @@ export default function InstrumentEditor({ id, meta, onBack, onChanged }: Props)
       return;
     }
     if (!issue.question_id) return;
+    if (fix.action === "make_choice") {
+      const scale = fix.multi ? "multi_choice" : "choice";
+      const old = work.questions.find((q) => q.id === issue.question_id);
+      if (!old) return;
+      const choice = { text: fix.text || old.text, scale, options: fix.options ?? [] } as Partial<ToolQuestion>;
+      if (lockedQ(old)) {
+        // Answers already exist: keep the old question (hidden) and add the choice version as a new one.
+        setWork({
+          ...work,
+          questions: [...work.questions.map((q) => (q.id === old.id ? { ...q, hidden: true } : q)),
+            { ...old, ...choice, id: newId(), source: "staff", hidden: false, reverse: false,
+              note: "Choice version suggested by the Survey Review Bot" } as ToolQuestion],
+        });
+      } else {
+        setQ(old.id, choice);
+      }
+      return;
+    }
     const patch: Partial<ToolQuestion> =
       fix.action === "rewrite" ? { text: fix.text ?? undefined }
       : fix.action === "change_scale" ? { scale: fix.scale ?? undefined }
@@ -69,7 +89,7 @@ export default function InstrumentEditor({ id, meta, onBack, onChanged }: Props)
   };
   const fixLabel: Record<SurveyFix["action"], string> = {
     rewrite: "Use this wording", change_scale: "Change scale", hide: "Hide question", set_waves: "Change timing",
-    set_reverse: "Mark reverse-scored", add_open_question: "Add this question",
+    set_reverse: "Mark reverse-scored", add_open_question: "Add this question", make_choice: "Make it multiple choice",
   };
   const questionText = (qid: string | null) => work.questions.find((q) => q.id === qid)?.text;
   const issues = [...inst.checks.map((c) => ({ ...c, from: "check" })), ...(inst.review?.issues ?? []).map((c) => ({ ...c, from: "bot" }))];
@@ -110,7 +130,7 @@ export default function InstrumentEditor({ id, meta, onBack, onChanged }: Props)
             {work.questions.map((q) => (
               <li key={q.id} className={`tq ${q.hidden ? "is-hidden" : ""}`}>
                 <div className="tq__main">
-                  <textarea rows={1} value={q.text} disabled={lockedQ(q)} onChange={(e) => setQ(q.id, { text: e.target.value })} />
+                  <AutoTextarea value={q.text} disabled={lockedQ(q)} onChange={(e) => setQ(q.id, { text: e.target.value })} />
                   <div className="tq__meta">
                     {q.metric ? <span className="chip">{q.metric}</span> : <span className="chip chip--staff">Added by staff</span>}
                     <select value={q.scale} disabled={lockedQ(q)} onChange={(e) => setQ(q.id, { scale: e.target.value as ToolQuestion["scale"] })}>
@@ -119,6 +139,9 @@ export default function InstrumentEditor({ id, meta, onBack, onChanged }: Props)
                     <select value={q.waves.join(",")} onChange={(e) => setQ(q.id, { waves: WAVE_CHOICES.find((w) => w.waves.join(",") === e.target.value)!.waves })}>
                       {WAVE_CHOICES.map((w) => <option key={w.label} value={w.waves.join(",")}>{w.label}</option>)}
                     </select>
+                    {CHOICE_SCALES.includes(q.scale) && (
+                      <span className="muted small">{q.scale === "choice" ? "People pick one" : "People pick all that apply"}</span>
+                    )}
                     {["agree_5", "frequency_5", "confidence_5", "scale_0_10", "yes_no"].includes(q.scale) && (
                       <label className="tq__check" title="For items where a higher answer is worse (e.g. 'returned to shelter: yes'), so higher always means better">
                         <input type="checkbox" checked={q.reverse} disabled={lockedQ(q)} onChange={(e) => setQ(q.id, { reverse: e.target.checked })} />
@@ -126,6 +149,13 @@ export default function InstrumentEditor({ id, meta, onBack, onChanged }: Props)
                       </label>
                     )}
                   </div>
+                  {CHOICE_SCALES.includes(q.scale) && (
+                    <label className="field tq__choices">
+                      <span>Choices, one per line (2–12)</span>
+                      <AutoTextarea value={(q.options ?? []).join("\n")} placeholder={"Transportation\nChildcare\nCost\nOther"}
+                        onChange={(e) => setQ(q.id, { options: e.target.value.split("\n") })} />
+                    </label>
+                  )}
                 </div>
                 <div className="tq__actions">
                   <button className="link-button small" onClick={() => setQ(q.id, { hidden: !q.hidden })}>{q.hidden ? "Show" : "Hide"}</button>
@@ -143,6 +173,11 @@ export default function InstrumentEditor({ id, meta, onBack, onChanged }: Props)
               questions: [...work.questions, { id: newId(), text: "", scale: "open_text", metric: null, source: "staff",
                 hidden: false, reverse: false, note: "", waves: ["post"] }],
             })}>+ Add an open-response question</button>
+            <button className="btn btn--ghost btn--small" onClick={() => setWork({
+              ...work,
+              questions: [...work.questions, { id: newId(), text: "", scale: "choice", options: ["", ""], metric: null,
+                source: "staff", hidden: false, reverse: false, note: "", waves: ["pre", "post"] }],
+            })}>+ Add a multiple-choice question</button>
           </div>
 
           {isParticipant && (
@@ -184,8 +219,16 @@ export default function InstrumentEditor({ id, meta, onBack, onChanged }: Props)
             <span className="review-bot__icon" aria-hidden="true" />
             <h3>Survey Review Bot</h3>
           </div>
-          <p className="muted small">Checks wording, scale consistency, and whether you'll learn what your logic model needs.</p>
-          <button className="btn btn--secondary btn--small" disabled={!!busy || dirty || inst.reviews_left === 0} onClick={() => run("The Survey Review Bot is reading your survey…", () => api.reviewInstrument(id))}>
+          <p className="muted small">
+            Checks wording, scales, and timing (questions asked before the program shouldn't assume people have been in it),
+            and whether you'll learn what your logic model needs.
+          </p>
+          <label className="field">
+            <span>Anything specific you'd like? (optional)</span>
+            <textarea rows={2} maxLength={600} value={request} onChange={(e) => setRequest(e.target.value)}
+              placeholder="e.g. Turn the written questions into multiple-choice so we can count the answers." />
+          </label>
+          <button className="btn btn--secondary btn--small" disabled={!!busy || dirty || inst.reviews_left === 0} onClick={() => run("The Survey Review Bot is reading your survey…", () => api.reviewInstrument(id, request))}>
             {inst.review ? "Review again" : "Review this survey"}
           </button>
           <span className="muted small"> {inst.reviews_left === 0 ? "This survey has had its reviews." : `${inst.reviews_left} review${inst.reviews_left === 1 ? "" : "s"} left for this survey.`}</span>
@@ -207,6 +250,12 @@ export default function InstrumentEditor({ id, meta, onBack, onChanged }: Props)
                   <p>{issue.problem}</p>
                   <p className="muted">{issue.suggestion}</p>
                   {issue.fix?.action === "rewrite" && issue.fix.text && <p className="issue__new">→ “{issue.fix.text}”</p>}
+                  {issue.fix?.action === "make_choice" && (
+                    <p className="issue__new">
+                      → {issue.fix.text ? `“${issue.fix.text}” ` : ""}{issue.fix.multi ? "(pick all that apply)" : "(pick one)"}:{" "}
+                      {(issue.fix.options ?? []).join(" · ")}
+                    </p>
+                  )}
                   {issue.fix && (
                     <button className="link-button small" onClick={() => applyFix(issue)}>{fixLabel[issue.fix.action]}</button>
                   )}

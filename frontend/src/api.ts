@@ -145,10 +145,15 @@ export type Me = {
 
 // ---------------------------------------------------------------- survey tools
 
+/** Survey tools add multiple-choice questions (staff-defined choices) to the Studio's scales. */
+export type ToolScale = Scale | "choice" | "multi_choice";
+export const CHOICE_SCALES: ToolScale[] = ["choice", "multi_choice"];
+
 export type ToolQuestion = {
   id: string;
   text: string;
-  scale: Scale;
+  scale: ToolScale;
+  options?: string[];
   metric: string | null;
   source: "plan" | "staff";
   hidden: boolean;
@@ -157,9 +162,11 @@ export type ToolQuestion = {
   waves: ("pre" | "post")[];
 };
 export type SurveyFix = {
-  action: "rewrite" | "change_scale" | "hide" | "set_waves" | "set_reverse" | "add_open_question";
+  action: "rewrite" | "change_scale" | "hide" | "set_waves" | "set_reverse" | "add_open_question" | "make_choice";
   text?: string | null;
   scale?: Scale | null;
+  options?: string[] | null;
+  multi?: boolean | null;
   waves?: ("pre" | "post")[] | null;
   reverse?: boolean | null;
 };
@@ -197,7 +204,7 @@ export type ToolsData = {
   collection_modes: CollectionMode[];
   has_plan: boolean;
   instruments: InstrumentSummary[];
-  scales: Record<Scale, ScaleInfo>;
+  scales: Record<ToolScale, ScaleInfo>;
   demographics: Record<string, DemoInfo>;
 };
 export type ParticipantRow = { id: number; code: string; active: boolean; created_at: string; completed: string[] };
@@ -216,7 +223,7 @@ export type IndicatorRow = {
 
 export type ChartSpec = {
   id: string;
-  group?: "outcomes" | "people" | "program";
+  group?: "outcomes" | "answers" | "people" | "program";
   metric?: string;
   counts?: number[];
   title: string;
@@ -375,7 +382,7 @@ export type PortalSurvey = { id: number; name: string; waves: { wave: "pre" | "p
 export type PortalForm = {
   name: string;
   wave: "pre" | "post";
-  questions: { id: string; text: string; scale: Scale; options: string[] | null }[];
+  questions: { id: string; text: string; scale: ToolScale; options: string[] | null }[];
   demographics: ({ key: string } & DemoInfo)[];
 };
 
@@ -435,7 +442,14 @@ export const api = {
     withJson<InstrumentDetail>("PUT", tool(id), body),
   publish: (id: number) => withJson<InstrumentDetail>("POST", `${tool(id)}/publish`),
   unpublish: (id: number) => withJson<InstrumentDetail>("POST", `${tool(id)}/unpublish`),
-  reviewInstrument: (id: number) => withJson<InstrumentDetail>("POST", `${tool(id)}/review`),
+  reviewInstrument: (id: number, request = "") => withJson<InstrumentDetail>("POST", `${tool(id)}/review`, { request }),
+  responsesTemplate: (id: number, wave: string) => `${tool(id)}/responses/template.xlsx?wave=${wave}`,
+  uploadResponses: (id: number, wave: string, file: File) => {
+    const form = new FormData();
+    form.append("file", file);
+    return send<{ saved: number; errors: { row: number; error: string }[] }>(`${tool(id)}/responses/upload?wave=${wave}`,
+      { method: "POST", body: form });
+  },
   enterResponses: (id: number, wave: string, rows: { participant_code: string; answers: Record<string, unknown> }[]) =>
     withJson<{ saved: number; errors: { row: number; error: string }[] }>("POST", `${tool(id)}/responses`, { wave, rows }),
   participants: () => getJson<{ participants: ParticipantRow[] }>("/api/tools/participants"),

@@ -25,7 +25,12 @@ SCALES: dict[str, dict[str, Any]] = {
     "yes_no": {"label": "Yes / No", "options": ["No", "Yes"]},
     "number": {"label": "Number", "options": None},
     "open_text": {"label": "Written answer", "options": None},
+    # Staff-defined options (stored on the question). Turns written answers into countable data.
+    "choice": {"label": "Choose one", "options": None},
+    "multi_choice": {"label": "Choose all that apply", "options": None},
 }
+CHOICE = {"choice", "multi_choice"}
+MAX_OPTIONS = 12
 SCORED = {"agree_5", "confidence_5", "frequency_5", "scale_0_10", "yes_no", "number"}
 MAX_VALUE = {"agree_5": 5, "confidence_5": 5, "frequency_5": 5, "scale_0_10": 10, "yes_no": 1}
 MIN_VALUE = {"agree_5": 1, "confidence_5": 1, "frequency_5": 1, "scale_0_10": 0, "yes_no": 0}
@@ -126,11 +131,27 @@ def validate_questions(questions: list[dict]) -> list[dict]:
         text = str(q.get("text", "")).strip()
         if not text:
             raise ValueError("Questions can't be blank.")
-        clean.append({"id": q.get("id") or new_qid(), "text": text[:400], "scale": q["scale"],
-                      "metric": q.get("metric"), "source": q.get("source", "staff"),
-                      "hidden": bool(q.get("hidden")), "reverse": bool(q.get("reverse")),
-                      "note": str(q.get("note") or "")[:300], "waves": waves})
+        item = {"id": q.get("id") or new_qid(), "text": text[:400], "scale": q["scale"],
+                "metric": q.get("metric"), "source": q.get("source", "staff"),
+                "hidden": bool(q.get("hidden")), "reverse": bool(q.get("reverse")),
+                "note": str(q.get("note") or "")[:300], "waves": waves}
+        if q["scale"] in CHOICE:
+            item["options"] = clean_options(q.get("options"), text)
+        clean.append(item)
     return clean
+
+
+def clean_options(options: Any, question: str) -> list[str]:
+    """2–12 distinct, non-empty choices of up to 80 characters."""
+    raw = options if isinstance(options, list) else re.split(r"[;\n]", str(options or ""))
+    out: list[str] = []
+    for o in raw:
+        o = str(o).strip()[:80]
+        if o and o.lower() not in {x.lower() for x in out}:
+            out.append(o)
+    if not 2 <= len(out) <= MAX_OPTIONS:
+        raise ValueError(f"'{question[:60]}' needs between 2 and {MAX_OPTIONS} answer choices.")
+    return out
 
 
 def locked_changes(old: list[dict], new: list[dict]) -> str | None:
@@ -142,10 +163,20 @@ def locked_changes(old: list[dict], new: list[dict]) -> str | None:
             return "Questions that already have answers can't be deleted. Hide them instead."
         if n["text"] != q["text"] or n["scale"] != q["scale"] or n["reverse"] != q["reverse"]:
             return "Questions that already have answers can't be reworded or re-scaled (it would break pre/post comparison). Hide it and add a new one instead."
+        if not set(q.get("options") or []) <= set(n.get("options") or []):
+            return "Choices that may already have been picked can't be removed or renamed. You can add new ones."
     return None
 
 
 # ============================================================ automatic checks (no AI)
+
+
+# Wording that only makes sense once someone has been in the program (so not at the "pre" survey).
+LOOKS_BACK = re.compile(
+    r"\b(since (you |your )?(started|joined|began|enrolled|beginning|starting)|because of (the|this) program|"
+    r"(after|during|through) (the|this) program|(has|have|did) (the|this) program|thanks to (the|this) program|"
+    r"(the|this) program (has|have) (helped|changed|made)|compared (to|with) (before|when you started)|now that you|"
+    r"how much (has|have|did)|what (has|have) changed|helped you|have you (learned|gained))\b", re.I)
 
 
 def precheck(questions: list[dict], method: str) -> list[dict]:
@@ -168,13 +199,22 @@ def precheck(questions: list[dict], method: str) -> list[dict]:
                            "problem": "This rated question is only asked after the program, so you can't see change.",
                            "suggestion": "Ask it at both pre and post.",
                            "fix": {"action": "set_waves", "waves": ["pre", "post"]}})
+        if "pre" in q["waves"] and LOOKS_BACK.search(q["text"]):
+            only_post = {"action": "set_waves", "waves": ["post"]}
+            issues.append({"question_id": q["id"], "kind": "wording", "severity": "high",
+                           "problem": "This is asked before the program starts, but its wording assumes the person has "
+                                      "already been in the program, so it won't make sense at pre.",
+                           "suggestion": "Reword it so it works at both times (e.g. 'How confident are you…'), or ask it "
+                                         "only at post." + (" Asking it only at post means you can't measure change."
+                                                            if q["scale"] in SCORED else ""),
+                           "fix": only_post if q["scale"] not in SCORED else None})
         if re.search(r"\b(and|or)\b", q["text"], re.I) and q["scale"] in {"agree_5", "confidence_5", "frequency_5"} \
                 and len(q["text"]) > 60:
             issues.append({"question_id": q["id"], "kind": "wording", "severity": "low",
                            "problem": "This question may ask about two things at once.",
                            "suggestion": "Check that it asks about one idea only.", "fix": None})
     if method == "participant_survey":
-        rated = [q for q in visible if q["scale"] != "open_text"]
+        rated = [q for q in visible if q["scale"] in SCORED]
         if len(visible) > 15:
             issues.append({"question_id": None, "kind": "burden", "severity": "medium",
                            "problem": f"{len(visible)} visible questions may be too long for participants.",
@@ -209,6 +249,14 @@ def clean_answers(questions: list[dict], wave: str, answers: dict[str, Any], *, 
         scale = q["scale"]
         if scale == "open_text":
             out[q["id"]] = str(v).strip()[:2000]
+        elif scale in CHOICE:
+            options = q.get("options") or []
+            # Several picks arrive as a list (portal) or "a; b" (Excel); options may contain commas, so split on ";" only.
+            picked = v if isinstance(v, list) else ([v] if scale == "choice" else re.split(r"\s*;\s*", str(v)))
+            picked = [o for o in options if o.lower() in {str(p).strip().lower() for p in picked}]
+            if not picked or (scale == "choice" and len(picked) != 1):
+                raise ValueError(f"'{q['text']}' needs one of its choices.")
+            out[q["id"]] = picked[0] if scale == "choice" else picked
         elif scale == "number":
             try:
                 num = float(v)

@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import { Link, NavLink, Outlet, useNavigate } from "react-router-dom";
 import { api } from "../api";
 import { useAuth } from "../auth";
@@ -38,10 +38,28 @@ function InviteButton() {
 export default function Layout() {
   const { me, signOut } = useAuth();
   const navigate = useNavigate();
+  const topbar = useRef<HTMLElement>(null);
+
+  // Sticky things below the top bar (like the Studio's stepper) need its height, which changes when it wraps.
+  useEffect(() => {
+    const el = topbar.current;
+    if (!el) return;
+    // On phones the top bar scrolls away (it would take too much room), so things stick to the very top.
+    const set = () => document.documentElement.style.setProperty(
+      "--topbar-h", getComputedStyle(el).position === "sticky" ? `${el.offsetHeight}px` : "0px");
+    set();
+    const ro = new ResizeObserver(set);
+    ro.observe(el);
+    window.addEventListener("resize", set);
+    return () => {
+      ro.disconnect();
+      window.removeEventListener("resize", set);
+    };
+  }, []);
 
   return (
     <div className="shell">
-      <header className="topbar">
+      <header className="topbar" ref={topbar}>
         <NavLink to="/" className="brand" aria-label="Through Line home">
           <span className="brand__mark" aria-hidden="true">
             <span className="shape shape--circle" />

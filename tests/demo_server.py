@@ -229,6 +229,15 @@ def _survey_review(messages: list[ModelMessage]) -> dict:
                        "problem": "This metric mixes a confidence scale with an agreement scale.",
                        "suggestion": "Use the agreement scale for every question in this metric.",
                        "fix": {"action": "change_scale", "scale": "agree_5"}})
+    written = [q for q in qs if q.get("scale") == "open_text" and not q.get("hidden")]
+    if written and "choice" in (_prompt_json(messages).get("staff_request") or "").lower():
+        issues.insert(0, {"question_id": written[0]["id"], "kind": "insight", "severity": "medium",
+                          "problem": "Written answers are hard to count.",
+                          "suggestion": "Offer the most common answers as choices.",
+                          "fix": {"action": "make_choice", "multi": True,
+                                  "text": "Which of these has changed for you? Choose all that apply.",
+                                  "options": ["Steadier housing", "Less stress", "Better budgeting", "New support people",
+                                              "Other"]}})
     if not any(q.get("scale") == "open_text" for q in qs):
         issues.append({"question_id": None, "kind": "insight", "severity": "low",
                        "problem": "No open question for participants' own words.", "suggestion": "Add one at post.",

@@ -9,6 +9,12 @@ export const STEPS: { id: StageId; label: string }[] = [
   { id: "done", label: "Download" },
 ];
 
+/** "Step 4 · Logic model": headings take their number from the stepper, so the two always match. */
+export function stepLabel(id: StageId): string {
+  const i = STEPS.findIndex((s) => s.id === id);
+  return `Step ${i + 1} · ${STEPS[i].label}`;
+}
+
 export default function Stepper({ current, onHelp }: { current: StageId; onHelp: () => void }) {
   const index = STEPS.findIndex((s) => s.id === current);
   return (

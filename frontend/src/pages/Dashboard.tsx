@@ -14,6 +14,7 @@ export default function Dashboard() {
   if (!data) return error ? <p className="alert">{error}</p> : <p className="muted">Loading…</p>;
   const h = data.headline;
   const outcomes = data.charts.filter((c) => c.group === "outcomes");
+  const answers = data.charts.filter((c) => c.group === "answers");
   const people = data.charts.filter((c) => c.group === "people");
   const program = data.charts.filter((c) => c.group === "program");
   const empty = data.charts.length === 0;
@@ -53,6 +54,9 @@ export default function Dashboard() {
 
       {outcomes.length > 0 && <h2 className="section-head">Outcomes</h2>}
       <div className="chart-grid">{outcomes.map((c) => <ChartCard key={c.id} chart={c} xlsxUrl={api.chartXlsx(c.id)} />)}</div>
+
+      {answers.length > 0 && <h2 className="section-head">Survey answers</h2>}
+      <div className="chart-grid">{answers.map((c) => <ChartCard key={c.id} chart={c} xlsxUrl={api.chartXlsx(c.id)} />)}</div>
 
       {people.length > 0 && <h2 className="section-head">Who we serve</h2>}
       <div className="chart-grid">{people.map((c) => <ChartCard key={c.id} chart={c} xlsxUrl={api.chartXlsx(c.id)} />)}</div>

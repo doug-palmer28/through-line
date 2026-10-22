@@ -384,7 +384,7 @@
     </tbody>
   </table>
   <p class="small muted">Web searches: the Funder Researcher may run up to 6 per research run. Search counts were added to the ledger after Keystone's run, so Keystone's are shown as the maximum.</p>
-  <p><b>Cached input.</b> OpenAI bills input that repeats a recent prompt (the agents' long instructions, for example) at the <b>cached</b> rate of $0.01 per million tokens, a tenth of the normal input price. The ledger now records cached input separately, and the app's AI usage page shows it (below). Keystone's and The Place's runs were recorded before that column existed, so the costs above count <b>all</b> input at the full price. They are an upper bound: <span class="pending">PENDING · cached share from the testers' runs</span>.</p>
+  <p><b>Cached input.</b> OpenAI bills input that repeats a recent prompt (the agents' long instructions, for example) at the <b>cached</b> rate of $0.01 per million tokens, a tenth of the normal input price. The ledger now records cached input separately, and the app's AI usage page shows it (below). Keystone's and The Place's runs were recorded before that column existed, so the costs above count <b>all</b> input at the full price. They are an upper bound. Jodi Walker's runs (below) are the first measured with it: <b>84,694 of her 285,623 input tokens (30%) were cached</b>, which cut her input bill by about 27% and her total model cost by about 17%.</p>
   <figure><img src="img/usage.jpg" alt="AI usage page" style="max-height:3.6in;width:auto;max-width:100%;margin:auto"><figcaption>Evidence: the app's own AI usage page, showing measured tokens by tool, month, and person, plus each tool's remaining allowance. This one is Keystone's organization.</figcaption></figure>
   <h3>Our live-site runs and outside testers</h3>
   <table>
@@ -392,19 +392,20 @@
     <tbody>
       <tr><td>Keystone (above)</td><td>Doug, local, live model · full journey</td><td class="n">33</td><td class="n">339K / 52K</td><td class="n">≤ 18</td><td class="n">≤ $0.24</td></tr>
       <tr><td>The Place</td><td>Doug, live site · Studio + 1 survey review</td><td class="n">28</td><td class="n">366K / 44K</td><td class="n">≤ 12*</td><td class="n">$0.06 (≤ $0.18)</td></tr>
-      <tr><td>Kids at Their Best</td><td>Jodi Walker, executive director (outside tester)</td><td class="n" colspan="4"><span class="pending">PENDING · not yet signed up</span></td></tr>
+      <tr><td>Kids at Their Best</td><td>Jodi Walker, executive director (outside tester), live site · Studio</td><td class="n">26</td><td class="n">286K / 30K<br><span class="small muted">85K cached</span></td><td class="n">8</td><td class="n">$0.04 + $0.08 search = $0.12</td></tr>
       <tr><td>Sara's organization</td><td>Sara (outside tester)</td><td class="n" colspan="4"><span class="pending">PENDING · not yet signed up</span></td></tr>
     </tbody>
   </table>
   <p class="small muted">* The Place's runs happened before web searches were counted, so the maximum is shown. Keystone was later copied onto the live site as a demo; the copy carries its results but not its usage history.</p>
   <table>
-    <thead><tr><th>Logic Model Studio, two independent runs</th><th class="n">Runs</th><th class="n">Input tokens</th><th class="n">Output tokens</th><th class="n">Model cost</th></tr></thead>
+    <thead><tr><th>Logic Model Studio, three independent runs</th><th class="n">Runs</th><th class="n">Input tokens</th><th class="n">Output tokens</th><th class="n">Model cost</th></tr></thead>
     <tbody>
       <tr><td>Keystone (housing, local)</td><td class="n">27</td><td class="n">296,022</td><td class="n">39,336</td><td class="n">$0.049</td></tr>
       <tr><td>The Place (live site)</td><td class="n">27</td><td class="n">363,131</td><td class="n">41,555</td><td class="n">$0.057</td></tr>
+      <tr><td>Kids at Their Best (live site, outside tester; 30% of input cached)</td><td class="n">26</td><td class="n">285,623</td><td class="n">30,202</td><td class="n">$0.036</td></tr>
     </tbody>
   </table>
-  <p>The two Studio runs, for different organizations in different settings, came within a cent of each other. That makes the cost of onboarding a new organization predictable: about <b>5–6¢ in model fees</b>, plus at most 12¢ of web search. In both, the metrics phase (research, a working plan, a four-specialist review, and a final plan) used about half the tokens.</p>
+  <p>The three Studio runs, for different organizations, run by different people, all landed between 3.6¢ and 5.7¢, and the outside tester's was the cheapest (helped by caching). That makes the cost of onboarding a new organization predictable: about <b>4–6¢ in model fees</b>, plus at most 12¢ of web search (Jodi's used 8¢). In all three, the metrics phase (research, a working plan, a four-specialist review, and a final plan) used about half the tokens.</p>
   <h3>Keeping costs down</h3>
   <p>The main lever is <b>limiting how often each organization can call the agents</b>. Every run also has hard request, token, and tool-call caps, so no loop can run on.</p>
   <table>
@@ -419,7 +420,7 @@
   </table>
   <h3>At scale</h3>
   <p>Treating each user as one organization, and using Keystone's measured costs: a <b>typical year</b> is one Studio session, 4 survey reviews, one report with a revision and a few privacy checks, and 12 grant drafts. That comes to about <b>$1 per organization per year</b> in AI fees, most of it web search. The <b>most an organization could spend</b> while staying within every allowance (2 Studio sessions at their caps, 36 grants, and the full daily privacy-check ceiling all year) is about <b>$8 per year</b>.</p>
-  <p><b>Per run and per user per month.</b> One Studio session (setting up a new organization) costs 5–6¢ in model fees plus at most 12¢ of web search. A grant draft is about 1¢ plus at most 6¢ of search. A report design is under 1¢. Per user (organization) per month, that's about <b>8¢ in a typical month</b> and at most <b>about 70¢</b> within the allowances.</p>
+  <p><b>Per run and per user per month.</b> One Studio session (setting up a new organization) costs 4–6¢ in model fees plus at most 12¢ of web search. A grant draft is about 1¢ plus at most 6¢ of search. A report design is under 1¢. Per user (organization) per month, that's about <b>8¢ in a typical month</b> and at most <b>about 70¢</b> within the allowances.</p>
   <table>
     <thead><tr><th>Users (organizations)</th><th class="n">AI, typical / year</th><th class="n">AI, worst case / year</th><th class="n">Hosting (Render) / year</th></tr></thead>
     <tbody>

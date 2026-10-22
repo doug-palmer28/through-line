@@ -34,6 +34,11 @@ def inline_images(html: str, base: Path) -> str:
     return re.sub(r'(<img\b[^>]*?\bsrc=)"([^"]+)"', data_uri, html)
 
 
+def new_tab_links(html: str) -> str:
+    """Web links open in a new tab, so the report or deck stays open; in-page links (#r13) don't."""
+    return re.sub(r'<a (?![^>]*\btarget=)([^>]*\bhref="https?://)', r'<a target="_blank" rel="noopener" \1', html)
+
+
 def fill(html: str, code: str, demo: str | None, slide: bool) -> str:
     html = html.replace("{{ACCESS_CODE}}", code)
     if demo:
@@ -59,13 +64,13 @@ def main() -> None:
     OUT.mkdir(exist_ok=True)
 
     report_src = (DOCS / "report" / "index.html").read_text(encoding="utf-8")
-    report = fill(inline_images(report_src, DOCS / "report"), args.access_code, args.demo, slide=False)
+    report = new_tab_links(fill(inline_images(report_src, DOCS / "report"), args.access_code, args.demo, slide=False))
     (OUT / "report.html").write_text(report, encoding="utf-8")
 
     svg = re.search(r"<svg\b.*?</svg>", report_src, re.S)
     slides_src = (DOCS / "slides" / "index.html").read_text(encoding="utf-8")
     slides_src = slides_src.replace("<!--AGENT_SVG-->", svg.group(0) if svg else "")
-    slides = fill(inline_images(slides_src, DOCS / "slides"), args.access_code, args.demo, slide=True)
+    slides = new_tab_links(fill(inline_images(slides_src, DOCS / "slides"), args.access_code, args.demo, slide=True))
     (OUT / "slides.html").write_text(slides, encoding="utf-8")
 
     for name in ("report.html", "slides.html"):

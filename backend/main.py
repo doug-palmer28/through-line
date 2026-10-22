@@ -27,6 +27,10 @@ MAX_REQUEST_BYTES = 52 * 1024 * 1024
 # disk; raising the spool limit to the request cap means an accepted upload never touches disk.
 MultiPartParser.spool_max_size = MAX_REQUEST_BYTES
 SIGN_IN_PATHS = {"/api/auth/login", "/api/auth/signup", "/api/auth/participant/login"}
+# The website loads only its own files: no outside scripts, and no other site can frame it.
+CSP = ("default-src 'self'; script-src 'self'; style-src 'self' 'unsafe-inline'; img-src 'self' data: blob:; "
+       "font-src 'self' data:; connect-src 'self'; object-src 'none'; base-uri 'self'; form-action 'self'; "
+       "frame-ancestors 'none'")
 
 production = os.getenv("THROUGH_LINE_HTTPS") == "1"
 app = FastAPI(title=f"{APP_NAME} API", version="0.1.0",
@@ -64,6 +68,9 @@ async def security_headers(request: Request, call_next):
     response.headers.setdefault("X-Content-Type-Options", "nosniff")
     response.headers.setdefault("X-Frame-Options", "DENY")
     response.headers.setdefault("Referrer-Policy", "strict-origin-when-cross-origin")
+    if production:  # (locally the /docs page needs its CDN scripts)
+        response.headers.setdefault("Content-Security-Policy", CSP)
+        response.headers.setdefault("Strict-Transport-Security", "max-age=31536000")
     if request.url.path.startswith("/api/"):
         response.headers.setdefault("Cache-Control", "no-store")  # private data: never cache API responses
     return response

@@ -25,6 +25,7 @@ from starlette.concurrency import run_in_threadpool
 
 import visible
 from audit import audit_append
+from security import check_zip
 
 MAX_FILES = 5
 MAX_FILE_BYTES = 10 * 1024 * 1024
@@ -87,7 +88,11 @@ def read_upload(index: int, filename: str, data: bytes) -> Source:
     if len(data) > MAX_FILE_BYTES:
         raise IntakeError(f"'{filename}' is larger than 10 MB.")
     try:
+        if suffix in (".docx", ".pptx"):
+            check_zip(data)
         raw, hidden = _file_text(suffix, data)
+    except ValueError as exc:
+        raise IntakeError(f"Couldn't read '{filename}': {exc}") from exc
     except Exception as exc:  # corrupt or password-protected files
         raise IntakeError(f"Couldn't read '{filename}'. Is it a valid, unlocked file?") from exc
     text, truncated = _cap(raw)

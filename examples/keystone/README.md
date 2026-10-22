@@ -15,6 +15,6 @@ Click any **PDF** to view it in your browser. The PowerPoint, Word, and Excel fi
 | 4. One-page flyer | The matching one-page flyer | Report Designer + Privacy Reviewer | [PDF](4_one_page_flyer.pdf) | |
 | 5. Grant draft | A tailored application to the El Pomar Foundation, with yellow `[ADD: …]` placeholders where facts were missing and an honest eligibility flag | Funder Researcher + Grant Writer + Privacy Reviewer | [PDF](5_grant_application_draft.pdf) | [Word](5_grant_application_draft.docx) |
 
-**To see these inside the app**, sign in to the live site with the Keystone demo login (it's in the submitted report and slides).
+**To see these inside the app**, sign in to the live site with the view-only Keystone demo login (it is in the submitted report and slides).
 
 **How this folder was made:** `python scripts/build_examples.py` loads Keystone's saved package into a throwaway database and downloads each file through the app, with no new AI calls. The files are the same ones the app gives a nonprofit. The PDF copies were made with Microsoft Office.

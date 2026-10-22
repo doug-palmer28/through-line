@@ -1,32 +1,40 @@
 # Through Line
 
-**Live app: [through-line.onrender.com](https://through-line.onrender.com)** · Graders: the sign-up access code and step-by-step instructions are in the submitted report (`report.html`, first page) and on the last slide (`slides.html`).
+**Live app: [through-line.onrender.com](https://through-line.onrender.com)**
 
-**From mission to evidence to story.** Through Line helps small, low-resourced nonprofits prove the change they create, with a team of AI agents doing the heavy lifting and people approving everything that matters.
+**From mission to evidence to story.** Through Line helps small, low-resourced nonprofits prove the change they create. A team of AI agents does the heavy lifting, and people approve everything that matters. Built by Doug Palmer for AI Foundations at the Yale School of Management. **All data in this repo is synthetic** (fictional organizations and participants), except the token counts and feedback from our outside tester.
 
-Built for AI Foundations at Yale. **All data in this repo is synthetic:** fictional organizations, fictional participants.
+## For graders: start here
+
+| You want to… | Go to |
+|---|---|
+| **Try the live app** | [through-line.onrender.com](https://through-line.onrender.com). The sign-up **access code** and step-by-step instructions are on page 1 of the submitted report (`report.html`) and on the last slide (`slides.html`), along with a view-only login for a finished example. |
+| **See what it produces** | [`examples/keystone/`](examples/keystone/): every file the app made for a fictional housing nonprofit (logic model, survey, dashboard data, funder deck, flyer, grant draft). PDF copies open in the browser. |
+| **Check the evidence** | [`evidence/`](evidence/): test results, the hidden-text defense in action, the audit-log check, and the live site's token ledger, each tied to a claim in the report. |
+| **Read how the agents work** | [`output/harness.md`](output/harness.md): every agent's prompt, tools, limits, guardrails, and audit trail. |
+| **See how it was built** | [`AI_prompts.md`](AI_prompts.md): every prompt, verbatim and in order. |
+| **Read the report or slides here** | Sources: [`docs/report/index.html`](docs/report/index.html) and [`docs/slides/index.html`](docs/slides/index.html) (reveal.js). |
+
+## What it does
 
 | Tab | What it does |
 |---|---|
-| **Logic Model** | A five-agent team (Team Lead, Sector Expert, Client Advocate, Evaluation Specialist, and Funder Researcher with live web search) reads your materials, asks five questions, and drafts a logic model and measurement plan that you edit and approve. Downloads as PowerPoint. |
-| **Survey Tools** | Pre/post surveys built from your approved metrics, a Survey Review Bot with one-click fixes, participant codes + PINs, a phone-friendly participant portal, staff bulk entry, and monthly program numbers (one at a time or via an Excel template). |
-| **Dashboard** | % improved, before/after, who you serve (as percentages, with small groups hidden), and program activity. Every chart downloads as Excel, plus all data and a quick PowerPoint report. |
-| **Impact Report** | Describe your brand and pick your results. The Report Designer builds a 10–15 minute funder deck with speaker notes and a one-page PDF flyer. Its numbers refresh from your latest data, for free. |
+| **Logic Model** | A five-agent team (Team Lead, Sector Expert, Client Advocate, Evaluation Specialist, and a Funder Researcher with live web search) reads your materials, asks five questions, and drafts a logic model and measurement plan that you edit and approve. Downloads as PowerPoint. |
+| **Survey Tools** | Pre/post surveys built from your approved metrics, a Survey Review Bot with one-click fixes, participant codes + PINs, a phone-friendly participant portal, staff bulk entry, and monthly program numbers (one at a time or from an Excel template). |
+| **Dashboard** | % improved, before and after, who you serve (as percentages, with small groups hidden), and program activity. Every chart downloads as Excel, plus all data and a quick PowerPoint report. |
+| **Impact Report** | Describe your brand and pick your results. The Report Designer builds a 10–15 minute funder deck with speaker notes and a one-page PDF flyer. Its numbers refresh from your latest data for free. |
 | **Grants** | Name a foundation, share its website and RFP, and paste its questions. The team researches what the foundation cares about and drafts a tailored application (Word) from your live data. |
 
-Safety is built in:
-- Agents read only text a person can see in a document.
+Every agent runs on `gpt-6-luna` through Portkey (OpenAI Responses API) with Pydantic AI. A typical organization costs cents per month in AI fees (see the report's Tokenomics section).
+
+**Safety is built in:**
+- Agents read only text a person can see in a document, so hidden instructions never reach them.
 - A Privacy Reviewer checks everything that leaves the organization.
-- Passwords and PINs are hashed with Argon2id, and usernames are stored only as keyed hashes.
+- Participants are codes and PINs, never names.
+- Passwords and PINs are hashed with Argon2id. Usernames are stored only as keyed hashes.
 - Each organization's data is isolated from every other's.
 - Every agent run is written to an append-only, hash-chained audit log.
 - Every run's tokens are recorded per person, and each tool has a usage allowance.
-
-**Example outputs:** [`examples/keystone/`](examples/keystone/) has every file Through Line made for the fictional Keystone Family Housing Partners: logic model, survey, dashboard data, funder deck, flyer, and grant draft (PDF copies open in the browser).
-
-**Final report:** [`docs/report/index.html`](docs/report/index.html). **Slides:** [`docs/slides/index.html`](docs/slides/index.html) (reveal.js). The submitted versions are single, self-contained files with every image embedded, built with `python scripts/build_deliverables.py --access-code <code>` into `deliverables/` (git-ignored, so the access code stays out of this public repo).
-
-**How the agents work** (prompts, tools, limits, guardrails, audit, test evidence): see [`output/harness.md`](output/harness.md). **How it was built**, prompt by prompt: [`AI_prompts.md`](AI_prompts.md).
 
 ---
 
@@ -40,6 +48,8 @@ python -m venv .venv
 cd frontend && npm install && cd ..
 cp .env.example .env                                          # then put your key in PORTKEY_API_KEY
 ```
+
+The app looks for `.env` in this folder first, then one folder up.
 
 Start the API and the website in two terminals:
 
@@ -56,7 +66,7 @@ Open http://localhost:5173, choose **Create a staff account**, and start in the 
 .venv/Scripts/python tests/demo_server.py
 ```
 
-**Tests** (offline; no AI calls):
+**Tests** (offline, no AI calls; 64 tests):
 
 ```bash
 env -u PORTKEY_API_KEY .venv/Scripts/python -m pytest tests
@@ -86,6 +96,7 @@ On Render, open the service's **Shell** tab:
 
 ```bash
 python ../scripts/operator_tools.py usage                  # tokens by organization and person
+python ../scripts/operator_tools.py report-data            # the same, as compact JSON by task
 python ../scripts/operator_tools.py orgs                   # allowances used
 python ../scripts/operator_tools.py allow <org id> grants  # give an organization one more
 ```
@@ -98,20 +109,24 @@ Limits per organization live in `backend/allowances.py`.
 python ../scripts/operator_tools.py import-org ../scripts/demo/keystone_family_housing.json --username keystone.demo --name "Keystone demo"
 ```
 
-It asks you to choose a password, then you can sign in as `keystone.demo`. Run it once (a second run says the username is taken).
+It asks you to choose a password, then you can sign in as `keystone.demo`. That account is **view-only**: anyone with its password can look around and download files, but can't change anything or lock it out with wrong passwords.
 
 ---
 
 ## Project layout
 
 ```
-backend/     FastAPI app, agents (agents/), prompts (prompts/), routes (routes/)
-frontend/    Vite + React + TypeScript
-tests/       offline tests and the scripted demo server
-scripts/     test-profile runner, demo-deck builder, operator tools
-data/        fictional test organizations and the Keystone test profile
-output/      harness.md (the agents, documented) and audit_log.json
-docs/        walkthrough deck from the live end-to-end test
+backend/         FastAPI app: agents/ (the AI agents), prompts/ (one per agent), routes/ (the API)
+frontend/        Vite + React + TypeScript website
+tests/           64 offline tests and the scripted demo server
+scripts/         operator tools, test-profile runner, and builders for the deliverables, examples, and evidence
+docs/            report/ and slides/ (sources of the submitted report.html and slides.html)
+examples/        keystone/: every file the app produced for the Keystone example
+evidence/        proof behind the report's claims
+output/          harness.md (the agents, documented) and audit_log.json
+data/            fictional test organizations and the Keystone test profile
+PROJECT_PLAN.md  the original product plan
+AI_prompts.md    every prompt used to build it
 ```
 
-Every agent uses `gpt-6-luna` through Portkey (OpenAI Responses API) with Pydantic AI.
+The submitted `report.html` and `slides.html` are single files with every image embedded, built with `python scripts/build_deliverables.py --access-code <code>`. They go into `deliverables/`, which is git-ignored so the access code stays out of this public repo.

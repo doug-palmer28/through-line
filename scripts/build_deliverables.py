@@ -45,7 +45,7 @@ def fill(html: str, code: str, demo: str | None, slide: bool) -> str:
         user, _, password = demo.partition(":")
         size = "font-size:25px;" if slide else ""
         line = (f'<p class="small" style="{size}margin:6px 0 0"><b style="font-weight:700">Want to see a finished example right away?</b> Sign in as '
-                f'<span class="code">{user}</span> with password <span class="code">{password}</span>: Keystone Family '
+                f'<span class="code">{user}</span> with password <span class="code">{password}</span> (view-only): Keystone Family '
                 "Housing Partners, with the logic model, surveys, dashboard, report, and grant draft already built.</p>")
         html = html.replace("<!--DEMO-->", line)
     else:

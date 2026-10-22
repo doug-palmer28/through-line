@@ -141,6 +141,7 @@ export type Me = {
   org: { id: number; name: string };
   studio_session_id: string | null;
   has_plan: boolean;
+  demo?: boolean;
 };
 
 // ---------------------------------------------------------------- survey tools

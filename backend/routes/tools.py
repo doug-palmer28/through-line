@@ -10,6 +10,7 @@ from datetime import date, datetime, timezone
 from fastapi import APIRouter, Depends, File, HTTPException, Query, UploadFile
 from fastapi.responses import Response as FileResponse  # (db.Response is a survey response)
 from pydantic import BaseModel, Field
+from starlette.concurrency import run_in_threadpool
 from sqlmodel import func, select
 
 import allowances
@@ -382,7 +383,7 @@ async def responses_upload(instrument_id: int, wave: str = Query(pattern="^(pre|
     if len(data) > 5 * 1024 * 1024:
         raise HTTPException(400, "That file is too large.")
     try:
-        rows, sheet_errors = response_sheets.parse_upload(data, inst, wave)
+        rows, sheet_errors = await run_in_threadpool(response_sheets.parse_upload, data, inst, wave)
     except ValueError as exc:
         raise HTTPException(400, str(exc)) from exc
     result = _save_rows(ctx, inst, wave, rows, "uploaded_responses")
@@ -441,7 +442,7 @@ async def numbers_upload(file: UploadFile = File(...), ctx: StaffCtx = Depends(c
     if len(data) > 5 * 1024 * 1024:
         raise HTTPException(400, "That file is too large.")
     try:
-        rows, errors = program_numbers.parse_upload(data)
+        rows, errors = await run_in_threadpool(program_numbers.parse_upload, data)
     except ValueError as exc:
         raise HTTPException(400, str(exc)) from exc
     mine = {i.id: i for i in ctx.db.exec(select(Indicator).where(Indicator.org_id == ctx.org.id)).all()}

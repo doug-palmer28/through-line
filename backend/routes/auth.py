@@ -13,8 +13,8 @@ from config import signup_code
 from db import Organization, Participant, StaffUser, get_db
 from deps import ParticipantCtx, StaffCtx, current_participant, current_staff
 from security import (
-    PARTICIPANT_COOKIE, PARTICIPANT_TTL, STAFF_COOKIE, STAFF_TTL, burn_time, clear_failures, cookie_args,
-    hash_secret, locked, make_token, new_invite_code, record_failure, token_hash, username_hash, verify_secret,
+    DEMO_USERNAME, PARTICIPANT_COOKIE, PARTICIPANT_TTL, STAFF_COOKIE, STAFF_TTL, burn_time, clear_failures, cookie_args,
+    hash_secret, is_demo, locked, make_token, new_invite_code, record_failure, token_hash, username_hash, verify_secret,
 )
 
 router = APIRouter(prefix="/api/auth", tags=["auth"])
@@ -61,6 +61,7 @@ def _me(ctx: StaffCtx) -> dict:
         "org": {"id": ctx.org.id, "name": ctx.org.name},
         "studio_session_id": ctx.org.studio_session_id,
         "has_plan": ctx.org.measurement_plan is not None,
+        "demo": is_demo(ctx.user.username_hash),  # the shared, view-only example account
     }
 
 
@@ -111,16 +112,20 @@ def signup(body: SignupIn, response: Response, db: Session = Depends(get_db)):
 @router.post("/login")
 def login(body: LoginIn, response: Response, db: Session = Depends(get_db)):
     ident = body.username.strip().lower()
-    if locked("staff", ident):
+    if ident == DEMO_USERNAME.lower():
+        ident = ""  # the demo's password is public: one person's typos shouldn't lock everyone else out
+    if ident and locked("staff", ident):
         raise HTTPException(429, LOCKED)
     user = db.exec(select(StaffUser).where(StaffUser.username_hash == username_hash(body.username))).first()
     if not user:
         burn_time(body.password)
     if not user or not verify_secret(user.password_hash, body.password):
-        record_failure("staff", ident)
+        if ident:
+            record_failure("staff", ident)
         audit_append(event="login_failed", agent="human", team="accounts", human={"role": "staff"})
         raise HTTPException(401, GENERIC_FAIL)
-    clear_failures("staff", ident)
+    if ident:
+        clear_failures("staff", ident)
     user.last_login = datetime.now(timezone.utc)
     db.add(user)
     db.commit()

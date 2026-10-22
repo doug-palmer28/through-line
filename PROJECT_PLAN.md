@@ -1,7 +1,7 @@
 # Final Project Plan — Nonprofit Impact Toolkit
 
 *Working title: **Through Line** — from mission to evidence to story.*
-*Status: in build. Steps 1–15 and 17 are done (Studio team, accounts and portals, survey tools, dashboard, Report Designer, live Keystone test). This plan is the original design; `AI_prompts.md` tracks the build and `output/harness.md` documents the agents as built.*
+*Status: built and live. This is the original design from the planning session, kept as written; some ideas (voice reflections, AI-coded testimonials) became next steps. What was actually built is documented in `output/harness.md`, and how, prompt by prompt, in `AI_prompts.md`.*
 
 ---
 

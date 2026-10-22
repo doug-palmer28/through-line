@@ -16,6 +16,11 @@ from openpyxl.worksheet.datavalidation import DataValidation
 
 import surveys
 from reports import excel_safe
+from security import check_zip
+
+# A sheet can claim a million rows; only read as far as a real template could go.
+MAX_SHEET_ROWS = 2000
+MAX_SHEET_COLS = 200
 
 ID_MARKER = "Through Line ids"
 INK, INPUT = "23262B", "FFF8E6"
@@ -118,6 +123,7 @@ def parse_upload(data: bytes, inst, wave: str) -> tuple[list[dict], list[dict]]:
     """Return (rows, errors). Rows match the bulk-entry API: {line, participant_code, answers, demographics}.
     Labels are turned back into stored values here; the usual checks (surveys.clean_answers) run afterwards."""
     try:
+        check_zip(data)
         wb = load_workbook(io.BytesIO(data), read_only=True, data_only=True)
     except Exception as exc:
         raise ValueError("That file couldn't be opened as an Excel workbook (.xlsx).") from exc
@@ -125,7 +131,7 @@ def parse_upload(data: bytes, inst, wave: str) -> tuple[list[dict], list[dict]]:
     cols = {c["id"]: c for c in _columns(inst, wave)}
     ids: list[str] | None = None
     rows, errors = [], []
-    for line, values in enumerate(ws.iter_rows(values_only=True), start=1):
+    for line, values in enumerate(ws.iter_rows(max_row=MAX_SHEET_ROWS, max_col=MAX_SHEET_COLS, values_only=True), start=1):
         values = list(values)
         if ids is None:
             if str(values[0] or "").strip() == ID_MARKER:

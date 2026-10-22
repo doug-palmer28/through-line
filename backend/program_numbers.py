@@ -16,6 +16,11 @@ from openpyxl.styles import Alignment, Font, PatternFill
 from openpyxl.worksheet.datavalidation import DataValidation
 
 from reports import excel_safe
+from security import check_zip
+
+# A sheet can claim a million rows; only read as far as a real template could go.
+MAX_SHEET_ROWS = 2000
+MAX_SHEET_COLS = 200
 
 HEADER = ["Number id", "What to enter", "Unit", "How it's counted", "Month (YYYY-MM)", "Value", "Note (optional)"]
 INK, FILL, INPUT = "23262B", "E9EEF7", "FFF8E6"
@@ -72,12 +77,13 @@ def _month(value) -> str | None:
 def parse_upload(data: bytes) -> tuple[list[dict], list[dict]]:
     """Return (rows, errors). Each row: {indicator_id, month, value, note, line}."""
     try:
+        check_zip(data)
         wb = load_workbook(io.BytesIO(data), read_only=True, data_only=True)
     except Exception as exc:
         raise ValueError("That file couldn't be opened as an Excel workbook (.xlsx).") from exc
     ws = wb["Program numbers"] if "Program numbers" in wb.sheetnames else wb.worksheets[0]
     rows, errors, header_seen = [], [], False
-    for i, row in enumerate(ws.iter_rows(values_only=True), start=1):
+    for i, row in enumerate(ws.iter_rows(max_row=MAX_SHEET_ROWS, max_col=MAX_SHEET_COLS, values_only=True), start=1):
         cells = list(row) + [None] * 7
         if not header_seen:
             header_seen = str(cells[0] or "").strip().lower() == "number id"

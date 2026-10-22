@@ -427,7 +427,7 @@ Hidden text is a classic way to slip instructions past a human to an AI ("ignore
 | All text | | zero-width and formatting characters, bidi overrides, Unicode "tag" characters |
 
 - What was skipped is logged as `hidden_text_skipped` (counts by reason, never the hidden text) and kept in each source's record. Since Step 19b it isn't shown to staff: the protection works quietly.
-- **Proof:** an adversarial PDF hides "SECRET" six ways; the old reader (pypdf) returns all of it, and the new one returns none of it while keeping white text on a dark box. The same goes for Word, PowerPoint (including a dark-background slide), HTML, and Markdown. On the 10 real test-organization PDFs, the new reader matches the old one word for word (no false positives).
+- **Proof:** an adversarial PDF hides "SECRET" seven ways; the old reader (pypdf) returns all of it, and the new one returns none of it while keeping white text on a dark box. The same goes for Word, PowerPoint (including a dark-background slide), HTML, and Markdown. On the 10 real test-organization PDFs, the new reader matches the old one word for word (no false positives).
 
 ## 10g. Tokens, Allowances, and Live Numbers (Step 15b)
 
@@ -479,10 +479,14 @@ Deployed on Render from the `Dockerfile` (one container serves the website and t
 | The unlimited privacy check | Re-checking an unchanged draft is answered from the last check (no AI run); at most 25 new checks per organization per day |
 | Citation verification | Exact page, or a sub-page on a path boundary; look-alike hosts never count |
 | Logos | PNG/JPEG only, ≤ 4000 × 4000 pixels checked before decoding |
-| Browser hardening | `nosniff`, `X-Frame-Options: DENY`, a referrer policy, `no-store` on API responses; API docs off in production |
+| Browser hardening | `nosniff`, `X-Frame-Options: DENY`, a referrer policy, `no-store` on API responses; API docs off in production; in production a Content-Security-Policy (only the site's own scripts, no framing) and HSTS |
+| The shared demo login | `keystone.demo` (its password is given to graders) is **view-only**: any change returns 403 with a friendly note and a banner says so, while viewing and downloads work. Wrong passwords never lock it, so one person's typos can't shut others out (`security.DEMO_USERNAME`, `deps.current_staff`) |
+| Hostile Office files | Word, PowerPoint, and Excel files are zip packages: ones that would unpack past 100 MB or 2,000 entries are refused before any library opens them (zip-bomb guard). Excel uploads are read only to 2,000 rows × 200 columns and parsed off the event loop |
 | PDF fonts on Linux | Carlito / Liberation / DejaVu installed, so flyers keep their metrics and full Unicode |
 
-Tests: `tests/test_deploy.py` (access code, website serving, path traversal, headers, oversized requests, sign-in limit, audit withholding, `NaN`, sheet names, formula escaping, private addresses). Whole suite: **53 passed**, offline.
+Tests: `tests/test_deploy.py` (access code, website serving, path traversal, headers, oversized requests, sign-in limit, audit withholding, `NaN`, sheet names, formula escaping, private addresses) and `tests/test_hardening.py` (view-only demo, no demo lockout, zip bomb refused, a sheet claiming a million rows read in seconds). Whole suite: **64 passed**, offline.
+
+A second independent review (2026-10-22) re-checked secrets in git, auth, org isolation, path traversal, SSRF, formula injection, XXE, and prompt-injection paths and found them sound; the demo-account, zip-bomb, and huge-sheet findings above were fixed from it. Not changed, by choice: the per-network sign-in limit trusts the proxy's forwarded address (the per-account lockout still applies), and the container runs as root so it can write to Render's mounted disk.
 
 ## 11. Workspace Map
 
@@ -504,14 +508,15 @@ Final Project/
 │   └── components/        studio/ (Studio stages, huddle) · tools/ (surveys, participants, entry, numbers) · charts/
 ├── data/                  through_line.db · secret.key · sessions/ · brand/ · usage_reports/   (all git-ignored)
 │   ├── test_organizations/  10 fictional nonprofit PDFs
-│   └── test_profiles/       keystone_family_housing/ (profile, logo, screenshots, live run outputs)
-├── scripts/               run_test_profile.py (plays a profile through the app) · build_demo_deck.py ·
-│                          operator_tools.py (usage report, allowances, backfill)
+│   └── test_profiles/       keystone_family_housing/ (profile, logo, live run records)
+├── scripts/               run_test_profile.py (plays a profile through the app) · operator_tools.py (usage, allowances,
+│                          export/import an organization, report data) · build_deliverables.py · build_examples.py ·
+│                          build_evidence.py · demo/keystone_family_housing.json
 ├── output/                harness.md · audit_log.json
-├── tests/                 test_logic_model_studio · test_collaboration_research · test_prototype · test_reports ·
-│                          test_visible_text · test_limits_grants
-│                          (offline) · demo_server.py (scripted agents, temp data) · conftest.py
-└── docs/                  Through_Line_live_walkthrough.pptx
+├── tests/                 11 offline test files (64 tests) · demo_server.py (scripted agents, temp data) · conftest.py
+├── docs/                  report/ (final report source + images) · slides/ (reveal.js deck source)
+├── examples/keystone/     every file the app produced for Keystone (PDF copies open in the browser)
+└── evidence/              test results, the hidden-text defense, the audit-log check, live token usage
 ```
 
 ---
@@ -585,7 +590,9 @@ All Logic Model Studio routes now require a signed-in staff member, and a sessio
 
 ## 13. Testing Evidence
 
-**Offline tests** (`env -u PORTKEY_API_KEY .venv/Scripts/python -m pytest tests`): **13 passed.**
+**Now:** the whole offline suite is **64 passed** (full list in [`evidence/test_results.txt`](../evidence/test_results.txt)). The sections below record what each step added, in order.
+
+**Step 7 offline tests** (`env -u PORTKEY_API_KEY .venv/Scripts/python -m pytest tests`): **13 passed.**
 - `test_logic_model_studio.py` (8): full flow; uploads never saved or logged; restart safety; expiry wipes notes; word limit; extra document; consult budget refusal; bad files and private URLs; phase order.
 - `test_collaboration_research.py` (5):
   - All five agents take part at intake, and the question pool has proposals from several specialists.
@@ -644,7 +651,7 @@ All Logic Model Studio routes now require a signed-in staff member, and a sessio
   - program-number matching and idempotent re-runs;
   - a "higher = better" label for reverse-scored charts;
   - two layout bugs.
-- **Walkthrough deck:** `docs/Through_Line_live_walkthrough.pptx`, 30 slides, built from the run.
+- **Outputs:** every file from this run is in `examples/keystone/`; the run records are in `data/test_profiles/keystone_family_housing/runs/`.
 
 **Step 15 tests** (`test_reports.py`, 7; whole suite **28 passed**):
 - Template round trip: download for a month, fill it, upload. One bad row comes back as an error while the rest save; re-uploading replaces instead of duplicating; the numbers reach the dashboard.
@@ -676,7 +683,7 @@ All Logic Model Studio routes now require a signed-in staff member, and a sessio
 
 **Step 15b browser walk-through** (demo server, scripted agents): Impact Report shows the shell (no design form once used), live stats, Refresh, Run privacy check, and a feedback round that locks after one use. Grants tab: the form with a Markdown RFP containing a hidden comment and a text file with zero-width characters → "We skipped text you can't see" lists both; answers show live numbers; placeholders are highlighted; the checklist renders; the Word file downloads; the allowance drops to 2. The AI usage page shows tokens by tool, month, and person, plus allowances. The top bar wraps cleanly with six tabs. No console errors.
 
-**Live runs:** the real audit log (437 entries) verifies end to end. The Step 15b agents (Privacy Reviewer, Grant Writer, foundation research) have **not been run live yet**.
+**Live runs:** the local audit log (456 entries) verifies end to end ([`evidence/audit_log_check.md`](../evidence/audit_log_check.md)). Every agent has now run live on gpt-6-luna: the full Keystone journey (Studio, Survey Review Bot, Report Designer, Privacy Reviewer, foundation research, Grant Writer) on 2026-10-20, The Place's Studio on the live site, and an outside tester's Studio (Kids at Their Best) on 2026-10-21.
 
 ## 14. Known Limitations
 
@@ -709,3 +716,4 @@ All Logic Model Studio routes now require a signed-in staff member, and a sessio
 | 15b | 2026-10-20 | **Agents read only what a person can see** (`visible.py`: pdfium for PDFs, Word/PowerPoint style and theme resolution, HTML/Markdown, invisible characters), proven with adversarial fixtures. **Token ledger** per person (`TokenUsage`), the **AI usage** page, and `operator_tools.py` (usage Excel, allowances, audit-log backfill). **Allowances** per organization (Studio 2, Survey Review Bot 2 per tool, report 1 design + 1 revision, grants 3/month + 1 revision; privacy check unlimited). **Report shell** with live `{{number}}` tokens and free refresh; stable chart ids. **Privacy Reviewer** split out as its own on-demand agent. **Grants tab:** Funder Researcher foundation job, **Grant Writer**, Word export. Top bar wraps with six tabs; local-time timestamps. |
 | 19 | 2026-10-20 | **Live site:** Dockerfile + Render blueprint (Starter + persistent disk), FastAPI serves the website, sign-up access code, and the pre-launch review fixes in §10i. README written; pushed to GitHub. |
 | 19b | 2026-10-20 | From Doug's walk-through: sticky Studio stepper, consistent step numbers, auto-growing question boxes; the hidden-text notice removed from the UI; **multiple-choice questions** with dashboard charts; the Survey Review Bot takes staff requests, converts written questions to choices (`make_choice`), and checks timing vs wording (plus a new automatic check); a Survey Tools guide; Excel templates for entering responses; completed sessions persist; `export-org` / `import-org` and the Keystone demo bundle. |
+| 20 | 2026-10-22 | Final report and reveal.js slides (`scripts/build_deliverables.py`); cached input tokens in the ledger and usage page; `examples/keystone/` (every output, `scripts/build_examples.py`) and `evidence/` (`scripts/build_evidence.py`); tester feedback; clearer staff sign-in; **hardening:** view-only demo account without lockout, zip-bomb guard, capped Excel reads off the event loop, CSP and HSTS in production. Removed the superseded walkthrough deck. |

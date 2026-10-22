@@ -53,3 +53,6 @@ Idea building.docx
 
 # --- Built Canvas submissions (contain the live-site access code)
 deliverables/
+
+# Participant codes + PINs written by scripts/run_test_profile.py (test credentials; keep local)
+participant_codes.json

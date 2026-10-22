@@ -6,7 +6,7 @@ from fastapi import Depends, HTTPException, Request
 from sqlmodel import Session
 
 from db import Organization, Participant, StaffUser, get_db
-from security import PARTICIPANT_COOKIE, STAFF_COOKIE, read_token
+from security import DEMO_READ_ONLY, PARTICIPANT_COOKIE, STAFF_COOKIE, is_demo, read_token
 
 
 @dataclass
@@ -28,6 +28,8 @@ def current_staff(request: Request, db: Session = Depends(get_db)) -> StaffCtx:
     user = db.get(StaffUser, int(claims["sub"])) if claims else None
     if not user or user.org_id != claims.get("org"):
         raise HTTPException(401, "Please sign in.")
+    if request.method not in ("GET", "HEAD") and is_demo(user.username_hash):
+        raise HTTPException(403, DEMO_READ_ONLY)
     return StaffCtx(user=user, org=db.get(Organization, user.org_id), db=db)
 
 

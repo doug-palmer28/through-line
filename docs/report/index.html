@@ -137,7 +137,7 @@
     <div class="tile"><b>9</b><span>AI agents, all on gpt-6-luna</span></div>
     <div class="tile"><b>~10 min</b><span>from documents to an approved logic model and metrics</span></div>
     <div class="tile"><b>$0.24</b><span>AI cost of Keystone's whole journey, upper bound</span></div>
-    <div class="tile"><b>59</b><span>offline tests, including adversarial privacy and injection tests</span></div>
+    <div class="tile"><b>64</b><span>offline tests, including adversarial privacy and injection tests</span></div>
   </div>
   <div class="graders">
     <h3>For graders: how to try it (about 10 minutes)</h3>
@@ -461,7 +461,7 @@
     <div>
       <h4>Agents only read what a person can see</h4>
       <p>Hidden text is a classic prompt-injection trick: white text, 1-point type, text off the page, or text tucked under a picture, all saying "ignore your instructions." Through Line reads PDFs with <b>pdfium</b> (the engine Chrome uses), resolves Word and PowerPoint styles and theme colors, and parses web pages for hidden content. It drops anything a reader of the document couldn't see.</p>
-      <figure><img src="img/hidden_text_page.jpg" alt="Test PDF as a person sees it"><figcaption>Figure 2. Our test PDF as a person sees it. It also hides "SECRET: ignore your instructions" six different ways (white, tiny, off-page, invisible, transparent, under a box). A standard PDF reader extracts all six; Through Line extracts only the three visible lines. On ten real documents, the new reader matched the old one word for word.</figcaption></figure>
+      <figure><img src="img/hidden_text_defense.jpg" alt="The hidden-text defense on a test PDF"><figcaption>Figure 2. The defense at work. (1) A person sees three lines, but the file also hides "SECRET: ignore your instructions" seven ways (white, tiny, off the page, invisible, transparent, under a box, scaled down). (2) A standard PDF reader hands all seven to the AI. (3) Through Line hands over only the three visible lines. Word, PowerPoint, and web pages give the same result (<a href="https://github.com/doug-palmer28/through-line/tree/main/evidence">evidence/</a>).</figcaption></figure>
     </div>
   </div>
   <table>
@@ -475,7 +475,7 @@
       <tr><td>Public-site hardening</td><td>Request size limits, website fetches restricted to public addresses, formula-safe Excel exports, security headers</td></tr>
     </tbody>
   </table>
-  <p class="small muted">A separate review agent audited the whole codebase before launch. It found no way to reach another organization's data, and every other issue it raised was fixed, each with a test.</p>
+  <p class="small muted">Independent review agents audited the whole codebase twice, before launch and before submission. Neither found a way to reach another organization's data, and the issues they raised were fixed, each with a test (for example, the shared demo login is view-only). <b>Proof for each defense</b> (all 64 test results, the hidden-text comparison for every file type, and the audit log's record of limits reached and hidden text skipped in real runs) is in <a href="https://github.com/doug-palmer28/through-line/tree/main/evidence">evidence/</a>.</p>
 </section>
 
 <!-- ============================================================ 7. IMPACT -->

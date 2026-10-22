@@ -107,6 +107,12 @@ export default function Layout() {
       </header>
 
       <main className="main">
+        {me?.demo && (
+          <p className="alert alert--soft">
+            <strong>You're looking at a shared, view-only example.</strong> Look around and download anything. To try the
+            AI tools yourself, sign out and create your own account with the access code.
+          </p>
+        )}
         <Outlet />
       </main>
 

@@ -179,3 +179,35 @@ def new_pin() -> str:
 
 def new_invite_code() -> str:
     return secrets.token_urlsafe(9)
+
+
+# ============================================================ the shared demo account
+
+# A ready-made example whose password is published for graders: it can look at everything and download
+# anything, but can't change anything, and wrong passwords never lock it.
+DEMO_USERNAME = os.getenv("THROUGH_LINE_DEMO_USERNAME", "keystone.demo")
+DEMO_READ_ONLY = "This shared demo is view-only. Create your own account with the access code to try the AI tools."
+
+
+def is_demo(username_hash_value: str) -> bool:
+    return bool(DEMO_USERNAME) and hmac.compare_digest(username_hash_value, username_hash(DEMO_USERNAME))
+
+
+# ============================================================ uploads
+
+MAX_UNZIPPED_BYTES = 100 * 1024 * 1024
+MAX_ZIP_ENTRIES = 2000
+
+
+def check_zip(data: bytes) -> None:
+    """Word, PowerPoint, and Excel files are zip packages. Refuse ones that would expand to something huge
+    (a "zip bomb") before any library unpacks them. Raises ValueError."""
+    import io
+    import zipfile
+
+    try:
+        info = zipfile.ZipFile(io.BytesIO(data)).infolist()
+    except zipfile.BadZipFile as exc:
+        raise ValueError("That file is damaged or isn't a real Office file.") from exc
+    if len(info) > MAX_ZIP_ENTRIES or sum(i.file_size for i in info) > MAX_UNZIPPED_BYTES:
+        raise ValueError("That file is too large once opened.")

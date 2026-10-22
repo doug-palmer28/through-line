@@ -46,15 +46,15 @@
   .art .t { position: absolute; bottom: 0; left: 0; width: 0; height: 0; border-left: 0.6in solid transparent; border-right: 0.6in solid transparent; border-bottom: 1.05in solid var(--yellow); opacity: 0.95; }
   .art .l { position: absolute; left: -0.2in; right: -0.2in; top: 1.25in; height: 2px; background: var(--ink); }
   .links { margin-top: 0.2in; display: grid; gap: 0.35rem; }
-  .link { display: flex; gap: 0.7rem; align-items: center; background: var(--paper); border: 1px solid var(--line); border-radius: 10px; padding: 0.55rem 0.8rem; }
+  .link { display: flex; gap: 0.7rem; align-items: center; background: var(--paper); border: 1px solid var(--line); border-radius: 10px; padding: 0.4rem 0.8rem; }
   .link b { font-family: var(--display); min-width: 1.4in; }
   .tiles { display: grid; grid-template-columns: repeat(4, 1fr); gap: 0.6rem; margin: 0.2in 0 0; }
-  .tile { background: var(--paper); border-radius: 10px; padding: 0.7rem 0.8rem; border-top: 4px solid var(--line-strong); }
+  .tile { background: var(--paper); border-radius: 10px; padding: 0.55rem 0.8rem; border-top: 4px solid var(--line-strong); }
   .tile b { display: block; font-family: var(--display); font-size: 19pt; line-height: 1.1; }
   .tile span { font-size: 8.5pt; color: var(--muted); }
   .tile:nth-child(1) { border-top-color: var(--red); } .tile:nth-child(2) { border-top-color: var(--blue); }
   .tile:nth-child(3) { border-top-color: var(--yellow); } .tile:nth-child(4) { border-top-color: var(--green); }
-  .cover footer { margin-top: auto; padding-top: 0.4in; font-size: 9pt; color: var(--muted); display: flex; justify-content: space-between; }
+  .cover footer { margin-top: auto; padding-top: 0.15in; font-size: 9pt; color: var(--muted); display: flex; justify-content: space-between; }
 
   /* content blocks */
   .callout { background: var(--tint-blue); border-left: 5px solid var(--blue); border-radius: 8px; padding: 0.7rem 0.9rem; margin: 0.8rem 0; }
@@ -106,9 +106,12 @@
     body { max-width: none; padding: 0; font-size: 10pt; }
     section { border: none; border-radius: 0; padding: 0.1in 0.2in 0.25in; margin: 0; }
     section + section { border-top: 2px solid var(--line); padding-top: 0.25in; }
-    section.cover { min-height: 0; padding: 0.3in 0.25in 0.2in; break-after: page; }
-    .cover footer { padding-top: 0.25in; }
-    figure, .step, table, .callout, .tiles, .three, .two, .shots { break-inside: avoid; }
+    section.cover { min-height: 0; padding: 0.15in 0.25in 0.1in; break-after: page; }
+    .cover footer { padding-top: 0.1in; }
+    .cover .link { padding: 0.28rem 0.8rem; }
+    .cover h1 { font-size: 29pt; }
+    figure, .step, .callout, .tiles, .three, .two, .shots, tr { break-inside: avoid; }
+    thead { display: table-header-group; }
     h2, h3, h4 { break-after: avoid; }
     .sh { break-inside: avoid; break-after: avoid; }
     a { color: var(--ink); }
@@ -128,6 +131,7 @@
     <div class="link"><b>Live app</b> <a href="https://through-line.onrender.com/">through-line.onrender.com</a> <span class="muted small">Staff sign-up needs the pilot access code</span></div>
     <div class="link"><b>Code (GitHub)</b> <a href="https://github.com/doug-palmer28/through-line">github.com/doug-palmer28/through-line</a></div>
     <div class="link"><b>How the agents work</b> <a href="https://github.com/doug-palmer28/through-line/blob/main/output/harness.md">output/harness.md</a> <span class="muted small">prompts, tools, limits, audit</span></div>
+    <div class="link"><b>Example outputs</b> <a href="https://github.com/doug-palmer28/through-line/tree/main/examples/keystone">examples/keystone</a> <span class="muted small">every file it made for Keystone, viewable in the browser</span></div>
   </div>
   <div class="tiles">
     <div class="tile"><b>9</b><span>AI agents, all on gpt-6-luna</span></div>
@@ -144,7 +148,8 @@
       <li>In <b>Logic Model</b>, share a website or a short program description (or skip), answer the five questions, and approve the logic model and metrics. Then try <b>Survey Tools</b>, <b>Dashboard</b>, <b>Impact Report</b>, and <b>Grants</b>.</li>
     </ol>
     <!--DEMO-->
-    <p class="small">Each organization is private and has its own usage limits, so nothing you do affects anyone else. All data is synthetic, so please don't enter real people's information.</p>
+    <p class="small"><b>See every file the app made for Keystone</b>, from logic model to grant draft: <a href="https://github.com/doug-palmer28/through-line/tree/main/examples/keystone">examples/keystone</a> on GitHub.</p>
+    <p class="small">Each organization is private, with its own limits. All data is synthetic: please don't enter real people's information.</p>
   </div>
   <footer><span>Doug Palmer · doug.palmer@yale.edu</span><span>All organizations and participants shown are fictional (synthetic data)</span></footer>
 </section>
@@ -308,7 +313,7 @@
 <section>
   <header class="sh"><p class="eyebrow">The agents · a real run</p>
   <h2><span class="num num--ink">▶</span> Keystone Family Housing Partners, step by step</h2></header>
-  <p>Keystone is a fictional rapid-rehousing nonprofit in New Haven (one of ten synthetic test organizations). We ran it live on gpt-6-luna on October 20, 2026, from sign-up to grant draft. The screenshots are from that run.</p>
+  <p>Keystone is a fictional rapid-rehousing nonprofit in New Haven (one of ten synthetic test organizations). We ran it live on gpt-6-luna on October 20, 2026, from sign-up to grant draft. The screenshots are from that run, and <b>every file it produced</b> (logic model, survey, dashboard data, funder deck, flyer, and grant draft) is in the repo at <a href="https://github.com/doug-palmer28/through-line/tree/main/examples/keystone">examples/keystone</a>, viewable in the browser.</p>
 
   <div class="step"><span class="num">1</span><div><h4>Share and intake (~15 seconds)</h4>
     <p>Staff upload Keystone's two-page program overview. The document passes through the visible-text reader. The four specialists then work in parallel: a sector brief, funder research (16 sources found, all 16 verified against real search results, including HUD Continuum of Care, Connecticut DOH, and the Community Foundation for Greater New Haven), and proposed questions. The Team Lead picks question 1 from the Evaluation Specialist's proposal.</p></div></div>
@@ -361,7 +366,7 @@
 
   <div class="step"><span class="num">8</span><div><h4>Grant draft for one foundation (3 runs)</h4>
     <p>For a test application to the El Pomar Foundation, the Funder Researcher found 7 sources, all verified, and identified four priorities. The Grant Writer drafted five sections, with placeholders such as <code>[ADD: organization history and mission]</code> where facts were missing. It also <b>flagged honestly that Keystone may not be eligible</b>, since El Pomar funds Colorado. The Privacy Reviewer generalized two town references that were linked to participants.</p></div></div>
-  <figure><img src="img/grants_answers.jpg" alt="Grant answers" style="max-height:3.2in;width:auto;max-width:100%;margin:auto"><figcaption>Grant answers with word counts, priorities addressed, source chips, and highlighted placeholders.</figcaption></figure>
+  <figure><img src="img/grants_answers.jpg" alt="Grant answers" style="max-height:2.4in;width:auto;max-width:100%;margin:auto"><figcaption>Grant answers with word counts, priorities addressed, source chips, and highlighted placeholders.</figcaption></figure>
 </section>
 
 <!-- ============================================================ 5. TOKENOMICS -->

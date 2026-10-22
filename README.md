@@ -22,6 +22,8 @@ Safety is built in:
 - Every agent run is written to an append-only, hash-chained audit log.
 - Every run's tokens are recorded per person, and each tool has a usage allowance.
 
+**Example outputs:** [`examples/keystone/`](examples/keystone/) has every file Through Line made for the fictional Keystone Family Housing Partners: logic model, survey, dashboard data, funder deck, flyer, and grant draft (PDF copies open in the browser).
+
 **Final report:** [`docs/report/index.html`](docs/report/index.html). **Slides:** [`docs/slides/index.html`](docs/slides/index.html) (reveal.js). The submitted versions are single, self-contained files with every image embedded, built with `python scripts/build_deliverables.py --access-code <code>` into `deliverables/` (git-ignored, so the access code stays out of this public repo).
 
 **How the agents work** (prompts, tools, limits, guardrails, audit, test evidence): see [`output/harness.md`](output/harness.md). **How it was built**, prompt by prompt: [`AI_prompts.md`](AI_prompts.md).

@@ -577,6 +577,10 @@ The full product plan lives in [PROJECT_PLAN.md](PROJECT_PLAN.md).
 
 *Outputs:* Jodi's findings, quotes, and caveats in the report's Impact section and on slide 8; "did limits make it worse?" answered from the tester (the 5-question cap was a favorite) in the report and on slide 6; multiple programs (her #1 ask, with the one-organization-per-program workaround) and a rapid-response logic model for emergencies added to Limits and slide 9. Multiple logic models were deliberately not built before the deadline: one program per organization runs through every feature and the live data. Small fix from the call: the public header now lists **Staff sign in** first and labels the other link "Survey participants (code + PIN)", and the participant sign-in page links to staff sign-in.
 
+> Can I have a folder of all of the materials that were made for Keystone and have those placed inside our project on GitHub? and then is there a way to make sure that is super easily visible by the graders? Perhaps in the slides and in the paper, we can link to the folder so that they could see the types of reports and tools etc. the system made?
+
+*Outputs:* `examples/keystone/` holds every file the app produced for Keystone: the logic model and metrics, the survey, the program-numbers template, dashboard data and quick report, the funder deck, the flyer, and the grant draft, with PDF copies that open in the browser and a README table explaining each one. `scripts/build_examples.py` regenerates the folder by loading Keystone's package into a throwaway database and downloading each file through the app (no AI calls). The folder is linked from the report's cover, graders box, and Keystone walkthrough; from slides 5 and 10; and from the README.
+
 ### Reflection
 
 ---

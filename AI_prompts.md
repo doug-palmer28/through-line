@@ -559,6 +559,24 @@ The full product plan lives in [PROJECT_PLAN.md](PROJECT_PLAN.md).
 
 *Outputs:* the deck became a reveal.js page, `docs/slides/index.html` (10 slides, reveal.js from a CDN), replacing the PowerPoint deck. `scripts/build_deliverables.py --access-code <code>` builds the two Canvas files, `deliverables/report.html` (15 printed pages) and `deliverables/slides.html`, with every image embedded so each opens by double-click. The report's cover and the last slide tell graders exactly how to sign up. The access code is filled in only at build time and `deliverables/` is git-ignored, so the code never appears in the public repo. The token ledger now records cached input tokens (shown on the AI usage page), and the report adds cached input, cost per user per month, and a screenshot of the usage page as evidence.
 
+> username is keystone.demo for the keystone demo and the password is [redacted] i think having this in our documents is great so they can see an example with data.
+
+*Outputs:* the built report and slides offer graders the ready-made Keystone login (`--demo`). Like the access code, the password is filled in only at build time and never committed.
+
+> can you give me the code to put into the powershell to get some usage statstics again on the tokens?
+
+> [pasted `report-data` output from the Render Shell]
+
+*Outputs:* Kids at Their Best's measured tokens added to the tokenomics: 26 runs, 285,623 in (30% cached) and 30,202 out, 8 searches, about 12¢. It is the third Studio run in the comparison and the first measured cached share.
+
+> Okay, here is the transcript from my debrief call with jodi. Just review it right now. Then recommend some edits/updates to the final presentation materials, and any  updates that we should make to the final project. The deadline is Monday, so I don't want to make too many changes to the software, so i'd be curious your thoughts on if we should build the multiple logic models idea, this feels like it may make things a lot more complicated.
+>
+> [debrief call transcript pasted; not reproduced here because it includes personal conversation]
+
+> Yes, go ahead and make those edits and updates across all of them.
+
+*Outputs:* Jodi's findings, quotes, and caveats in the report's Impact section and on slide 8; "did limits make it worse?" answered from the tester (the 5-question cap was a favorite) in the report and on slide 6; multiple programs (her #1 ask, with the one-organization-per-program workaround) and a rapid-response logic model for emergencies added to Limits and slide 9. Multiple logic models were deliberately not built before the deadline: one program per organization runs through every feature and the live data. Small fix from the call: the public header now lists **Staff sign in** first and labels the other link "Survey participants (code + PIN)", and the participant sign-in page links to staff sign-in.
+
 ### Reflection
 
 ---

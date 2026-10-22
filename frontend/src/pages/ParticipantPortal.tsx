@@ -1,4 +1,5 @@
 import { useCallback, useEffect, useState } from "react";
+import { Link } from "react-router-dom";
 import { api, type PortalForm, type PortalSurvey } from "../api";
 
 type View = { kind: "login" } | { kind: "list" } | { kind: "form"; id: number; wave: string } | { kind: "thanks" };
@@ -146,6 +147,9 @@ function PortalLogin({ onDone }: { onDone: () => void }) {
       <button className="btn btn--primary" disabled={busy}>
         {busy ? "Signing in…" : "Sign in"}
       </button>
+      <p className="muted small">
+        Work at the organization? <Link to="/login">Staff sign in</Link>
+      </p>
     </form>
   );
 }

@@ -78,11 +78,11 @@ export default function Layout() {
           </nav>
         ) : (
           <nav className="nav nav--public">
-            <Link className="nav__link" to="/participant">
-              Participant sign-in
-            </Link>
             <Link className="nav__link" to="/login">
               Staff sign in
+            </Link>
+            <Link className="nav__link" to="/participant">
+              Survey participants (code + PIN)
             </Link>
           </nav>
         )}

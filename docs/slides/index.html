@@ -35,6 +35,8 @@
   .grid { display: grid; gap: 18px; }
   .g2 { grid-template-columns: 1fr 1fr; } .g3 { grid-template-columns: repeat(3, 1fr); } .g4 { grid-template-columns: repeat(4, 1fr); }
   .card { background: var(--card); border: 1px solid var(--line); border-radius: 14px; padding: 20px 22px; position: relative; overflow: hidden; }
+  .cap { background: #fff; border-radius: 10px; padding: 8px 14px; }
+  .cap h3 { font-size: 22px; margin: 0 0 2px; } .cap p { font-size: 19px; margin: 0; color: var(--muted); }
   .card.top::before { content: ""; position: absolute; left: 0; right: 0; top: 0; height: 7px; background: var(--c, var(--ink)); }
   .big { font-family: var(--display); font-weight: 600; font-size: 80px; line-height: 1; margin: 8px 0 12px; }
   .tint-red { background: var(--tint-red); } .tint-blue { background: var(--tint-blue); } .tint-green { background: var(--tint-green); }
@@ -74,7 +76,8 @@
   <p style="max-width:680px;font-size:24px;margin-top:18px" class="muted">AI agents that help small nonprofits define their impact, measure it, and turn it into funder reports and grant applications, without an evaluation consultant.</p>
   <div class="graders" style="max-width:760px;margin-top:22px;padding:14px 20px">
     <p style="margin:0;font-size:21px"><b>Try it:</b> <a href="https://through-line.onrender.com/">through-line.onrender.com</a> · access code <span class="code">{{ACCESS_CODE}}</span></p>
-    <p class="small" style="margin:6px 0 0">Code: github.com/doug-palmer28/through-line · Doug Palmer · AI Foundations · Yale SOM</p>
+    <p class="small" style="margin:6px 0 0">Code: <a href="https://github.com/doug-palmer28/through-line">github.com/doug-palmer28/through-line</a></p>
+    <p class="small" style="margin:6px 0 0">Doug Palmer · AI Foundations · Yale SOM</p>
   </div>
 </section>
 
@@ -162,8 +165,14 @@
       <p class="small" style="margin:0"><b>Three real Studio runs:</b> 3.6¢–5.7¢, incl. an outside tester</p></div>
   </div>
   <div class="card tint-green" style="margin-top:16px;padding:14px 20px">
-    <p style="margin:0 0 6px"><b>Keeping costs down: limit how often the bots run.</b> Studio: 2 sessions, 5 questions · Survey Review Bot: 2 per survey · Impact report: 1 design + 1 feedback round, then free data refreshes · Grants: 3 a month.</p>
-    <p class="small" style="margin:0"><b>Did it make the app worse?</b> No. Our tester liked the 5-question cap best: "By question 10, your head is swimming." Every run's tokens (including cached input) are shown on the app's AI usage page.</p>
+    <h3 style="margin:0 0 10px">How we keep it cheap: every AI tool has a usage cap</h3>
+    <div class="grid g4" style="gap:10px">
+      <div class="cap"><h3>Logic model</h3><p>2 sessions · 5 questions</p></div>
+      <div class="cap"><h3>Survey review</h3><p>2 per survey</p></div>
+      <div class="cap"><h3>Impact report</h3><p>1 design + 1 revision</p></div>
+      <div class="cap"><h3>Grants</h3><p>3 per month</p></div>
+    </div>
+    <p class="small" style="margin:10px 0 0">Did the caps make it worse? No: our testers' favorite part was the 5-question limit.</p>
   </div>
 </section>
 
@@ -193,11 +202,11 @@
   <div class="grid g4">
     <div class="card top" style="--c:var(--red)"><div class="big" style="font-size:52px">~10 min</div><p class="small">documents → approved logic model + 5 metrics</p></div>
     <div class="card top" style="--c:var(--blue)"><div class="big" style="font-size:52px">20</div><p class="small">verified sources behind the metrics</p></div>
-    <div class="card top" style="--c:var(--yellow)"><div class="big" style="font-size:52px">85%</div><p class="small">of matched participants improved on housing confidence</p></div>
+    <div class="card top" style="--c:var(--yellow)"><div class="big" style="font-size:52px">$50,000</div><p class="small">"This would have saved us like $50,000." Jodi Walker</p></div>
     <div class="card top" style="--c:var(--green)"><div class="big" style="font-size:52px">&lt; $1</div><p class="small">AI cost, vs. $3,000+ for a consultant-led logic model</p></div>
   </div>
   <div class="grid g2" style="margin-top:18px">
-    <div class="card" style="background:var(--tint-purple, #efe9f7)"><p style="margin:0;font-size:34px;font-family:var(--display);font-weight:600;line-height:1.2">"This would have saved us like $50,000."</p>
+    <div class="card" style="background:var(--tint-purple, #efe9f7)"><p style="margin:0;font-size:34px;font-family:var(--display);font-weight:600;line-height:1.2">"This could just be such a game changer."</p>
       <p class="small" style="margin:10px 0 0">Jodi Walker, ED, Kids at Their Best (rural Colorado). Outside tester: finished the Studio in about an hour, for about 12¢.</p></div>
     <div class="card"><p class="small" style="margin:0 0 6px"><b>What worked for her</b></p>
       <p class="small" style="margin:0 0 6px">· Only 5 questions: "5 was a good number"</p>

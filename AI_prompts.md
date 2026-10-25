@@ -157,3 +157,19 @@ is described in brackets; passwords and the sign-up access code are redacted. Th
 > Can I have a folder of all of the materials that were made for Keystone and have those placed inside our project on GitHub? and then is there a way to make sure that is super easily visible by the graders? Perhaps in the slides and in the paper, we can link to the folder so that they could see the types of reports and tools etc. the system made?
 
 > Oh great. Can you do a full clean up. Look through all of the files, amek sure everything is clean and looks nice. Make sure the files are organized and clear for someone to move through. The read me adn the prompts are up to date. I think the prompts file had an old thing about the strucutre that we were going to go through for building the site, that can be done away with an djust have the individual prompts. Just make sure everything is as clean and professional as possible. Do a scrub to make sure that nothing will break or be easily hacked, and along the way se if there are any other small improvements you think we can do to really knock this out of the park (they really want evidence, so is there any additional evidence we can grab? ). Let me know and let's finish this thing strong!
+
+> can you give me the code to run to grab information from throughline for the tokens?
+
+> [pasted `report-data` output from the Render Shell]
+
+> This is feedback I received from one person named Sara B. [last name shortened]:
+>
+> [Sara B.'s emailed feedback pasted; summarized and quoted in the report]
+>
+> And then this is the feedback that I received fro another person named Sara S. [last name shortened]
+>
+> [Sara S.'s feedback pasted; summarized and quoted in the report]
+>
+> Can you review all of this and help me to know if there is any substantive things tha twe should address before we turn in the assignment? Any UX items or additional features that we can review? the report can be 16 pages, that is okay. But we also don't need a ton of information from our various user test
+
+*Decisions I made when asked:* testers named by first name and initial only (Sara B., Sara S.); fix the phone answer issue, add the tester findings, and add a "Meet your team" intro.

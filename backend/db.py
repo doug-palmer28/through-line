@@ -10,6 +10,7 @@ What's deliberately NOT stored:
 """
 
 import os
+import threading
 from datetime import date, datetime, timezone
 from functools import cache
 from typing import Any
@@ -200,8 +201,13 @@ def _engine(url: str):
     return engine
 
 
+_engine_lock = threading.Lock()
+
+
 def engine():
-    return _engine(db_url())
+    # One thread at a time, so two first requests can't both try to create the tables.
+    with _engine_lock:
+        return _engine(db_url())
 
 
 def get_db():

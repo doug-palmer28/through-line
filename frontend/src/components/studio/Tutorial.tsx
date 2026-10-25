@@ -29,6 +29,15 @@ const STEPS = [
   },
 ];
 
+/** What each agent is for, in a sentence, so the personas make sense before the team starts working. */
+const ROLES: Record<AgentKey, string> = {
+  boss: "Your main contact. Asks the five questions, writes the drafts, and brings in the others.",
+  sector_expert: "Knows what works in your field and checks the plan against good practice.",
+  client_advocate: "Speaks for the people you serve, so the plan stays realistic and respectful for them.",
+  evaluation_specialist: "Makes sure every outcome can actually be measured, before and after.",
+  funder_researcher: "Searches the web for what funders in your field look for, and cites the sources.",
+};
+
 export default function Tutorial({ onClose, starting }: { onClose: () => void; starting: boolean }) {
   return (
     <section className="tutorial card">
@@ -39,14 +48,22 @@ export default function Tutorial({ onClose, starting }: { onClose: () => void; s
         whole team before you see it. You'll always see who's talking to whom and what they're working on.
       </p>
 
+      <h3 className="tutorial__subhead">Meet your team</h3>
       <ul className="tutorial__team">
         {(Object.keys(AGENTS) as AgentKey[]).map((key) => (
           <li key={key}>
-            <AgentIcon agent={key} size={18} />
-            <span>{AGENTS[key].name}</span>
+            <AgentIcon agent={key} size={22} />
+            <div>
+              <strong>{AGENTS[key].name}</strong>
+              <p>{ROLES[key]}</p>
+            </div>
           </li>
         ))}
       </ul>
+      <p className="muted small">
+        You'll see them pass work to each other in the team huddle. Every draft is reviewed by all four specialists
+        before it reaches you.
+      </p>
 
       <ol className="tutorial__steps">
         {STEPS.map((step, i) => (

@@ -112,6 +112,8 @@
     .cover h1 { font-size: 29pt; }
     figure, .step, .callout, .tiles, .three, .two, .shots, tr { break-inside: avoid; }
     thead { display: table-header-group; }
+    .two.split { break-inside: auto; }
+    .two.split > div { break-inside: auto; }
     h2, h3, h4 { break-after: avoid; }
     .sh { break-inside: avoid; break-after: avoid; }
     a { color: var(--ink); }
@@ -389,8 +391,8 @@
     </tbody>
   </table>
   <p class="small muted">Web searches: the Funder Researcher may run up to 6 per research run. Search counts were added to the ledger after Keystone's run, so Keystone's are shown as the maximum.</p>
-  <p><b>Cached input.</b> OpenAI bills input that repeats a recent prompt (the agents' long instructions, for example) at the <b>cached</b> rate of $0.01 per million tokens, a tenth of the normal input price. The ledger now records cached input separately, and the app's AI usage page shows it (below). Keystone's and The Place's runs were recorded before that column existed, so the costs above count <b>all</b> input at the full price. They are an upper bound. Jodi Walker's runs (below) are the first measured with it: <b>84,694 of her 285,623 input tokens (30%) were cached</b>, which cut her input bill by about 27% and her total model cost by about 17%.</p>
-  <figure><img src="img/usage.jpg" alt="AI usage page" style="max-height:3.1in;width:auto;max-width:100%;margin:auto"><figcaption>Evidence: the app's own AI usage page, showing measured tokens by tool, month, and person, plus each tool's remaining allowance. This one is Keystone's organization.</figcaption></figure>
+  <p><b>Cached input.</b> OpenAI bills input that repeats a recent prompt (the agents' long instructions, for example) at the <b>cached</b> rate of $0.01 per million tokens, a tenth of the normal input price. The ledger now records cached input separately, and the app's AI usage page shows it (below). Keystone's and The Place's runs were recorded before that column existed, so the costs above count <b>all</b> input at the full price. They are an upper bound. Our three outside testers' runs (below) are the first measured with it. For Jodi Walker, <b>84,694 of 285,623 input tokens (30%) were cached</b>, which cut her input bill by about 27% and her total model cost by about 17%. For Sara S. and Sara B., 35% and 32% of input was cached.</p>
+  <figure><img src="img/usage.jpg" alt="AI usage page" style="max-height:2.7in;width:auto;max-width:100%;margin:auto"><figcaption>Evidence: the app's own AI usage page, showing measured tokens by tool, month, and person, plus each tool's remaining allowance. This one is Keystone's organization.</figcaption></figure>
   <h3>Our live-site runs and outside testers</h3>
   <table>
     <thead><tr><th>Organization</th><th>Who ran it</th><th class="n">Agent runs</th><th class="n">Tokens in / out</th><th class="n">Searches</th><th class="n">Est. cost</th></tr></thead>
@@ -398,21 +400,24 @@
       <tr><td>Keystone (above)</td><td>Doug, local, live model · full journey</td><td class="n">33</td><td class="n">339K / 52K</td><td class="n">≤ 18</td><td class="n">≤ $0.24</td></tr>
       <tr><td>The Place</td><td>Doug, live site · Studio + 1 survey review</td><td class="n">28</td><td class="n">366K / 44K</td><td class="n">≤ 12*</td><td class="n">$0.06 (≤ $0.18)</td></tr>
       <tr><td>Kids at Their Best</td><td>Jodi Walker, executive director (outside tester), live site · Studio</td><td class="n">26</td><td class="n">286K / 30K<br><span class="small muted">85K cached</span></td><td class="n">8</td><td class="n">$0.04 + $0.08 search = $0.12</td></tr>
-      <tr><td>Sara's organization</td><td>Sara (outside tester)</td><td class="n" colspan="4"><span class="pending">PENDING · not yet signed up</span></td></tr>
+      <tr><td>A food bank</td><td>Sara S. (outside tester), live site · Studio, a survey + its review, program numbers</td><td class="n">25</td><td class="n">242K / 29K<br><span class="small muted">84K cached</span></td><td class="n">4</td><td class="n">$0.03 + $0.04 search = $0.07</td></tr>
+      <tr><td>A sewing cooperative</td><td>Sara B. (outside tester), live site, on her phone · logic model and draft metrics</td><td class="n">24</td><td class="n">297K / 30K<br><span class="small muted">94K cached</span></td><td class="n">7</td><td class="n">$0.04 + $0.07 search = $0.11</td></tr>
     </tbody>
   </table>
   <p class="small muted">* The Place's runs happened before web searches were counted, so the maximum is shown. Keystone was later copied onto the live site as a demo; the copy carries its results but not its usage history.</p>
   <table>
-    <thead><tr><th>Logic Model Studio, three independent runs</th><th class="n">Runs</th><th class="n">Input tokens</th><th class="n">Output tokens</th><th class="n">Model cost</th></tr></thead>
+    <thead><tr><th>Logic Model Studio, five independent runs</th><th class="n">Runs</th><th class="n">Input tokens</th><th class="n">Output tokens</th><th class="n">Model cost</th></tr></thead>
     <tbody>
       <tr><td>Keystone (housing, local)</td><td class="n">27</td><td class="n">296,022</td><td class="n">39,336</td><td class="n">$0.049</td></tr>
       <tr><td>The Place (live site)</td><td class="n">27</td><td class="n">363,131</td><td class="n">41,555</td><td class="n">$0.057</td></tr>
       <tr><td>Kids at Their Best (live site, outside tester; 30% of input cached)</td><td class="n">26</td><td class="n">285,623</td><td class="n">30,202</td><td class="n">$0.036</td></tr>
+      <tr><td>A food bank (Sara S., live site; 35% of input cached)</td><td class="n">24</td><td class="n">239,355</td><td class="n">27,188</td><td class="n">$0.030</td></tr>
+      <tr><td>A sewing cooperative (Sara B., live site, by phone; 32% cached)</td><td class="n">24</td><td class="n">296,685</td><td class="n">29,916</td><td class="n">$0.036</td></tr>
     </tbody>
   </table>
-  <p>The three Studio runs, for different organizations, run by different people, all landed between 3.6¢ and 5.7¢, and the outside tester's was the cheapest (helped by caching). That makes the cost of onboarding a new organization predictable: about <b>4–6¢ in model fees</b>, plus at most 12¢ of web search (Jodi's used 8¢). In all three, the metrics phase (research, a working plan, a four-specialist review, and a final plan) used about half the tokens.</p>
+  <p>The five Studio runs, for different organizations, run by different people, all landed between 3.0¢ and 5.7¢, and the three outside testers' were the cheapest (helped by caching). That makes the cost of onboarding a new organization predictable: about <b>3–6¢ in model fees</b>, plus at most 12¢ of web search (the testers' used 4–8¢). In all five, the metrics phase (research, a working plan, a four-specialist review, and a final plan) used about half the tokens.</p>
   <h3>Keeping costs down</h3>
-  <p>The main lever is <b>limiting how often each organization can call the agents</b>. Every run also has hard request, token, and tool-call caps, so no loop can run on.</p>
+  <p>The main lever is <b>limiting how often each organization can call the agents</b>. Every run also has hard request, token, and tool-call caps, so no loop can run on. One tester asked whether every stage needs the same model. The course allows only gpt-6-luna, but a lighter model for intake and the interview is a natural next test.</p>
   <table>
     <thead><tr><th>Tool</th><th>Limit per organization</th></tr></thead>
     <tbody>
@@ -425,7 +430,7 @@
   </table>
   <h3>At scale</h3>
   <p>Treating each user as one organization, and using Keystone's measured costs: a <b>typical year</b> is one Studio session, 4 survey reviews, one report with a revision and a few privacy checks, and 12 grant drafts. That comes to about <b>$1 per organization per year</b> in AI fees, most of it web search. The <b>most an organization could spend</b> while staying within every allowance (2 Studio sessions at their caps, 36 grants, and the full daily privacy-check ceiling all year) is about <b>$8 per year</b>.</p>
-  <p><b>Per run and per user per month.</b> One Studio session (setting up a new organization) costs 4–6¢ in model fees plus at most 12¢ of web search. A grant draft is about 1¢ plus at most 6¢ of search. A report design is under 1¢. Per user (organization) per month, that's about <b>8¢ in a typical month</b> and at most <b>about 70¢</b> within the allowances.</p>
+  <p><b>Per run and per user per month.</b> One Studio session (setting up a new organization) costs 3–6¢ in model fees plus at most 12¢ of web search. A grant draft is about 1¢ plus at most 6¢ of search. A report design is under 1¢. Per user (organization) per month, that's about <b>8¢ in a typical month</b> and at most <b>about 70¢</b> within the allowances.</p>
   <table>
     <thead><tr><th>Users (organizations)</th><th class="n">AI, typical / year</th><th class="n">AI, worst case / year</th><th class="n">Hosting (Render) / year</th></tr></thead>
     <tbody>
@@ -443,7 +448,7 @@
 <section>
   <header class="sh"><p class="eyebrow">Safety</p>
   <h2><span class="num num--red">⛨</span> Built for people's private information</h2></header>
-  <div class="two">
+  <div class="two split">
     <div>
       <h4>Staff accounts</h4>
       <p>Passwords are hashed with <b>Argon2id</b>. Usernames are never stored, only a keyed HMAC of them. Sign-in uses an HttpOnly, SameSite=Strict cookie, plus per-account lockout and a per-network attempt limit. Every database query is filtered by the signed-in organization, and tests confirm one organization can't open another's data. On the live site, starting a new organization requires an access code.</p>
@@ -500,7 +505,8 @@
     <div class="callout"><span class="eyebrow">Jodi Walker · Kids at Their Best</span><p class="quote">"You only get five, make them count. I think that's one of the big things nonprofits need: the ability to better focus and better streamline."</p></div>
     <div class="callout callout--green"><span class="eyebrow">Jodi Walker · Kids at Their Best</span><p class="quote">"This would have saved us like $50,000. … This could just be such a game changer."</p></div>
   </div>
-  <p class="small muted">Quotes lightly edited from the call transcript. Context for the $50,000: their past consultant work covered much more than a logic model (organizational strategy, too), so this is her upper-end comparison. This tester already knew logic models well and uploaded one; we have not yet tested someone starting from nothing, though she thought the questions were "straightforward enough" that they could have. <span class="pending">PENDING · Sara</span></p>
+  <p class="small muted">Quotes lightly edited from the call transcript. Context for the $50,000: their past consultant work covered much more than a logic model (organizational strategy, too), so this is her upper-end comparison. This tester already knew logic models well and uploaded one; we have not yet tested someone starting from nothing, though she thought the questions were "straightforward enough" that they could have.</p>
+  <p><b>Two more outside testers</b> tried it on their own. <b>Sara B.</b> tested a sewing cooperative's program on her phone and found it "pretty easy to navigate." The logic model "definitely sounded like it fit," and it surfaced a real gap: it "highlighted the fact that the stated purpose of the cooperative was to generate income for the women, but there wasn't any specific support or KPIs associated to support the income-generating piece aside from creating the sewing cooperative itself." She sometimes had to send an interview answer twice on her phone, so the answer box now works the phone way: Enter adds a line, Send sends, and the answer appears in the conversation right away. <b>Sara S.</b> set up a food bank: she finished the Studio, built a survey, ran the Survey Review Bot on it, and added three program numbers (25 agent runs, about 7¢). She "especially liked the different agents' review perspectives, citations for the metrics, built-in survey tools, the survey review bot, and the branding options in reports." The personas confused her at first, so the Studio now opens by introducing each agent's role. Her biggest suggestion is in Limits.</p>
   <h3>Why it matters</h3>
   <p>For a small nonprofit, the biggest change is that program evaluation stops being something you buy and becomes something you do. The executive director comes away with a logic model they helped write and understand, surveys their staff can actually run, and funder materials that stay current as new data comes in. That is what a $3,000–$8,000 consultant engagement would produce, at a cost of cents.</p>
 </section>
@@ -511,6 +517,8 @@
   <h2><span class="num num--ink sq">→</span> What it doesn't do yet</h2></header>
   <h4>One program at a time</h4>
   <p>Through Line works best for a fairly simple nonprofit with one core program, which is the target user. It was also our tester's first request. A rural youth organization covers many areas at once, and she wanted "logic model A" for general workforce training plus sub-models, such as one for a lifeguard instructor program, that roll up into it. Building this means adding a <b>program</b> level under each organization. The logic model, metrics, surveys, dashboard, reports, and allowances would all be scoped by program, with a roll-up view on top. That touches every part of the app and its live data, so we chose not to build it before submission. A workaround works today: set each program up as its own organization.</p>
+  <h4>Make the through line visible</h4>
+  <p>Sara S.'s biggest suggestion was to make the app's namesake easier to see. Show which inputs lead to which activities, outputs, and outcomes inside the logic model. Carry the collection tools the logic model already points to into the metrics step, and group the metrics under them. Explain why each measure matters to participants, not only to funders. Her other ideas: surveys in other languages (marking validated translations apart from AI drafts), images in reports, and reusable answers for common grant questions.</p>
   <h4>Quick logic models for emergencies</h4>
   <p>Our tester's second idea: when something hits, such as COVID, a disaster, or a sudden flood of food to distribute, small rural agencies pivot fast, and "nobody ever takes the time" to decide what they're trying to achieve and how they'll track it. Afterward, "we're like, oh, so how did we track that?" A 30-minute <b>rapid-response</b> mode would reuse the Studio for a short-lived logic model: the problem, the response, three outcomes, and how to track them. That gives the agency a plan to show funders right away and the data to report on afterward.</p>
   <h4>Getting data in and out at scale</h4>

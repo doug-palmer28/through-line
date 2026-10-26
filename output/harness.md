@@ -513,7 +513,7 @@ Final Project/
 │                          export/import an organization, report data) · build_deliverables.py · build_examples.py ·
 │                          build_evidence.py · demo/keystone_family_housing.json
 ├── output/                harness.md · audit_log.json
-├── tests/                 11 offline test files (64 tests) · demo_server.py (scripted agents, temp data) · conftest.py
+├── tests/                 11 offline test files (68 tests) · demo_server.py (scripted agents, temp data) · conftest.py
 ├── docs/                  report/ (final report source + images) · slides/ (reveal.js deck source)
 ├── examples/keystone/     every file the app produced for Keystone (PDF copies open in the browser)
 └── evidence/              test results, the hidden-text defense, the audit-log check, live token usage
@@ -590,7 +590,7 @@ All Logic Model Studio routes now require a signed-in staff member, and a sessio
 
 ## 13. Testing Evidence
 
-**Now:** the whole offline suite is **64 passed** (full list in [`evidence/test_results.txt`](../evidence/test_results.txt)). The sections below record what each step added, in order.
+**Now:** the whole offline suite is **68 passed** (full list in [`evidence/test_results.txt`](../evidence/test_results.txt)). The sections below record what each step added, in order.
 
 **Step 7 offline tests** (`env -u PORTKEY_API_KEY .venv/Scripts/python -m pytest tests`): **13 passed.**
 - `test_logic_model_studio.py` (8): full flow; uploads never saved or logged; restart safety; expiry wipes notes; word limit; extra document; consult budget refusal; bad files and private URLs; phase order.

@@ -65,7 +65,7 @@ Open http://localhost:5173, choose **Create a staff account**, and start in the 
 .venv/Scripts/python tests/demo_server.py
 ```
 
-**Tests** (offline, no AI calls; 64 tests):
+**Tests** (offline, no AI calls; 68 tests):
 
 ```bash
 env -u PORTKEY_API_KEY .venv/Scripts/python -m pytest tests
@@ -117,7 +117,7 @@ It asks you to choose a password, then you can sign in as `keystone.demo`. That 
 ```
 backend/         FastAPI app: agents/ (the AI agents), prompts/ (one per agent), routes/ (the API)
 frontend/        Vite + React + TypeScript website
-tests/           64 offline tests and the scripted demo server
+tests/           68 offline tests and the scripted demo server
 scripts/         operator tools, test-profile runner, and builders for the deliverables, examples, and evidence
 docs/            report/ and slides/ (sources of the submitted report.html and slides.html)
 examples/        keystone/: every file the app produced for the Keystone example

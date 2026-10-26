@@ -1,4 +1,4 @@
-Through Line: offline test suite, run 2026-10-22 15:42
+Through Line: offline test suite, run 2026-10-26 07:13
 Command: python -m pytest tests -v   (no AI calls: PORTKEY_API_KEY is empty)
 
 ============================= test session starts =============================
@@ -16,6 +16,10 @@ tests/test_deploy.py::test_sign_in_attempts_are_limited_per_address PASSED
 tests/test_deploy.py::test_audit_log_never_keeps_flagged_text PASSED
 tests/test_deploy.py::test_bad_numbers_and_sheet_names_cant_break_an_org PASSED
 tests/test_deploy.py::test_private_addresses_are_never_fetched PASSED
+tests/test_env_loading.py::test_key_is_found_one_folder_above_the_repo PASSED
+tests/test_env_loading.py::test_a_blank_copy_of_env_example_does_not_hide_it PASSED
+tests/test_env_loading.py::test_the_repos_own_env_comes_first PASSED
+tests/test_env_loading.py::test_a_value_already_in_the_environment_wins PASSED
 tests/test_hardening.py::test_demo_account_is_view_only PASSED
 tests/test_hardening.py::test_ordinary_accounts_are_not_view_only PASSED
 tests/test_hardening.py::test_wrong_passwords_never_lock_the_shared_demo PASSED
@@ -66,4 +70,4 @@ tests/test_visible_text.py::test_pptx_reads_only_visible_text PASSED
 tests/test_visible_text.py::test_html_reads_only_visible_text PASSED
 tests/test_visible_text.py::test_markdown_hides_comments_and_hidden_html PASSED
 tests/test_visible_text.py::test_intake_reports_hidden_counts_not_content PASSED
-======================== 64 passed in 69.98s (0:01:09) ========================
+======================= 68 passed in 126.41s (0:02:06) ========================

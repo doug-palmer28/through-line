@@ -10,7 +10,7 @@ Proof behind each claim in the report, in one place. Everything here is real out
 | **Agents can't be steered by hidden text** | [`hidden_text_defense.md`](hidden_text_defense.md): the same booby-trapped PDF, Word, PowerPoint, and web page read by a standard reader (26 hidden instructions get through) and by Through Line (0 get through, all visible text kept). |
 | **Usage limits actually stop runs** | [`audit_log_check.md`](audit_log_check.md): `limit_reached` entries from real runs, where the per-run consult budget refused extra agent calls. The allowance tests are in `tests/test_limits_grants.py`. |
 | **The audit log can't be quietly edited** | [`audit_log_check.md`](audit_log_check.md): 456 hash-chained entries, chain intact, with counts of every event type. |
-| **The code is tested** | [`test_results.txt`](test_results.txt): all 64 offline tests passing, by name. They cover org isolation, sign-in, uploads that are never saved, privacy scrubbing, hidden text, usage limits, the view-only demo, zip bombs, and more. |
+| **The code is tested** | [`test_results.txt`](test_results.txt): all 68 offline tests passing, by name. They cover org isolation, sign-in, finding the API key the graders' way, uploads that are never saved, privacy scrubbing, hidden text, usage limits, the view-only demo, zip bombs, and more. |
 | **It was reviewed for security** | [`output/harness.md` §10i](../output/harness.md): two independent code reviews (before launch and before submission) and what was fixed from each. |
 
 ## Rebuild

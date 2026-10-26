@@ -484,7 +484,7 @@ Deployed on Render from the `Dockerfile` (one container serves the website and t
 | Hostile Office files | Word, PowerPoint, and Excel files are zip packages: ones that would unpack past 100 MB or 2,000 entries are refused before any library opens them (zip-bomb guard). Excel uploads are read only to 2,000 rows × 200 columns and parsed off the event loop |
 | PDF fonts on Linux | Carlito / Liberation / DejaVu installed, so flyers keep their metrics and full Unicode |
 
-Tests: `tests/test_deploy.py` (access code, website serving, path traversal, headers, oversized requests, sign-in limit, audit withholding, `NaN`, sheet names, formula escaping, private addresses) and `tests/test_hardening.py` (view-only demo, no demo lockout, zip bomb refused, a sheet claiming a million rows read in seconds). Whole suite: **64 passed**, offline.
+Tests: `tests/test_deploy.py` (access code, website serving, path traversal, headers, oversized requests, sign-in limit, audit withholding, `NaN`, sheet names, formula escaping, private addresses) and `tests/test_hardening.py` (view-only demo, no demo lockout, zip bomb refused, a sheet claiming a million rows read in seconds). Whole suite: **68 passed**, offline.
 
 A second independent review (2026-10-22) re-checked secrets in git, auth, org isolation, path traversal, SSRF, formula injection, XXE, and prompt-injection paths and found them sound; the demo-account, zip-bomb, and huge-sheet findings above were fixed from it. Not changed, by choice: the per-network sign-in limit trusts the proxy's forwarded address (the per-account lockout still applies), and the container runs as root so it can write to Render's mounted disk.
 

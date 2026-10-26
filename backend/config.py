@@ -7,14 +7,25 @@ Secrets come from the environment / .env only and are never logged or returned b
 import os
 from pathlib import Path
 
-from dotenv import load_dotenv
+from dotenv import dotenv_values
 
 BACKEND_DIR = Path(__file__).resolve().parent
 PROJECT_DIR = BACKEND_DIR.parent
 
-# Project .env first, then the course-root .env one level up (holds PORTKEY_API_KEY).
-load_dotenv(PROJECT_DIR / ".env")
-load_dotenv(PROJECT_DIR.parent / ".env")
+
+def _load_env() -> None:
+    """Read .env from this repo's folder first, then from the folder above it (where a shared .env with
+    PORTKEY_API_KEY may live). Anything already set in the environment wins, including a deliberately empty
+    value (that's how the offline tests keep the key out). Blank lines in a .env, such as an untouched copy of
+    .env.example, never hide a real value further up."""
+    preset = set(os.environ)
+    for path in (PROJECT_DIR / ".env", PROJECT_DIR.parent / ".env"):
+        for key, value in dotenv_values(path).items():
+            if key not in preset and value and not os.environ.get(key):
+                os.environ[key] = value
+
+
+_load_env()
 
 APP_NAME = "Through Line"
 MODEL_NAME = "gpt-6-luna"  # Project rule: every agent uses Luna. Not configurable per agent.

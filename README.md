@@ -42,14 +42,13 @@ Every agent runs on `gpt-6-luna` through Portkey (OpenAI Responses API) with Pyd
 
 You need Python 3.13, Node 22+, and a [Portkey](https://portkey.ai) API key that can reach OpenAI's `gpt-6-luna`.
 
+**The API key.** The app needs one key, `PORTKEY_API_KEY`, and looks for a `.env` file in two places: first this repo's own folder, then the folder **above** it. If a `.env` with `PORTKEY_API_KEY` already sits one level above the cloned repo, there is nothing to set up. Otherwise, copy `.env.example` to `.env` here and fill in the key. A blank line in this folder's `.env` never hides the key above.
+
 ```bash
 python -m venv .venv
 .venv/Scripts/python -m pip install -r requirements.txt      # macOS/Linux: .venv/bin/python
 cd frontend && npm install && cd ..
-cp .env.example .env                                          # then put your key in PORTKEY_API_KEY
 ```
-
-The app looks for `.env` in this folder first, then one folder up.
 
 Start the API and the website in two terminals:
 

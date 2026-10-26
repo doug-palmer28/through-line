@@ -173,3 +173,11 @@ is described in brackets; passwords and the sign-up access code are redacted. Th
 > Can you review all of this and help me to know if there is any substantive things tha twe should address before we turn in the assignment? Any UX items or additional features that we can review? the report can be 16 pages, that is okay. But we also don't need a ton of information from our various user test
 
 *Decisions I made when asked:* testers named by first name and initial only (Sara B., Sara S.); fix the phone answer issue, add the tester findings, and add a "Meet your team" intro.
+
+> yes please correct the git hub thing on the prompt log.
+
+> go ahead and do ti
+
+> can you revie sara santos feedback for me or summarize rather
+
+> on the report. here are some edits: On the first page where it says's live app and that staff sign-up needs the pilot access code, cna you put the access code there as well? I know that it is down below, but lets repeat it. It says that if they sign in with keystone demo, it is view only, is that true? I don't think that it is. On the tokenomics page, what is the diffreence bteween the two tables on the our live site runs and outsider testers? They appear to be the organizations but they have different model costs? can we combine these into one table or at least make it ore clear how these two things are difference? I think one is web search and one is studio runs.

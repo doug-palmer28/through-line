@@ -130,7 +130,7 @@
   <h1>From mission to evidence to story.</h1>
   <p class="lede">Through Line is a web app where a team of AI agents helps a small nonprofit say what change it creates, measure whether it's happening, and turn the results into funder reports and grant applications, without hiring an evaluation consultant.</p>
   <div class="links">
-    <div class="link"><b>Live app</b> <a href="https://through-line.onrender.com/">through-line.onrender.com</a> <span class="muted small">Staff sign-up needs the pilot access code</span></div>
+    <div class="link"><b>Live app</b> <a href="https://through-line.onrender.com/">through-line.onrender.com</a> <span class="muted small">Staff sign-up access code:</span> <span class="code">{{ACCESS_CODE}}</span></div>
     <div class="link"><b>Code (GitHub)</b> <a href="https://github.com/doug-palmer28/through-line">github.com/doug-palmer28/through-line</a></div>
     <div class="link"><b>How the agents work</b> <a href="https://github.com/doug-palmer28/through-line/blob/main/output/harness.md">output/harness.md</a> <span class="muted small">prompts, tools, limits, audit</span></div>
     <div class="link"><b>Example outputs</b> <a href="https://github.com/doug-palmer28/through-line/tree/main/examples/keystone">examples/keystone</a> <span class="muted small">every file it made for Keystone, viewable in the browser</span></div>
@@ -393,28 +393,19 @@
   <p class="small muted">Web searches: the Funder Researcher may run up to 6 per research run. Search counts were added to the ledger after Keystone's run, so Keystone's are shown as the maximum.</p>
   <p><b>Cached input.</b> OpenAI bills input that repeats a recent prompt (the agents' long instructions, for example) at the <b>cached</b> rate of $0.01 per million tokens, a tenth of the normal input price. The ledger now records cached input separately, and the app's AI usage page shows it (below). Keystone's and The Place's runs were recorded before that column existed, so the costs above count <b>all</b> input at the full price. They are an upper bound. Our three outside testers' runs (below) are the first measured with it. For Jodi Walker, <b>84,694 of 285,623 input tokens (30%) were cached</b>, which cut her input bill by about 27% and her total model cost by about 17%. For Sara S. and Sara B., 35% and 32% of input was cached.</p>
   <figure><img src="img/usage.jpg" alt="AI usage page" style="max-height:2.7in;width:auto;max-width:100%;margin:auto"><figcaption>Evidence: the app's own AI usage page, showing measured tokens by tool, month, and person, plus each tool's remaining allowance. This one is Keystone's organization.</figcaption></figure>
-  <h3>Our live-site runs and outside testers</h3>
+  <h3>Every organization we measured</h3>
+  <p>Each row is one organization's measured AI use. <b>Studio only</b> is the model cost of the Logic Model Studio, the step every organization goes through, so it compares like with like. The last three columns add up everything that organization did: all model fees, plus web searches (1¢ each).</p>
   <table>
-    <thead><tr><th>Organization</th><th>Who ran it</th><th class="n">Agent runs</th><th class="n">Tokens in / out</th><th class="n">Searches</th><th class="n">Est. cost</th></tr></thead>
+    <thead><tr><th>Organization · who ran it · what they did</th><th class="n">Agent runs</th><th class="n">Tokens in / out</th><th class="n">Studio only</th><th class="n">All model fees</th><th class="n">Web search</th><th class="n">Total</th></tr></thead>
     <tbody>
-      <tr><td>Keystone (above)</td><td>Doug, local, live model · full journey</td><td class="n">33</td><td class="n">339K / 52K</td><td class="n">≤ 18</td><td class="n">≤ $0.24</td></tr>
-      <tr><td>The Place</td><td>Doug, live site · Studio + 1 survey review</td><td class="n">28</td><td class="n">366K / 44K</td><td class="n">≤ 12*</td><td class="n">$0.06 (≤ $0.18)</td></tr>
-      <tr><td>Kids at Their Best</td><td>Jodi Walker, executive director (outside tester), live site · Studio</td><td class="n">26</td><td class="n">286K / 30K<br><span class="small muted">85K cached</span></td><td class="n">8</td><td class="n">$0.04 + $0.08 search = $0.12</td></tr>
-      <tr><td>A food bank</td><td>Sara S. (outside tester), live site · Studio, a survey + its review, program numbers</td><td class="n">25</td><td class="n">242K / 29K<br><span class="small muted">84K cached</span></td><td class="n">4</td><td class="n">$0.03 + $0.04 search = $0.07</td></tr>
-      <tr><td>A sewing cooperative</td><td>Sara B. (outside tester), live site, on her phone · logic model and draft metrics</td><td class="n">24</td><td class="n">297K / 30K<br><span class="small muted">94K cached</span></td><td class="n">7</td><td class="n">$0.04 + $0.07 search = $0.11</td></tr>
+      <tr><td><b>Keystone (above)</b><br><span class="small muted">Doug, local, live model · the full journey</span></td><td class="n">33</td><td class="n">339K / 52K</td><td class="n"><b>4.9¢</b></td><td class="n">6.0¢</td><td class="n">≤ 18¢</td><td class="n"><b>≤ 24¢</b></td></tr>
+      <tr><td><b>The Place</b><br><span class="small muted">Doug, live site · Studio + 1 survey review</span></td><td class="n">28</td><td class="n">366K / 44K</td><td class="n"><b>5.7¢</b></td><td class="n">5.9¢</td><td class="n">≤ 12¢*</td><td class="n"><b>≤ 18¢</b></td></tr>
+      <tr><td><b>Kids at Their Best</b><br><span class="small muted">Jodi Walker, outside tester · Studio</span></td><td class="n">26</td><td class="n">286K / 30K<br><span class="small muted">85K cached</span></td><td class="n"><b>3.6¢</b></td><td class="n">3.6¢</td><td class="n">8¢</td><td class="n"><b>12¢</b></td></tr>
+      <tr><td><b>A food bank</b><br><span class="small muted">Sara S., outside tester · Studio, a survey + its review</span></td><td class="n">25</td><td class="n">242K / 29K<br><span class="small muted">84K cached</span></td><td class="n"><b>3.0¢</b></td><td class="n">3.1¢</td><td class="n">4¢</td><td class="n"><b>7¢</b></td></tr>
+      <tr><td><b>A sewing cooperative</b><br><span class="small muted">Sara B., outside tester, on her phone · logic model + draft metrics</span></td><td class="n">24</td><td class="n">297K / 30K<br><span class="small muted">94K cached</span></td><td class="n"><b>3.6¢</b></td><td class="n">3.6¢</td><td class="n">7¢</td><td class="n"><b>11¢</b></td></tr>
     </tbody>
   </table>
-  <p class="small muted">* The Place's runs happened before web searches were counted, so the maximum is shown. Keystone was later copied onto the live site as a demo; the copy carries its results but not its usage history.</p>
-  <table>
-    <thead><tr><th>Logic Model Studio, five independent runs</th><th class="n">Runs</th><th class="n">Input tokens</th><th class="n">Output tokens</th><th class="n">Model cost</th></tr></thead>
-    <tbody>
-      <tr><td>Keystone (housing, local)</td><td class="n">27</td><td class="n">296,022</td><td class="n">39,336</td><td class="n">$0.049</td></tr>
-      <tr><td>The Place (live site)</td><td class="n">27</td><td class="n">363,131</td><td class="n">41,555</td><td class="n">$0.057</td></tr>
-      <tr><td>Kids at Their Best (live site, outside tester; 30% of input cached)</td><td class="n">26</td><td class="n">285,623</td><td class="n">30,202</td><td class="n">$0.036</td></tr>
-      <tr><td>A food bank (Sara S., live site; 35% of input cached)</td><td class="n">24</td><td class="n">239,355</td><td class="n">27,188</td><td class="n">$0.030</td></tr>
-      <tr><td>A sewing cooperative (Sara B., live site, by phone; 32% cached)</td><td class="n">24</td><td class="n">296,685</td><td class="n">29,916</td><td class="n">$0.036</td></tr>
-    </tbody>
-  </table>
+  <p class="small muted">* The Place's runs happened before web searches were counted, so the maximum is shown; Keystone's searches are also shown as the maximum. Keystone was later copied onto the live site as a demo; the copy carries its results but not its usage history.</p>
   <p>The five Studio runs, for different organizations, run by different people, all landed between 3.0¢ and 5.7¢, and the three outside testers' were the cheapest (helped by caching). That makes the cost of onboarding a new organization predictable: about <b>3–6¢ in model fees</b>, plus at most 12¢ of web search (the testers' used 4–8¢). In all five, the metrics phase (research, a working plan, a four-specialist review, and a final plan) used about half the tokens.</p>
   <h3>Keeping costs down</h3>
   <p>The main lever is <b>limiting how often each organization can call the agents</b>. Every run also has hard request, token, and tool-call caps, so no loop can run on. One tester asked whether every stage needs the same model. The course allows only gpt-6-luna, but a lighter model for intake and the interview is a natural next test.</p>
